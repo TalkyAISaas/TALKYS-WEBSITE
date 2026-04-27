@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light Theme - Warm & Clean */
+    --background: 30 33% 98%;
+    --foreground: 220 20% 18%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 18%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 18%;
+    --primary: 192 73% 21%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 25 45% 94%;
+    --secondary-foreground: 220 20% 18%;
+    --muted: 25 25% 94%;
+    --muted-foreground: 220 10% 45%;
+    --accent: 14 68% 62%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 25 20% 90%;
+    --input: 25 20% 90%;
+    --ring: 192 73% 21%;
+    --radius: 1rem;
+  }
+
+  .dark {
+    --background: 220 30% 6%;
+    --foreground: 30 20% 95%;
+    --card: 220 25% 8%;
+    --card-foreground: 30 20% 95%;
+    --popover: 220 25% 8%;
+    --popover-foreground: 30 20% 95%;
+    --primary: 192 73% 30%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 15% 12%;
+    --secondary-foreground: 30 20% 95%;
+    --muted: 220 15% 14%;
+    --muted-foreground: 220 10% 55%;
+    --accent: 14 68% 62%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 15% 14%;
+    --input: 220 15% 14%;
+    --ring: 192 73% 30%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  /* ═══════════════════════════════════════════════════
+     LIGHT MODE OVERRIDES for foreground-based opacities
+     Fixes grey/muddy tint when using bg-foreground/[0.XX]
+     ═══════════════════════════════════════════════════ */
+
+  /* Subtle backgrounds: dark grey → warm beige/cream */
+  :root:not(.dark) .bg-foreground\/\[0\.02\],
+  :root:not(.dark) .bg-foreground\/\[0\.03\] {
+    background-color: rgba(245, 240, 235, 0.5) !important;
+  }
+
+  :root:not(.dark) .bg-foreground\/\[0\.04\],
+  :root:not(.dark) .bg-foreground\/\[0\.05\],
+  :root:not(.dark) .bg-foreground\/\[0\.06\] {
+    background-color: rgba(245, 240, 235, 0.8) !important;
+  }
+
+  :root:not(.dark) .bg-foreground\/\[0\.08\],
+  :root:not(.dark) .bg-foreground\/\[0\.1\] {
+    background-color: rgba(232, 224, 216, 0.5) !important;
+  }
+
+  /* Subtle borders: dark grey → warm sand */
+  :root:not(.dark) .border-foreground\/\[0\.06\],
+  :root:not(.dark) .border-foreground\/\[0\.08\],
+  :root:not(.dark) .border-foreground\/\[0\.1\],
+  :root:not(.dark) .border-foreground\/10 {
+    border-color: #E8E0D8 !important;
+  }
+
+  /* Text readability in light mode */
+  :root:not(.dark) .text-foreground\/25 { color: rgba(46, 46, 46, 0.35) !important; }
+  :root:not(.dark) .text-foreground\/30 { color: rgba(46, 46, 46, 0.4) !important; }
+  :root:not(.dark) .text-foreground\/40 { color: rgba(46, 46, 46, 0.5) !important; }
+  :root:not(.dark) .text-foreground\/50 { color: rgba(46, 46, 46, 0.65) !important; }
+  :root:not(.dark) .text-foreground\/55 { color: rgba(46, 46, 46, 0.7) !important; }
+  :root:not(.dark) .text-foreground\/60 { color: rgba(46, 46, 46, 0.75) !important; }
+  :root:not(.dark) .text-foreground\/70 { color: rgba(46, 46, 46, 0.85) !important; }
+  :root:not(.dark) .text-foreground\/80 { color: rgba(46, 46, 46, 0.9) !important; }
+  :root:not(.dark) .text-foreground\/90 { color: rgba(46, 46, 46, 0.95) !important; }
+
+  /* Placeholder text in light mode */
+  :root:not(.dark) .placeholder-foreground\/25::placeholder,
+  :root:not(.dark) .placeholder-foreground\/30::placeholder {
+    color: rgba(46, 46, 46, 0.35) !important;
+  }
+
+  /* Light mode form inputs */
+  :root:not(.dark) input,
+  :root:not(.dark) textarea,
+  :root:not(.dark) select {
+    background-color: #F8F5F2 !important;
+    border-color: #E8E0D8 !important;
+    color: #2E2E2E !important;
+  }
+
+  :root:not(.dark) input::placeholder,
+  :root:not(.dark) textarea::placeholder {
+    color: rgba(46, 46, 46, 0.4) !important;
+  }
+
+  :root:not(.dark) input:focus,
+  :root:not(.dark) textarea:focus,
+  :root:not(.dark) select:focus {
+    border-color: rgba(15, 76, 92, 0.4) !important;
+    box-shadow: 0 0 0 3px rgba(15, 76, 92, 0.08) !important;
+  }
+
+  /* Light mode gradient orbs - softer */
+  :root:not(.dark) .gradient-orb {
+    opacity: 0.3;
+  }
+
+  /* Light mode futuristic grid - barely visible */
+  :root:not(.dark) .futuristic-grid {
+    opacity: 0.08 !important;
+  }
+
+  /* Light mode hover backgrounds */
+  :root:not(.dark) .hover\:bg-foreground\/\[0\.03\]:hover,
+  :root:not(.dark) .hover\:bg-foreground\/\[0\.05\]:hover,
+  :root:not(.dark) .hover\:bg-foreground\/\[0\.06\]:hover,
+  :root:not(.dark) .hover\:bg-foreground\/\[0\.08\]:hover,
+  :root:not(.dark) .hover\:bg-foreground\/\[0\.1\]:hover {
+    background-color: rgba(232, 224, 216, 0.5) !important;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+.dark ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 3px; }
+.dark ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+
+:root:not(.dark) ::-webkit-scrollbar-thumb { background: #D4CCC4; border-radius: 3px; }
+:root:not(.dark) ::-webkit-scrollbar-thumb:hover { background: #B8B0A8; }
+
+/* Selection */
+::selection { background: rgba(15, 76, 92, 0.25); color: inherit; }
+
+/* Focus styles */
+button:focus-visible, a:focus-visible { outline: 2px solid #0F4C5C; outline-offset: 2px; }
+.dark button:focus-visible, .dark a:focus-visible { outline-color: #1A8FA8; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
