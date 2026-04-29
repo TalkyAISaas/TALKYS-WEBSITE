@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowRight, CheckCircle2, Headphones, Monitor, Settings, Sparkles } from 'lucide-react';
+import { ArrowRight, Headphones, Monitor, Settings, Sparkles } from 'lucide-react';
 
 const GettingStartedSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [, setIsVisible] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',

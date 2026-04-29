@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Phone, MessageCircle, ShoppingCart, Send, BarChart3, ArrowDown } from 'lucide-react';
+import { Phone, MessageCircle, ShoppingCart, Send, BarChart3 } from 'lucide-react';
 
 const HowItWorksSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);

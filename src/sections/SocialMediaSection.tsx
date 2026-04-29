@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Instagram, MessageCircle, Phone, ShoppingCart, Send, Check, Smartphone } from 'lucide-react';
+import { Instagram, Phone, Check } from 'lucide-react';
 
 const SocialMediaSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
