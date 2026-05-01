@@ -159,7 +159,7 @@ const SolutionSection = () => {
                         {activeAgent === index ? (
                           <>
                             {/* Live waveform */}
-                            <div className="flex items-center gap-0.5 h-4">
+                            <div className="flex items-end gap-0.5 h-6 overflow-hidden">
                               {[...Array(4)].map((_, i) => (
                                 <div
                                   key={i}

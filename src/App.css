@@ -133,10 +133,10 @@ html {
 }
 
 @keyframes waveform {
-  0%, 100% { height: 8px; }
-  25% { height: 20px; }
-  50% { height: 12px; }
-  75% { height: 24px; }
+  0%, 100% { transform: scaleY(0.33); }
+  25% { transform: scaleY(0.83); }
+  50% { transform: scaleY(0.5); }
+  75% { transform: scaleY(1); }
 }
 
 @keyframes ripple {
@@ -181,10 +181,12 @@ html {
 /* Waveform bars for voice visual */
 .waveform-bar {
   width: 3px;
+  height: 24px;
   border-radius: 2px;
   background: linear-gradient(to top, #0F4C5C, #1A8FA8);
   animation: waveform 1.2s ease-in-out infinite;
-  will-change: height;
+  will-change: transform;
+  transform-origin: bottom center;
 }
 
 /* Ripple effect */

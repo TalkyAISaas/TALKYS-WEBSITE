@@ -93,7 +93,7 @@ const HeroSection = () => {
             {/* Waveform */}
             <div className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-[350ms] mt-12 flex items-center justify-center gap-1">
               {[...Array(12)].map((_, i) => (
-                <div key={i} className="waveform-bar" style={{ animationDelay: `${i * 0.13}s`, height: `${8 + Math.sin(i * 0.8) * 12}px` }} />
+                <div key={i} className="waveform-bar" style={{ animationDelay: `${i * 0.13}s` }} />
               ))}
             </div>
 
