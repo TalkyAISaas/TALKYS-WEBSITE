@@ -6,33 +6,41 @@ const SocialMediaSection = () => {
   const [chatStep, setChatStep] = useState(0);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    let chatTimers: ReturnType<typeof setTimeout>[] = [];
+
+    const animObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-visible');
-          }
+          if (entry.isIntersecting) entry.target.classList.add('animate-visible');
         });
       },
       { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
     );
+    const chatObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          chatTimers = [
+            setTimeout(() => setChatStep(1), 800),
+            setTimeout(() => setChatStep(2), 2000),
+            setTimeout(() => setChatStep(3), 3200),
+            setTimeout(() => setChatStep(4), 4500),
+            setTimeout(() => setChatStep(5), 5800),
+          ];
+          chatObserver.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
 
     const elements = sectionRef.current?.querySelectorAll('.animate-on-scroll');
-    elements?.forEach((el) => observer.observe(el));
+    elements?.forEach((el) => animObserver.observe(el));
+    if (sectionRef.current) chatObserver.observe(sectionRef.current);
 
-    return () => observer.disconnect();
-  }, []);
-
-  // Animate chat messages appearing
-  useEffect(() => {
-    const timers = [
-      setTimeout(() => setChatStep(1), 800),
-      setTimeout(() => setChatStep(2), 2000),
-      setTimeout(() => setChatStep(3), 3200),
-      setTimeout(() => setChatStep(4), 4500),
-      setTimeout(() => setChatStep(5), 5800),
-    ];
-    return () => timers.forEach(clearTimeout);
+    return () => {
+      animObserver.disconnect();
+      chatObserver.disconnect();
+      chatTimers.forEach(clearTimeout);
+    };
   }, []);
 
   const integrations = [

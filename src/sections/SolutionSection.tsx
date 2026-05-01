@@ -4,32 +4,37 @@ import { Check, PhoneCall, ShoppingCart, MessageSquare, Database } from 'lucide-
 const SolutionSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [activeAgent, setActiveAgent] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    const animObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-visible');
-          }
+          if (entry.isIntersecting) entry.target.classList.add('animate-visible');
         });
       },
       { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
     );
-
+    const visObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) { setIsVisible(true); visObserver.disconnect(); }
+      },
+      { threshold: 0.2 }
+    );
     const elements = sectionRef.current?.querySelectorAll('.animate-on-scroll');
-    elements?.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
+    elements?.forEach((el) => animObserver.observe(el));
+    if (sectionRef.current) visObserver.observe(sectionRef.current);
+    return () => { animObserver.disconnect(); visObserver.disconnect(); };
   }, []);
 
-  // Auto-cycle agents
+  // Auto-cycle agents only when section is visible
   useEffect(() => {
+    if (!isVisible) return;
     const interval = setInterval(() => {
-      setActiveAgent((prev) => (prev + 1) % agents.length);
+      setActiveAgent((prev) => (prev + 1) % 3);
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isVisible]);
 
   const features = [
     { icon: PhoneCall, text: 'Unlimited parallel calls — no busy signal, ever' },

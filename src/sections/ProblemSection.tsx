@@ -5,14 +5,16 @@ const AnimatedCounter = ({ end, suffix = '', visible }: { end: number; suffix?: 
   const [count, setCount] = useState(0);
   useEffect(() => {
     if (!visible) return;
-    let start = 0;
-    const step = end / (2000 / 16);
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= end) { setCount(end); clearInterval(timer); }
-      else setCount(Math.floor(start));
-    }, 16);
-    return () => clearInterval(timer);
+    const duration = 2000;
+    const startTime = performance.now();
+    let raf: number;
+    const tick = (now: number) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      setCount(Math.floor(progress * end));
+      if (progress < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
   }, [visible, end]);
   return <span>{count.toLocaleString()}{suffix}</span>;
 };
@@ -62,7 +64,7 @@ const ProblemSection = () => {
               <div key={index} className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700" style={{ transitionDelay: `${(index + 2) * 100}ms` }}>
                 <div className="card-gradient-border p-0 h-full group">
                   <div className="relative h-44 overflow-hidden rounded-t-2xl">
-                    <img src={problem.image} alt={problem.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <img src={problem.image} alt={problem.title} loading="lazy" decoding="async" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                     <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
                     <div className="absolute bottom-3 right-3 px-3 py-1.5 rounded-lg bg-[#E07A5F]/20 backdrop-blur-sm border border-[#E07A5F]/30">
                       <p className="text-[#E07A5F] font-heading font-bold text-lg">

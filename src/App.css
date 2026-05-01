@@ -103,8 +103,8 @@ html {
    KEYFRAME ANIMATIONS
    ═══════════════════════════════════════════════════════ */
 @keyframes pulseGlow {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.65; transform: scale(1.02); }
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.65; }
 }
 
 @keyframes shimmer {
@@ -184,6 +184,7 @@ html {
   border-radius: 2px;
   background: linear-gradient(to top, #0F4C5C, #1A8FA8);
   animation: waveform 1.2s ease-in-out infinite;
+  will-change: height;
 }
 
 /* Ripple effect */

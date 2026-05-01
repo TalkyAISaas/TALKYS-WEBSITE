@@ -4,32 +4,37 @@ import { Phone, MessageCircle, ShoppingCart, Send, BarChart3 } from 'lucide-reac
 const HowItWorksSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [activeStep, setActiveStep] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    const animObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-visible');
-          }
+          if (entry.isIntersecting) entry.target.classList.add('animate-visible');
         });
       },
       { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
     );
-
+    const visObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) { setIsVisible(true); visObserver.disconnect(); }
+      },
+      { threshold: 0.2 }
+    );
     const elements = sectionRef.current?.querySelectorAll('.animate-on-scroll');
-    elements?.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
+    elements?.forEach((el) => animObserver.observe(el));
+    if (sectionRef.current) visObserver.observe(sectionRef.current);
+    return () => { animObserver.disconnect(); visObserver.disconnect(); };
   }, []);
 
-  // Auto-advance steps
+  // Auto-advance steps only when section is visible
   useEffect(() => {
+    if (!isVisible) return;
     const interval = setInterval(() => {
-      setActiveStep((prev) => (prev + 1) % steps.length);
+      setActiveStep((prev) => (prev + 1) % 5);
     }, 4000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isVisible]);
 
   const steps = [
     {
