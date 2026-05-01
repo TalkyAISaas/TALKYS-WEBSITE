@@ -57,8 +57,8 @@ Where `wave = amplitude × sin(plane.x × frequency + time)` — a live sine rip
 
 ### Rendering
 
-- `wireframe: true` on a `LineBasicMaterial` — one draw call
-- A second material pass colors every 8th longitude line in the terracotta accent color
+- `wireframe: true` on a `LineBasicMaterial` — primary wireframe mesh
+- A second `LineSegments` object (subset of vertices for every 8th longitude ring) uses a separate `LineBasicMaterial` in the terracotta accent color — total **2 draw calls**
 - Globe continuously rotates on Y axis at **0.003 rad/frame**
 - Wave grid ripples via a `time` value incremented each frame
 
@@ -99,7 +99,7 @@ Theme is read from `document.documentElement.classList` on mount and on theme ch
 | Setting | Value |
 |---------|-------|
 | Vertex count | 1089 |
-| Draw calls | 1 (wireframe mesh) |
+| Draw calls | 2 (wireframe mesh + accent lines) |
 | Pixel ratio (desktop) | up to 2× |
 | Pixel ratio (mobile) | capped at 1.5× via `dpr={[1, 1.5]}` |
 | Frame budget | passive — no scroll jank, uses `requestAnimationFrame` |
