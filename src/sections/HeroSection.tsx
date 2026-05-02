@@ -30,7 +30,7 @@ const HeroSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="relative min-h-screen bg-background overflow-hidden">
+    <section ref={sectionRef} className="relative min-h-screen overflow-hidden">
       {/* Video Background */}
       <div className="absolute inset-0 z-0">
         <video
@@ -45,7 +45,6 @@ const HeroSection = () => {
 
       {/* Animated Background Orbs */}
       <div className="absolute inset-0 z-[1]">
-        <div className="absolute inset-0 futuristic-grid opacity-20 dark:opacity-20" />
         <div className="gradient-orb w-[500px] h-[500px] -top-20 -right-20 bg-[#0F4C5C]/10 dark:bg-[#0F4C5C]/10" style={{ animationDelay: '0s' }} />
         <div className="gradient-orb w-[400px] h-[400px] -bottom-20 -left-20 bg-[#E07A5F]/5 dark:bg-[#E07A5F]/8" style={{ animationDelay: '2s' }} />
       </div>

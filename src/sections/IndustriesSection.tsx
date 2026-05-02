@@ -120,7 +120,7 @@ const IndustriesSection = () => {
     <section
       ref={sectionRef}
       id="industries"
-      className="relative py-24 lg:py-32 bg-background"
+      className="relative py-24 lg:py-32"
     >
       <div className="absolute top-0 left-0 right-0 section-divider" />
       <div className="gradient-orb w-[400px] h-[400px] top-1/4 right-0 bg-[#0F4C5C]/5" />

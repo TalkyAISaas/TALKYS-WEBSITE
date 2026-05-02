@@ -93,8 +93,8 @@ export function getThemeColors(isDark: boolean): {
   opacity: number;
 } {
   return isDark
-    ? { primary: '#1A8FA8', accent: '#E07A5F', opacity: 0.25 }
-    : { primary: '#0F4C5C', accent: '#C96A52', opacity: 0.15 };
+    ? { primary: '#1A8FA8', accent: '#E07A5F', opacity: 0.6 }
+    : { primary: '#0F4C5C', accent: '#C96A52', opacity: 0.45 };
 }
 
 /**
