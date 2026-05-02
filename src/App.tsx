@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 
-// Sections
 import Navigation from './sections/Navigation';
 import HeroSection from './sections/HeroSection';
 import ProblemSection from './sections/ProblemSection';
@@ -13,8 +12,8 @@ import IndustriesSection from './sections/IndustriesSection';
 import GettingStartedSection from './sections/GettingStartedSection';
 import FooterSection from './sections/FooterSection';
 import FloatingObjects from './components/FloatingObjects';
+import BackgroundCanvas from './components/BackgroundCanvas';
 
-// Theme Context
 import { ThemeProvider } from './context/ThemeContext';
 
 function App() {
@@ -26,6 +25,7 @@ function App() {
 
   return (
     <ThemeProvider>
+      <BackgroundCanvas />
       <div className={`min-h-screen bg-background transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
         <FloatingObjects />
         <Navigation />
