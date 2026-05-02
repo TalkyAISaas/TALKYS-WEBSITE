@@ -49,7 +49,7 @@ const GettingStartedSection = () => {
     <section
       ref={sectionRef}
       id="get-started"
-      className="relative py-24 lg:py-32 bg-background"
+      className="relative py-24 lg:py-32"
     >
       <div className="absolute top-0 left-0 right-0 section-divider" />
 

@@ -45,7 +45,7 @@ const ProblemSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="relative py-24 lg:py-32 bg-background">
+    <section ref={sectionRef} className="relative py-24 lg:py-32">
       <div className="absolute top-0 left-0 right-0 section-divider" />
       <div className="w-full px-6 lg:px-16">
         <div className="max-w-7xl mx-auto">
