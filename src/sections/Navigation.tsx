@@ -1,20 +1,18 @@
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
 import { useT } from '@/context/LocaleContext';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 
 const Navigation = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const t = useT();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
     };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isMobileMenuOpen]);
 
   const navLinks = [
     { label: t('nav.links.howItWorks') as string, href: '#how-it-works' },
@@ -32,67 +30,66 @@ const Navigation = () => {
 
   return (
     <>
-      <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled
-            ? 'bg-white/80 dark:bg-[#0a0f1a]/80 backdrop-blur-xl border-b border-black/[0.06] dark:border-white/[0.06] shadow-sm dark:shadow-none'
-            : 'bg-transparent'
-        }`}
-      >
-        <div className="w-full px-6 lg:px-12">
-          <div className="flex items-center justify-between h-16 lg:h-20">
-            <a
-              href="#"
-              className="flex items-center gap-2.5"
-              onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-            >
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#0F4C5C] to-[#1A8FA8] flex items-center justify-center">
-                <span className="text-white font-heading font-bold text-lg">T</span>
-              </div>
-              <span className="font-heading font-semibold text-xl text-foreground">Talkys</span>
-            </a>
+      <nav className="sticky top-0 z-50 bg-background/82 backdrop-blur-xl border-b border-black/[0.06]">
+        <div className="max-w-[1100px] mx-auto px-6 py-4 flex items-center justify-between">
+          <a
+            href="#"
+            onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+            className="text-[22px] font-extrabold text-foreground tracking-[-0.04em]"
+          >
+            Talkys<span className="text-accent">.</span>
+          </a>
 
-            <div className="hidden lg:flex items-center gap-8">
-              {navLinks.map((link) => (
+          <ul className="hidden lg:flex gap-[30px] list-none">
+            {navLinks.map((link) => (
+              <li key={link.label}>
                 <button
-                  key={link.label}
                   onClick={() => scrollToSection(link.href)}
-                  className="text-sm text-foreground/60 hover:text-foreground transition-colors duration-300"
+                  className="text-foreground text-[14.5px] font-medium hover:text-accent transition-colors"
                 >
                   {link.label}
                 </button>
-              ))}
-            </div>
+              </li>
+            ))}
+          </ul>
 
-            <div className="hidden lg:flex items-center gap-3">
-              <LanguageSwitcher />
-              <button
-                onClick={() => scrollToSection('#get-started')}
-                className="bg-gradient-to-r from-[#0F4C5C] to-[#1A8FA8] text-white hover:opacity-90 transition-all rounded-full px-6 py-2.5 text-sm font-medium"
-              >
-                {t('nav.bookDemo') as string}
-              </button>
-            </div>
+          <div className="hidden lg:flex items-center gap-3.5">
+            <LanguageSwitcher />
+            <button
+              onClick={() => scrollToSection('#get-started')}
+              className="bg-foreground text-white border-0 px-[18px] py-2.5 rounded-[9px] text-[14px] font-semibold cursor-pointer hover:-translate-y-0.5 transition-transform inline-flex items-center gap-1.5"
+            >
+              {t('nav.bookDemo') as string}
+              <ArrowRight className="w-4 h-4 rtl:rotate-180" />
+            </button>
+          </div>
 
-            <div className="lg:hidden flex items-center gap-3">
-              <LanguageSwitcher />
-              <button className="p-2 text-foreground" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
-            </div>
+          <div className="lg:hidden flex items-center gap-3">
+            <LanguageSwitcher />
+            <button
+              className="p-2 text-foreground"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
         </div>
       </nav>
 
       <div className={`fixed inset-0 z-40 lg:hidden transition-all duration-300 ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-        <div className="absolute inset-0 bg-white/95 dark:bg-[#0a0f1a]/95 backdrop-blur-xl" onClick={() => setIsMobileMenuOpen(false)} />
+        <div className="absolute inset-0 bg-background/95 backdrop-blur-xl" onClick={() => setIsMobileMenuOpen(false)} />
         <div className="relative flex flex-col items-center justify-center h-full gap-6">
           {navLinks.map((link) => (
-            <button key={link.label} onClick={() => scrollToSection(link.href)} className="text-2xl font-heading font-medium text-foreground/80 hover:text-foreground transition-colors">
+            <button
+              key={link.label}
+              onClick={() => scrollToSection(link.href)}
+              className="text-2xl font-heading font-medium text-foreground/80 hover:text-accent transition-colors"
+            >
               {link.label}
             </button>
           ))}
-          <button onClick={() => scrollToSection('#get-started')} className="mt-4 bg-gradient-to-r from-[#0F4C5C] to-[#1A8FA8] text-white hover:opacity-90 transition-all rounded-full px-8 py-3 text-lg font-medium">
+          <button onClick={() => scrollToSection('#get-started')} className="btn-coral mt-2">
             {t('nav.bookDemo') as string}
           </button>
         </div>
