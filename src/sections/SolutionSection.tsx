@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Check, PhoneCall, ShoppingCart, MessageSquare, Database } from 'lucide-react';
+import { useT } from '@/context/LocaleContext';
 
 const SolutionSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -36,35 +37,22 @@ const SolutionSection = () => {
     return () => clearInterval(interval);
   }, [isVisible]);
 
+  const t = useT();
+
+  const featuresCopy = t<string[]>('solution.features');
+  const agentsCopy = t<{ name: string; role: string; message: string }[]>('solution.agents');
+
   const features = [
-    { icon: PhoneCall, text: 'Unlimited parallel calls — no busy signal, ever' },
-    { icon: ShoppingCart, text: 'Orders sync directly to Omega & Squirrel POS' },
-    { icon: MessageSquare, text: 'Speaks natural Lebanese Arabic + English' },
-    { icon: Database, text: 'Every call logged, transcribed, and searchable' },
+    { icon: PhoneCall,     text: featuresCopy[0] },
+    { icon: ShoppingCart,  text: featuresCopy[1] },
+    { icon: MessageSquare, text: featuresCopy[2] },
+    { icon: Database,      text: featuresCopy[3] },
   ];
 
   const agents = [
-    {
-      name: 'Layla',
-      role: 'Receptionist',
-      color: 'from-purple-500 to-purple-600',
-      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80',
-      message: '"Ahlan! Welcome to your restaurant. How can I help you today?"',
-    },
-    {
-      name: 'Karim',
-      role: 'Delivery',
-      color: 'from-[#0F4C5C] to-[#1A8FA8]',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80',
-      message: '"Your order is confirmed! Delivery to Hamra in 35 minutes."',
-    },
-    {
-      name: 'Sara',
-      role: 'Support',
-      color: 'from-blue-500 to-blue-600',
-      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80',
-      message: '"I\'ve checked your account — your last order is out for delivery."',
-    },
+    { color: 'from-purple-500 to-purple-600', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80', ...agentsCopy[0] },
+    { color: 'from-[#0F4C5C] to-[#1A8FA8]',  avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80', ...agentsCopy[1] },
+    { color: 'from-blue-500 to-blue-600',    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80', ...agentsCopy[2] },
   ];
 
   return (
@@ -84,15 +72,15 @@ const SolutionSection = () => {
             {/* Left Column */}
             <div>
               <h2 className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 font-heading font-bold text-3xl sm:text-4xl lg:text-5xl text-foreground">
-                One Platform.
+                {t('solution.titleLine1') as string}
                 <br />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#0F4C5C] to-[#1A8FA8]">A Full Voice Team.</span>
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#0F4C5C] to-[#1A8FA8]">
+                  {t('solution.titleLine2') as string}
+                </span>
               </h2>
 
               <p className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-100 mt-6 text-lg text-foreground/50 leading-relaxed">
-                Talkys lets you build a team of AI voice agents that each have their own name,
-                personality, knowledge base, and role. They answer calls, take orders, book tables,
-                send confirmations, and sync everything to your existing systems — automatically.
+                {t('solution.paragraph') as string}
               </p>
 
               {/* Features List with slide-in */}
@@ -117,8 +105,8 @@ const SolutionSection = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-background/80 to-transparent" />
                   <div className="absolute bottom-4 left-4">
-                    <p className="text-foreground/80 text-sm font-medium">Powering businesses across Lebanon</p>
-                    <p className="text-foreground/40 text-xs mt-1">From Beirut to Tripoli</p>
+                    <p className="text-foreground/80 text-sm font-medium">{t('solution.teamCaption') as string}</p>
+                    <p className="text-foreground/40 text-xs mt-1">{t('solution.teamSubcaption') as string}</p>
                   </div>
                 </div>
               </div>
@@ -128,7 +116,7 @@ const SolutionSection = () => {
             <div className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-300">
               <div className="card-gradient-border p-8">
                 <h3 className="font-heading font-semibold text-xl text-foreground mb-6">
-                  Meet Your AI Team
+                  {t('solution.meetTeam') as string}
                 </h3>
                 <div className="space-y-4">
                   {agents.map((agent, index) => (
@@ -168,10 +156,10 @@ const SolutionSection = () => {
                                 />
                               ))}
                             </div>
-                            <span className="text-xs text-emerald-400">Speaking</span>
+                            <span className="text-xs text-emerald-400">{t('solution.speaking') as string}</span>
                           </>
                         ) : (
-                          <span className="text-xs text-foreground/30">Standby</span>
+                          <span className="text-xs text-foreground/30">{t('solution.standby') as string}</span>
                         )}
                       </div>
                     </div>
@@ -187,7 +175,7 @@ const SolutionSection = () => {
                       className="w-8 h-8 rounded-full object-cover"
                     />
                     <div>
-                      <p className="text-xs text-[#1A8FA8] font-medium">{agents[activeAgent].name} is saying:</p>
+                      <p className="text-xs text-[#1A8FA8] font-medium">{`${agents[activeAgent].name} ${t('solution.isSaying') as string}`}</p>
                       <p className="text-foreground/60 text-sm mt-1 italic">{agents[activeAgent].message}</p>
                     </div>
                   </div>
