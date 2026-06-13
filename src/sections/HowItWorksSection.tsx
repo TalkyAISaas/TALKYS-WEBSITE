@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Phone, MessageCircle, ShoppingCart, Send, BarChart3 } from 'lucide-react';
+import { useT } from '@/context/LocaleContext';
 
 const HowItWorksSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -36,47 +37,16 @@ const HowItWorksSection = () => {
     return () => clearInterval(interval);
   }, [isVisible]);
 
+  const t = useT();
+  const stepsCopy = t<{ title: string; description: string; detail: string }[]>('howItWorks.steps');
+  const integrationsCopy = t<string[]>('howItWorks.integrations');
+
   const steps = [
-    {
-      icon: Phone,
-      number: '01',
-      title: 'Customer Calls or Messages',
-      description: 'Your AI agent picks up instantly — no hold music, no waiting. Works via phone, WhatsApp, Instagram, or Messenger.',
-      image: 'https://images.unsplash.com/photo-1596524430615-b46475ddff6e?auto=format&fit=crop&w=600&q=80',
-      detail: 'Instant pickup in < 3 seconds',
-    },
-    {
-      icon: MessageCircle,
-      number: '02',
-      title: 'AI Takes the Order',
-      description: 'Natural conversation in Arabic or English. The agent knows your full menu, pricing, and availability.',
-      image: 'https://images.unsplash.com/photo-1577563908411-5077b6dc7624?auto=format&fit=crop&w=600&q=80',
-      detail: 'Bilingual AR/EN conversations',
-    },
-    {
-      icon: ShoppingCart,
-      number: '03',
-      title: 'Synced to Your POS',
-      description: 'Order appears on your kitchen screen instantly — zero manual entry. Direct integration with Omega & Squirrel.',
-      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=600&q=80',
-      detail: 'Real-time POS integration',
-    },
-    {
-      icon: Send,
-      number: '04',
-      title: 'Confirmation Sent',
-      description: 'Customer receives order summary + delivery ETA automatically via WhatsApp or SMS.',
-      image: 'https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&w=600&q=80',
-      detail: 'WhatsApp auto-confirmation',
-    },
-    {
-      icon: BarChart3,
-      number: '05',
-      title: 'Dashboard Updated',
-      description: 'Full transcript, order value, and status visible in your admin portal with real-time analytics.',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80',
-      detail: 'Live analytics & transcripts',
-    },
+    { icon: Phone,         number: '01', image: 'https://images.unsplash.com/photo-1596524430615-b46475ddff6e?auto=format&fit=crop&w=600&q=80', ...stepsCopy[0] },
+    { icon: MessageCircle, number: '02', image: 'https://images.unsplash.com/photo-1577563908411-5077b6dc7624?auto=format&fit=crop&w=600&q=80', ...stepsCopy[1] },
+    { icon: ShoppingCart,  number: '03', image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=600&q=80', ...stepsCopy[2] },
+    { icon: Send,          number: '04', image: 'https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&w=600&q=80', ...stepsCopy[3] },
+    { icon: BarChart3,     number: '05', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80', ...stepsCopy[4] },
   ];
 
   return (
@@ -95,10 +65,10 @@ const HowItWorksSection = () => {
           {/* Header */}
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 font-heading font-bold text-3xl sm:text-4xl lg:text-5xl text-foreground">
-              How It <span className="text-[#1A8FA8]">Works</span>
+              {t('howItWorks.titlePrefix') as string} <span className="text-[#1A8FA8]">{t('howItWorks.titleHighlight') as string}</span>
             </h2>
             <p className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-100 mt-5 text-lg text-foreground/50">
-              From the first call to the confirmed order — fully automated.
+              {t('howItWorks.subtitle') as string}
             </p>
           </div>
 
@@ -172,7 +142,7 @@ const HowItWorksSection = () => {
                           return <Icon className="w-5 h-5 text-white" />;
                         })()}
                       </div>
-                      <span className="text-[#1A8FA8] font-heading font-bold text-sm">STEP {steps[activeStep].number}</span>
+                      <span className="text-[#1A8FA8] font-heading font-bold text-sm">{t('howItWorks.stepLabel') as string} {steps[activeStep].number}</span>
                     </div>
                     <h3 className="font-heading font-bold text-2xl text-foreground mb-2">
                       {steps[activeStep].title}
@@ -188,7 +158,7 @@ const HowItWorksSection = () => {
 
           {/* POS Integration Badges */}
           <div className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-500 mt-12 flex flex-wrap justify-center gap-3">
-            {['Omega POS', 'Squirrel POS', 'WhatsApp Business', 'Instagram', 'Messenger'].map((integration, index) => (
+            {integrationsCopy.map((integration, index) => (
               <div
                 key={index}
                 className="px-5 py-2.5 rounded-full bg-foreground/[0.03] border border-foreground/[0.06] text-foreground/50 text-sm font-medium hover:bg-foreground/[0.06] hover:text-foreground/70 transition-all duration-300 cursor-default"
