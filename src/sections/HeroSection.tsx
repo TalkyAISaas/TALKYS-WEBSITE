@@ -1,9 +1,11 @@
 import { useEffect, useRef } from 'react';
 import { ArrowRight, Play } from 'lucide-react';
 import { Console } from '@/components/Console';
+import { useT } from '@/context/LocaleContext';
 
 const HeroSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const t = useT();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -51,17 +53,16 @@ const HeroSection = () => {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E07A5F] opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E07A5F]" />
                 </span>
-                Now Live in Lebanon
+                {t('hero.badge') as string}
               </span>
             </div>
 
             <h1 className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-100 mt-8 font-heading font-bold text-5xl sm:text-6xl lg:text-[5.5rem] text-foreground leading-[1.05]">
-              Meet Talkys.
+              {t('hero.title') as string}
             </h1>
 
             <p className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-200 mt-7 text-lg lg:text-xl text-foreground/55 leading-relaxed max-w-2xl mx-auto">
-              Talkys gives you a team of AI voice agents that take orders, answer calls,
-              handle deliveries, and manage customer conversations — 24/7, in Arabic and English.
+              {t('hero.subtitle') as string}
             </p>
 
             <div className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-300 mt-10 flex flex-wrap justify-center gap-4">
@@ -69,15 +70,15 @@ const HeroSection = () => {
                 onClick={() => document.querySelector('#get-started')?.scrollIntoView({ behavior: 'smooth' })}
                 className="relative bg-gradient-to-r from-[#0F4C5C] to-[#1A8FA8] text-white hover:shadow-[0_0_30px_rgba(15,76,92,0.4)] transition-all duration-300 rounded-full px-8 py-4 text-base font-medium flex items-center gap-2 group"
               >
-                Book a Free Demo
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300" />
+                {t('hero.ctaPrimary') as string}
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300 rtl:rotate-180" />
               </button>
               <button
                 onClick={() => document.querySelector('#how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
                 className="bg-foreground/[0.05] text-foreground border border-foreground/[0.1] hover:bg-foreground/[0.08] transition-all duration-300 rounded-full px-8 py-4 text-base font-medium flex items-center gap-2 group"
               >
                 <Play className="w-4 h-4 text-[#1A8FA8] group-hover:scale-110 transition-transform" />
-                See How It Works
+                {t('hero.ctaSecondary') as string}
               </button>
             </div>
 
