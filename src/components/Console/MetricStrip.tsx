@@ -13,7 +13,7 @@ export function MetricStrip({ handled, missed, rating }: MetricStripProps) {
   const fmt = (n: number) => n.toLocaleString(locale === 'ar' ? 'ar-EG' : 'en-US');
 
   return (
-    <div className="rounded-lg border border-foreground/10 bg-foreground/[0.03] px-4 py-3">
+    <div className="rounded-2xl border border-black/[0.06] bg-background px-4 py-3">
       <p className="text-[10px] uppercase tracking-wider text-foreground/50 mb-2">
         {t('console.metrics.todaysCalls') as string}
       </p>

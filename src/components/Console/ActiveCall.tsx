@@ -96,9 +96,9 @@ export function ActiveCall({ industry }: ActiveCallProps) {
         <span>{industry.demoCall.caller}</span>
       </div>
 
-      <div className="min-h-[120px] max-h-[160px] overflow-y-auto rounded-lg border border-foreground/10 bg-foreground/[0.02] p-3 space-y-2">
+      <div className="min-h-[120px] max-h-[160px] overflow-y-auto rounded-lg border border-black/[0.06] bg-background p-3 space-y-2">
         {visible.length === 0 ? (
-          <p className="text-sm text-foreground/40 italic">
+          <p className="text-sm text-muted-foreground italic">
             {t('console.transcriptPrompt') as string}
           </p>
         ) : (
@@ -109,7 +109,7 @@ export function ActiveCall({ industry }: ActiveCallProps) {
                 .map(({ cue, visibleText }, idx) => (
                   <p key={`${cue.startTime}-${idx}`} className="text-sm text-foreground/85">
                     {cue.speaker && (
-                      <span className="font-semibold text-[#1A8FA8]">{cue.speaker}: </span>
+                      <span className="font-semibold text-accent">{cue.speaker}: </span>
                     )}
                     {visibleText}
                   </p>
@@ -135,7 +135,7 @@ export function ActiveCall({ industry }: ActiveCallProps) {
       <div className="flex items-center gap-3">
         <button
           onClick={togglePlay}
-          className="w-10 h-10 rounded-full bg-[#0F4C5C] hover:bg-[#1A8FA8] text-white flex items-center justify-center transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A8FA8] focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          className="w-10 h-10 rounded-full bg-accent hover:bg-accent-soft text-white flex items-center justify-center transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           aria-label={isPlaying ? (t('console.pauseAria') as string) : (t('console.playAria') as string)}
         >
           {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ms-0.5 rtl:rotate-180" />}
@@ -143,7 +143,7 @@ export function ActiveCall({ industry }: ActiveCallProps) {
         <div className="flex-1">
           <div className="h-1.5 rounded-full bg-foreground/10 overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-[#0F4C5C] to-[#1A8FA8] transition-[width] duration-100"
+              className="h-full bg-gradient-to-r from-accent to-accent-soft transition-[width] duration-100"
               style={{ width: `${progress}%` }}
             />
           </div>

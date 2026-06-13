@@ -21,13 +21,13 @@ export function ConsoleTabs({ active, onChange }: ConsoleTabsProps) {
             value={ind.id}
             className={`
               flex items-center justify-center gap-2 px-3 py-2 rounded-lg
-              border border-foreground/10 bg-foreground/[0.03]
+              border border-black/[0.06] bg-background
               text-sm font-medium text-foreground/70
-              hover:bg-foreground/[0.06] hover:text-foreground
-              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A8FA8]
+              hover:bg-bg-soft hover:text-foreground
+              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent
               transition-colors duration-200
-              data-[state=active]:bg-[#0F4C5C] data-[state=active]:text-white
-              data-[state=active]:border-[#0F4C5C]
+              data-[state=active]:bg-accent data-[state=active]:text-white
+              data-[state=active]:border-accent
             `}
           >
             <span className="text-base" aria-hidden="true">{ind.icon}</span>
