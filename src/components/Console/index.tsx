@@ -42,7 +42,7 @@ export function Console() {
       {/* Body */}
       <div className="p-5 space-y-4">
         <ConsoleTabs active={activeId} onChange={setActiveId} />
-        <ActiveCall industry={active} />
+        <ActiveCall key={active.id} industry={active} />
         <MetricStrip {...active.metrics} />
       </div>
     </div>

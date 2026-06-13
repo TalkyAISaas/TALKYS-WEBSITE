@@ -15,17 +15,6 @@ export function ActiveCall({ industry }: ActiveCallProps) {
   const [currentTime, setCurrentTime] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  // Reset state when industry changes
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-    }
-    setCurrentTime(0);
-    setIsPlaying(false);
-    setCues([]);
-  }, [industry.id]);
-
   // Fetch and parse VTT for current industry
   useEffect(() => {
     let cancelled = false;
