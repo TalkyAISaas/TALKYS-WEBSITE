@@ -286,7 +286,7 @@ export const AR_TRANSLATIONS: Translations = {
     ],
     form: {
       fullName: 'الاسم الكامل *',
-      fullNamePlaceholder: 'علي فقيه',
+      fullNamePlaceholder: 'محمد الأحمد',
       email: 'البريد الإلكتروني للعمل *',
       emailPlaceholder: 'name@company.com',
       company: 'اسم الشركة',

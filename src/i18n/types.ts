@@ -8,6 +8,3 @@ export const DIRECTION: Record<Locale, Direction> = {
   ar: 'rtl',
 };
 
-// The shape that both en.ts and ar.ts must satisfy.
-// Use `typeof EN_TRANSLATIONS` from en.ts as the canonical shape — ar.ts
-// imports the type and is required to match.
