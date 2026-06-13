@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
-import { ArrowRight, Clock, Globe, Phone, Zap, Play } from 'lucide-react';
+import { useEffect, useRef } from 'react';
+import { ArrowRight, Play } from 'lucide-react';
+import { Console } from '@/components/Console';
 
 const HeroSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [countersVisible, setCountersVisible] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -11,7 +11,6 @@ const HeroSection = () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('animate-visible');
-            setCountersVisible(true);
           }
         });
       },
@@ -21,13 +20,6 @@ const HeroSection = () => {
     elements?.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
-
-  const stats = [
-    { icon: Clock, value: '24/7', label: 'Always On' },
-    { icon: Globe, value: 'AR + EN', label: 'Bilingual' },
-    { icon: Phone, value: '< 3s', label: 'Response Time' },
-    { icon: Zap, value: '100%', label: 'Call Coverage' },
-  ];
 
   return (
     <section ref={sectionRef} className="relative min-h-screen overflow-hidden">
@@ -89,30 +81,9 @@ const HeroSection = () => {
               </button>
             </div>
 
-            {/* Waveform */}
-            <div className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-[350ms] mt-12 flex items-center justify-center gap-1">
-              {[...Array(12)].map((_, i) => (
-                <div key={i} className="waveform-bar" style={{ animationDelay: `${i * 0.13}s` }} />
-              ))}
-            </div>
-
-            {/* Stats Bar */}
-            <div className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-[400ms] mt-10 lg:mt-14">
-              <div className="inline-flex flex-wrap justify-center gap-6 lg:gap-10 p-6 lg:px-12 lg:py-7 rounded-2xl bg-foreground/[0.03] border border-foreground/[0.06] backdrop-blur-md">
-                {stats.map((stat, index) => (
-                  <div key={index} className="flex items-center gap-3 group">
-                    <div className="w-11 h-11 rounded-xl bg-[#0F4C5C]/10 flex items-center justify-center group-hover:bg-[#0F4C5C]/20 transition-colors duration-300">
-                      <stat.icon className="w-5 h-5 text-[#1A8FA8]" />
-                    </div>
-                    <div className="text-left">
-                      <p className={`font-heading font-bold text-2xl text-foreground ${countersVisible ? 'counter-animate' : 'opacity-0'}`} style={{ animationDelay: `${index * 150}ms` }}>
-                        {stat.value}
-                      </p>
-                      <p className="text-xs text-foreground/40">{stat.label}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+            {/* Console */}
+            <div className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-[400ms] mt-14">
+              <Console />
             </div>
           </div>
         </div>
