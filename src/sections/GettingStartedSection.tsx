@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Headphones, Monitor, Settings, Sparkles } from 'lucide-react';
+import { useT } from '@/context/LocaleContext';
 
 const GettingStartedSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -13,6 +14,12 @@ const GettingStartedSection = () => {
     useCase: '',
     consent: false,
   });
+
+  const t = useT();
+  const expectations = t<string[]>('getStarted.expectations');
+  const expectationIcons = [Headphones, Settings, Monitor, Sparkles];
+  const trustStats = t<{ value: string; label: string }[]>('getStarted.stats');
+  const industryOptions = t<Record<string, string>>('getStarted.form.industryOptions');
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -35,15 +42,8 @@ const GettingStartedSection = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert('Demo booking coming soon!');
+    alert(t('getStarted.form.successMessage') as string);
   };
-
-  const expectations = [
-    { icon: Headphones, text: 'Live Talkys conversation demo' },
-    { icon: Settings, text: 'Full workflow walkthrough' },
-    { icon: Monitor, text: 'Admin portal demo' },
-    { icon: Sparkles, text: 'Custom integration & pricing' },
-  ];
 
   return (
     <section
@@ -63,27 +63,28 @@ const GettingStartedSection = () => {
             {/* Left - Info */}
             <div>
               <h2 className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 font-heading font-bold text-3xl sm:text-4xl lg:text-5xl text-foreground">
-                Book Your <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#0F4C5C] to-[#1A8FA8]">Free Demo</span>
+                {t('getStarted.titlePrefix') as string}{' '}
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#0F4C5C] to-[#1A8FA8]">
+                  {t('getStarted.titleHighlight') as string}
+                </span>
               </h2>
               <p className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-100 mt-6 text-lg text-foreground/50 leading-relaxed">
-                See exactly how Talkys works for your business. Our team will walk you through
-                a live demo customized to your industry and workflow.
+                {t('getStarted.paragraph') as string}
               </p>
 
               {/* What to Expect - animated cards */}
               <div className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-200 mt-10">
-                <h3 className="text-sm text-foreground/30 uppercase tracking-wider mb-5">What to Expect</h3>
+                <h3 className="text-sm text-foreground/30 uppercase tracking-wider mb-5">{t('getStarted.whatToExpect') as string}</h3>
                 <div className="grid grid-cols-2 gap-3">
-                  {expectations.map((item, index) => (
-                    <div
-                      key={index}
-                      className="card-dark p-4 group"
-                      style={{ animationDelay: `${index * 100}ms` }}
-                    >
-                      <item.icon className="w-5 h-5 text-[#1A8FA8] mb-2 group-hover:scale-110 transition-transform duration-300" />
-                      <p className="text-foreground/60 text-sm">{item.text}</p>
-                    </div>
-                  ))}
+                  {expectations.map((text, index) => {
+                    const Icon = expectationIcons[index];
+                    return (
+                      <div key={index} className="card-dark p-4 group" style={{ animationDelay: `${index * 100}ms` }}>
+                        <Icon className="w-5 h-5 text-[#1A8FA8] mb-2 group-hover:scale-110 transition-transform duration-300" />
+                        <p className="text-foreground/60 text-sm">{text}</p>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -97,11 +98,7 @@ const GettingStartedSection = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/60 to-transparent" />
                   <div className="absolute bottom-4 left-4 flex items-center gap-6">
-                    {[
-                      { value: '24/7', label: 'Always On' },
-                      { value: 'AR+EN', label: 'Bilingual' },
-                      { value: '<3s', label: 'Response' },
-                    ].map((stat, i) => (
+                    {trustStats.map((stat, i) => (
                       <div key={i}>
                         <p className="font-heading font-bold text-xl text-foreground">{stat.value}</p>
                         <p className="text-foreground/30 text-xs">{stat.label}</p>
@@ -118,79 +115,74 @@ const GettingStartedSection = () => {
                 <div className="space-y-4">
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm text-foreground/50 mb-1.5">Full Name *</label>
+                      <label className="block text-sm text-foreground/50 mb-1.5">{t('getStarted.form.fullName') as string}</label>
                       <input
                         type="text"
                         required
                         value={formData.fullName}
                         onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                         className="w-full px-4 py-3 rounded-xl bg-foreground/[0.04] border border-foreground/[0.08] text-foreground placeholder-foreground/25 focus:border-[#0F4C5C]/50 focus:shadow-[0_0_15px_rgba(15,76,92,0.15)] focus:outline-none transition-all duration-300"
-                        placeholder="John Doe"
+                        placeholder={t('getStarted.form.fullNamePlaceholder') as string}
                       />
                     </div>
                     <div>
-                      <label className="block text-sm text-foreground/50 mb-1.5">Work Email *</label>
+                      <label className="block text-sm text-foreground/50 mb-1.5">{t('getStarted.form.email') as string}</label>
                       <input
                         type="email"
                         required
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         className="w-full px-4 py-3 rounded-xl bg-foreground/[0.04] border border-foreground/[0.08] text-foreground placeholder-foreground/25 focus:border-[#0F4C5C]/50 focus:shadow-[0_0_15px_rgba(15,76,92,0.15)] focus:outline-none transition-all duration-300"
-                        placeholder="john@company.com"
+                        placeholder={t('getStarted.form.emailPlaceholder') as string}
                       />
                     </div>
                   </div>
 
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm text-foreground/50 mb-1.5">Company Name</label>
+                      <label className="block text-sm text-foreground/50 mb-1.5">{t('getStarted.form.company') as string}</label>
                       <input
                         type="text"
                         value={formData.company}
                         onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                         className="w-full px-4 py-3 rounded-xl bg-foreground/[0.04] border border-foreground/[0.08] text-foreground placeholder-foreground/25 focus:border-[#0F4C5C]/50 focus:shadow-[0_0_15px_rgba(15,76,92,0.15)] focus:outline-none transition-all duration-300"
-                        placeholder="Your Company"
+                        placeholder={t('getStarted.form.companyPlaceholder') as string}
                       />
                     </div>
                     <div>
-                      <label className="block text-sm text-foreground/50 mb-1.5">Industry</label>
+                      <label className="block text-sm text-foreground/50 mb-1.5">{t('getStarted.form.industry') as string}</label>
                       <select
                         value={formData.industry}
                         onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
                         className="w-full px-4 py-3 rounded-xl bg-foreground/[0.04] border border-foreground/[0.08] text-foreground/70 focus:border-[#0F4C5C]/50 focus:shadow-[0_0_15px_rgba(15,76,92,0.15)] focus:outline-none transition-all duration-300 appearance-none"
                       >
-                        <option value="" className="bg-background">Select industry</option>
-                        <option value="food" className="bg-background">Restaurants & Food</option>
-                        <option value="healthcare" className="bg-background">Healthcare</option>
-                        <option value="retail" className="bg-background">Retail & E-commerce</option>
-                        <option value="realestate" className="bg-background">Real Estate</option>
-                        <option value="salon" className="bg-background">Salons & Beauty</option>
-                        <option value="transport" className="bg-background">Transportation</option>
-                        <option value="logistics" className="bg-background">Logistics</option>
-                        <option value="other" className="bg-background">Other</option>
+                        <option value="" className="bg-background">{t('getStarted.form.industrySelect') as string}</option>
+                        {Object.entries(industryOptions).map(([value, label]) => (
+                          <option key={value} value={value} className="bg-background">{label}</option>
+                        ))}
                       </select>
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm text-foreground/50 mb-1.5">Phone Number</label>
+                    <label className="block text-sm text-foreground/50 mb-1.5">{t('getStarted.form.phone') as string}</label>
                     <input
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl bg-foreground/[0.04] border border-foreground/[0.08] text-foreground placeholder-foreground/25 focus:border-[#0F4C5C]/50 focus:shadow-[0_0_15px_rgba(15,76,92,0.15)] focus:outline-none transition-all duration-300"
-                      placeholder="+961 XX XXX XXX"
+                      placeholder={t('getStarted.form.phonePlaceholder') as string}
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm text-foreground/50 mb-1.5">Tell us about your use case</label>
+                    <label className="block text-sm text-foreground/50 mb-1.5">{t('getStarted.form.useCase') as string}</label>
                     <textarea
                       value={formData.useCase}
                       onChange={(e) => setFormData({ ...formData, useCase: e.target.value })}
                       rows={3}
                       className="w-full px-4 py-3 rounded-xl bg-foreground/[0.04] border border-foreground/[0.08] text-foreground placeholder-foreground/25 focus:border-[#0F4C5C]/50 focus:shadow-[0_0_15px_rgba(15,76,92,0.15)] focus:outline-none transition-all duration-300 resize-none"
-                      placeholder="What would you like Talkys to handle?"
+                      placeholder={t('getStarted.form.useCasePlaceholder') as string}
                     />
                   </div>
 
@@ -203,7 +195,7 @@ const GettingStartedSection = () => {
                       className="mt-1 w-4 h-4 rounded border-foreground/20 bg-foreground/[0.04] text-[#0F4C5C] focus:ring-[#0F4C5C]/40"
                     />
                     <label htmlFor="consent" className="text-xs text-foreground/40">
-                      I agree to receive communications from Talkys. You can unsubscribe at any time.
+                      {t('getStarted.form.consent') as string}
                     </label>
                   </div>
 
@@ -211,8 +203,8 @@ const GettingStartedSection = () => {
                     type="submit"
                     className="w-full bg-gradient-to-r from-[#0F4C5C] to-[#1A8FA8] text-white hover:shadow-[0_0_30px_rgba(15,76,92,0.4)] transition-all duration-300 rounded-xl px-8 py-4 text-base font-medium flex items-center justify-center gap-2 group mt-2"
                   >
-                    Book My Demo
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300" />
+                    {t('getStarted.form.submit') as string}
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300 rtl:rotate-180" />
                   </button>
                 </div>
               </form>
