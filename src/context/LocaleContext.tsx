@@ -4,6 +4,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from 'react';
@@ -39,7 +40,7 @@ const LocaleContext = createContext<LocaleContextValue | undefined>(undefined);
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(() => readStoredLocale() ?? 'en');
-  const [userPicked] = useState<boolean>(() => readStoredLocale() !== null);
+  const userPickedRef = useRef<boolean>(readStoredLocale() !== null);
 
   // Apply <html lang> and <html dir> on every change.
   useEffect(() => {
@@ -49,19 +50,20 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
 
   // First-visit geo detection only when the user hasn't picked.
   useEffect(() => {
-    if (userPicked) return;
+    if (userPickedRef.current) return;
     let cancelled = false;
     detectLocaleFromGeo({ navigatorLanguage: navigator.language })
       .then((detected) => {
-        if (!cancelled) setLocaleState(detected);
+        if (!cancelled && !userPickedRef.current) setLocaleState(detected);
       })
       .catch(() => {});
     return () => {
       cancelled = true;
     };
-  }, [userPicked]);
+  }, []);
 
   const setLocale = useCallback((l: Locale) => {
+    userPickedRef.current = true;
     setLocaleState(l);
     try {
       window.localStorage.setItem(STORAGE_KEY, l);

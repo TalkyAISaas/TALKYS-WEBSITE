@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { PhoneOff, Users, RefreshCw, TrendingUp } from 'lucide-react';
-import { useT } from '@/context/LocaleContext';
+import { useT, useLocale } from '@/context/LocaleContext';
 
-const AnimatedCounter = ({ end, suffix = '', visible }: { end: number; suffix?: string; visible: boolean }) => {
+const AnimatedCounter = ({ end, suffix = '', visible, locale }: { end: number; suffix?: string; visible: boolean; locale: 'en' | 'ar' }) => {
   const [count, setCount] = useState(0);
   useEffect(() => {
     if (!visible) return;
@@ -17,7 +17,7 @@ const AnimatedCounter = ({ end, suffix = '', visible }: { end: number; suffix?: 
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, [visible, end]);
-  return <span>{count.toLocaleString()}{suffix}</span>;
+  return <span>{count.toLocaleString(locale === 'ar' ? 'ar-EG' : 'en-US')}{suffix}</span>;
 };
 
 const ProblemSection = () => {
@@ -39,6 +39,7 @@ const ProblemSection = () => {
   }, []);
 
   const t = useT();
+  const { locale } = useLocale();
 
   interface ProblemCopy {
     title: string;
@@ -79,7 +80,7 @@ const ProblemSection = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
                     <div className="absolute bottom-3 right-3 px-3 py-1.5 rounded-lg bg-[#E07A5F]/20 backdrop-blur-sm border border-[#E07A5F]/30">
                       <p className="text-[#E07A5F] font-heading font-bold text-lg">
-                        <AnimatedCounter end={problem.stat.value} suffix={problem.stat.suffix} visible={isVisible} />
+                        <AnimatedCounter end={problem.stat.value} suffix={problem.stat.suffix} visible={isVisible} locale={locale} />
                       </p>
                       <p className="text-foreground/40 text-[10px]">{problem.statLabel}</p>
                     </div>

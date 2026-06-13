@@ -113,7 +113,7 @@ const HowItWorksSection = () => {
 
                     {/* Progress bar */}
                     {activeStep === index && (
-                      <div className="mt-3 ml-16 h-0.5 bg-foreground/[0.06] rounded-full overflow-hidden">
+                      <div className="mt-3 ms-16 h-0.5 bg-foreground/[0.06] rounded-full overflow-hidden">
                         <div className="h-full bg-gradient-to-r from-[#0F4C5C] to-[#1A8FA8] rounded-full animate-[shimmer_4s_linear_infinite]" style={{ width: '100%' }} />
                       </div>
                     )}

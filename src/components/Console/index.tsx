@@ -28,7 +28,7 @@ export function Console() {
             <div className="w-2.5 h-2.5 rounded-full bg-foreground/15" />
             <div className="w-2.5 h-2.5 rounded-full bg-foreground/15" />
           </div>
-          <span className="ml-2 text-xs font-medium text-foreground/60">
+          <span className="ms-2 text-xs font-medium text-foreground/60">
             {t('console.label') as string}
           </span>
         </div>

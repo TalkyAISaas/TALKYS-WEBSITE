@@ -124,7 +124,7 @@ export function ActiveCall({ industry }: ActiveCallProps) {
                     <span className="font-semibold text-[#1A8FA8]">{last.cue.speaker}: </span>
                   )}
                   {last.visibleText}
-                  <span className="inline-block w-1.5 h-3.5 ml-0.5 align-text-bottom bg-foreground/70 animate-pulse" />
+                  <span className="inline-block w-1.5 h-3.5 ms-0.5 align-text-bottom bg-foreground/70 animate-pulse" />
                 </p>
               );
             })()}
