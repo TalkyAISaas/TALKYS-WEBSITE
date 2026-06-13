@@ -3,38 +3,64 @@ import { Play, Pause, Phone } from 'lucide-react';
 import type { IndustryConfig } from '@/data/industries';
 import { parseVtt, type CaptionCue } from '@/utils/captions';
 import { getVisibleCues } from '@/utils/typewriter';
+import { useT, useLocale } from '@/context/LocaleContext';
 
 interface ActiveCallProps {
   industry: IndustryConfig;
 }
 
 export function ActiveCall({ industry }: ActiveCallProps) {
+  const t = useT();
+  const { locale } = useLocale();
   const audioRef = useRef<HTMLAudioElement>(null);
   const rafRef = useRef<number | null>(null);
   const [cues, setCues] = useState<CaptionCue[]>([]);
   const [currentTime, setCurrentTime] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  // Fetch and parse VTT for current industry
+  // Pick caption + audio for the active locale; fall back to English on fetch failure.
+  const captionsPrimary = industry.demoCall.captions[locale];
+  const captionsFallback = industry.demoCall.captions.en;
+  const audioPrimary = industry.demoCall.audio[locale];
+  const audioFallback = industry.demoCall.audio.en;
+  const [audioSrc, setAudioSrc] = useState<string>(audioPrimary);
+
+  // Reset audio source on locale/industry change.
+  useEffect(() => {
+    setAudioSrc(audioPrimary);
+  }, [audioPrimary]);
+
+  // Fetch VTT with fallback.
   useEffect(() => {
     let cancelled = false;
-    fetch(industry.demoCall.captions.en)
-      .then((r) => r.text())
-      .then((txt) => {
+    const load = async () => {
+      try {
+        const res = await fetch(captionsPrimary);
+        if (!res.ok) throw new Error(`captions ${res.status}`);
+        const txt = await res.text();
         if (!cancelled) setCues(parseVtt(txt));
-      })
-      .catch(() => {});
+      } catch {
+        try {
+          const res = await fetch(captionsFallback);
+          if (!res.ok) return;
+          const txt = await res.text();
+          if (!cancelled) setCues(parseVtt(txt));
+        } catch {
+          // give up silently
+        }
+      }
+    };
+    load();
     return () => {
       cancelled = true;
     };
-  }, [industry.id, industry.demoCall.captions.en]);
+  }, [captionsPrimary, captionsFallback]);
 
-  // Drive typewriter via rAF while playing
   useEffect(() => {
     if (!isPlaying) return;
     const tick = () => {
-      const t = audioRef.current?.currentTime ?? 0;
-      setCurrentTime(t);
+      const t2 = audioRef.current?.currentTime ?? 0;
+      setCurrentTime(t2);
       rafRef.current = requestAnimationFrame(tick);
     };
     rafRef.current = requestAnimationFrame(tick);
@@ -45,11 +71,8 @@ export function ActiveCall({ industry }: ActiveCallProps) {
 
   const togglePlay = () => {
     if (!audioRef.current) return;
-    if (audioRef.current.paused) {
-      audioRef.current.play().catch(() => {});
-    } else {
-      audioRef.current.pause();
-    }
+    if (audioRef.current.paused) audioRef.current.play().catch(() => {});
+    else audioRef.current.pause();
   };
 
   const visible = getVisibleCues(cues, currentTime);
@@ -57,27 +80,29 @@ export function ActiveCall({ industry }: ActiveCallProps) {
     ? Math.min(100, (currentTime / industry.demoCall.duration) * 100)
     : 0;
 
+  const handleAudioError = () => {
+    setIsPlaying(false);
+    if (audioSrc !== audioFallback) setAudioSrc(audioFallback);
+  };
+
   return (
     <div className="space-y-3">
-      {/* Caller line */}
       <div className="flex items-center gap-2 text-xs text-foreground/60">
         <Phone className="w-3.5 h-3.5" />
         <span className="font-medium text-foreground/80">
-          {isPlaying ? '● LIVE' : 'Sample Call'}
+          {isPlaying ? (t('console.liveTag') as string) : (t('console.sampleCall') as string)}
         </span>
         <span>·</span>
         <span>{industry.demoCall.caller}</span>
       </div>
 
-      {/* Transcript */}
       <div className="min-h-[120px] max-h-[160px] overflow-y-auto rounded-lg border border-foreground/10 bg-foreground/[0.02] p-3 space-y-2">
         {visible.length === 0 ? (
           <p className="text-sm text-foreground/40 italic">
-            Press play to hear a real Talkys agent take this call.
+            {t('console.transcriptPrompt') as string}
           </p>
         ) : (
           <>
-            {/* Completed cues — announced to screen readers */}
             <div aria-live="polite" className="space-y-2">
               {visible
                 .filter(({ cue, visibleText }) => visibleText.length === cue.text.length)
@@ -90,7 +115,6 @@ export function ActiveCall({ industry }: ActiveCallProps) {
                   </p>
                 ))}
             </div>
-            {/* In-progress cue — visually shown with caret, hidden from SR until complete */}
             {visible.length > 0 && (() => {
               const last = visible[visible.length - 1];
               if (last.visibleText.length === last.cue.text.length) return null;
@@ -108,14 +132,13 @@ export function ActiveCall({ industry }: ActiveCallProps) {
         )}
       </div>
 
-      {/* Audio controls */}
       <div className="flex items-center gap-3">
         <button
           onClick={togglePlay}
           className="w-10 h-10 rounded-full bg-[#0F4C5C] hover:bg-[#1A8FA8] text-white flex items-center justify-center transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A8FA8] focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-          aria-label={isPlaying ? 'Pause sample call' : 'Play sample call'}
+          aria-label={isPlaying ? (t('console.pauseAria') as string) : (t('console.playAria') as string)}
         >
-          {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
+          {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ms-0.5 rtl:rotate-180" />}
         </button>
         <div className="flex-1">
           <div className="h-1.5 rounded-full bg-foreground/10 overflow-hidden">
@@ -132,12 +155,12 @@ export function ActiveCall({ industry }: ActiveCallProps) {
 
       <audio
         ref={audioRef}
-        src={industry.demoCall.audio.en}
+        src={audioSrc}
         preload="metadata"
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
         onEnded={() => setIsPlaying(false)}
-        onError={() => setIsPlaying(false)}
+        onError={handleAudioError}
       />
     </div>
   );
