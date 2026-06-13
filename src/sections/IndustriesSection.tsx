@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Utensils, Stethoscope, ShoppingBag, Home, Scissors, Truck, Package, Ship } from 'lucide-react';
+import { useT } from '@/context/LocaleContext';
 
 const IndustriesSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -23,95 +24,27 @@ const IndustriesSection = () => {
     return () => observer.disconnect();
   }, []);
 
+  const t = useT();
+  interface IndustryCopy {
+    shortTitle: string;
+    title: string;
+    description: string;
+    role: string;
+    flow: string[];
+    quote: string;
+    capabilities: string[];
+  }
+  const industryCopy = t<IndustryCopy[]>('industries.items');
+
   const industries = [
-    {
-      icon: Utensils,
-      title: 'Restaurants & Food Delivery',
-      shortTitle: 'Food',
-      description: 'Take orders in Arabic and English, sync to POS, confirm via WhatsApp.',
-      image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80',
-      role: 'Ordering + Receptionist',
-      flow: ['Customer calls or DMs', 'Talkys takes order and address', 'POS sync + ETA confirmation'],
-      quote: '"Ahlan! I see you usually order 2 shawarmas. Same address in Hamra?"',
-      capabilities: ['Menu knowledge', 'POS integration', 'Delivery tracking', 'Upselling'],
-    },
-    {
-      icon: Stethoscope,
-      title: 'Clinics & Healthcare',
-      shortTitle: 'Healthcare',
-      description: 'Book appointments, handle inquiries, send reminders 24/7.',
-      image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80',
-      role: 'Secretary + Appointment Agent',
-      flow: ['Patient calls', 'Talkys books appointment slot', 'Reminder sent with clinic details'],
-      quote: '"Dr. Hanna has availability Thursday at 3pm. Shall I book that for you?"',
-      capabilities: ['Scheduling', 'Patient records', 'Reminders', 'Insurance queries'],
-    },
-    {
-      icon: ShoppingBag,
-      title: 'Retail & E-commerce',
-      shortTitle: 'Retail',
-      description: 'Handle order inquiries, process returns, answer product questions.',
-      image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80',
-      role: 'Customer Service + Lead Agent',
-      flow: ['Client asks about product', 'Talkys qualifies intent and details', 'Lead/opportunity pushed to CRM'],
-      quote: '"The leather bag you liked is back in stock. Want me to reserve one?"',
-      capabilities: ['Product catalog', 'CRM sync', 'Returns handling', 'Recommendations'],
-    },
-    {
-      icon: Home,
-      title: 'Real Estate',
-      shortTitle: 'Real Estate',
-      description: 'Qualify leads, schedule viewings, answer property questions.',
-      image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80',
-      role: 'Lead Management',
-      flow: ['Inbound inquiry received', 'Talkys qualifies budget and area', 'Viewing booked with agent'],
-      quote: '"Welcome back, Ahmad. You were looking at 3-bedroom villas in Beit Mery..."',
-      capabilities: ['Lead scoring', 'Property matching', 'Viewing scheduler', 'Follow-ups'],
-    },
-    {
-      icon: Scissors,
-      title: 'Salons & Beauty',
-      shortTitle: 'Salons',
-      description: 'Book appointments, send reminders, handle cancellations.',
-      image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80',
-      role: 'Receptionist',
-      flow: ['Customer requests service', 'Talkys finds open slot', 'Booking confirmation + reminders'],
-      quote: '"We have an opening with Sarah at 2pm for a blowout. Should I confirm?"',
-      capabilities: ['Booking system', 'Staff schedules', 'Cancellations', 'Product upsells'],
-    },
-    {
-      icon: Truck,
-      title: 'Transportation',
-      shortTitle: 'Transport',
-      description: 'Handle booking inquiries, track shipments, manage fleet communications.',
-      image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80',
-      role: 'Call Answering + Dispatch',
-      flow: ['Client calls for shipment status', 'Talkys fetches live update', 'Status and ETA shared instantly'],
-      quote: '"Your shipment #4821 is currently in customs. Expected release: tomorrow 10am."',
-      capabilities: ['Fleet tracking', 'ETA updates', 'Dispatch coordination', 'Status queries'],
-    },
-    {
-      icon: Package,
-      title: 'Logistics & Warehousing',
-      shortTitle: 'Logistics',
-      description: 'Manage delivery schedules, coordinate pickups, update customers.',
-      image: 'https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=800&q=80',
-      role: 'Operations Assistant',
-      flow: ['Pickup request received', 'Talkys confirms window and details', 'Task pushed to operations queue'],
-      quote: '"Your pickup is scheduled for tomorrow between 9-11am. Driver Ahmad will call before arriving."',
-      capabilities: ['Pickup scheduling', 'Inventory queries', 'Route optimization', 'Customer updates'],
-    },
-    {
-      icon: Ship,
-      title: 'Import & Export',
-      shortTitle: 'Import/Export',
-      description: 'Handle customs inquiries, track shipments, coordinate with partners.',
-      image: 'https://images.unsplash.com/photo-1494412574643-ff11b0a5eb19?auto=format&fit=crop&w=800&q=80',
-      role: 'Client Calls + Service Desk',
-      flow: ['Partner calls for customs status', 'Talkys answers from knowledge base', 'Case logged for follow-up'],
-      quote: '"Container MSKU-7291 cleared customs yesterday. Delivery to warehouse is scheduled Friday."',
-      capabilities: ['Customs tracking', 'Document status', 'Partner coordination', 'Case management'],
-    },
+    { icon: Utensils,    image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80', ...industryCopy[0] },
+    { icon: Stethoscope, image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80', ...industryCopy[1] },
+    { icon: ShoppingBag, image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80', ...industryCopy[2] },
+    { icon: Home,        image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80', ...industryCopy[3] },
+    { icon: Scissors,    image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80', ...industryCopy[4] },
+    { icon: Truck,       image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80', ...industryCopy[5] },
+    { icon: Package,     image: 'https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=800&q=80', ...industryCopy[6] },
+    { icon: Ship,        image: 'https://images.unsplash.com/photo-1494412574643-ff11b0a5eb19?auto=format&fit=crop&w=800&q=80', ...industryCopy[7] },
   ];
 
   const active = industries[activeTab];
@@ -130,10 +63,10 @@ const IndustriesSection = () => {
           {/* Header */}
           <div className="text-center max-w-2xl mx-auto mb-12">
             <h2 className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 font-heading font-bold text-3xl sm:text-4xl lg:text-5xl text-foreground">
-              Built for Every <span className="text-[#1A8FA8]">Lebanese Business</span>
+              {t('industries.titlePrefix') as string} <span className="text-[#1A8FA8]">{t('industries.titleHighlight') as string}</span>
             </h2>
             <p className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-100 mt-5 text-lg text-foreground/50">
-              Whether you run a restaurant, clinic, logistics company, or retail store — Talkys adapts to your industry.
+              {t('industries.subtitle') as string}
             </p>
           </div>
 
@@ -229,7 +162,7 @@ const IndustriesSection = () => {
                           ))}
                         </div>
                       </div>
-                      <p className="text-xs text-[#1A8FA8] font-medium">Talkys speaking to customer</p>
+                      <p className="text-xs text-[#1A8FA8] font-medium">{t('industries.speakingLabel') as string}</p>
                     </div>
                     <p className="text-foreground/60 leading-relaxed italic">
                       {active.quote}
