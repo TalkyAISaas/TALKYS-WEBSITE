@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useT } from '@/context/LocaleContext';
 
 const FooterSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -21,11 +22,15 @@ const FooterSection = () => {
     return () => observer.disconnect();
   }, []);
 
-  const footerLinks = {
-    Product: ['Features', 'Integrations', 'Industries', 'Analytics', 'Admin Portal', 'Pricing'],
-    Company: ['About Us', 'FAQ', 'Contact'],
-    Legal: ['Privacy Policy', 'Terms of Service', 'Cookie Policy'],
-  };
+  const t = useT();
+  const categories = t<{ Product: string; Company: string; Legal: string }>('footer.categories');
+  const links = t<{ Product: string[]; Company: string[]; Legal: string[] }>('footer.links');
+
+  const footerEntries: [keyof typeof categories, string[]][] = [
+    ['Product', links.Product],
+    ['Company', links.Company],
+    ['Legal', links.Legal],
+  ];
 
   return (
     <footer
@@ -47,27 +52,21 @@ const FooterSection = () => {
                 </span>
               </div>
               <p className="text-sm text-foreground/40 leading-relaxed max-w-xs">
-                The AI voice agent that never sleeps. Lebanon's first AI voice workforce platform.
-                One portal, unlimited agents, every channel connected.
+                {t('footer.description') as string}
               </p>
               <p className="mt-2 text-xs text-foreground/20">
-                Lebanon &middot; MENA &middot; Global
+                {t('footer.regions') as string}
               </p>
             </div>
 
             {/* Links */}
-            {Object.entries(footerLinks).map(([category, links]) => (
-              <div key={category}>
-                <h4 className="font-heading font-semibold text-foreground text-sm mb-4">
-                  {category}
-                </h4>
+            {footerEntries.map(([key, items]) => (
+              <div key={key}>
+                <h4 className="font-heading font-semibold text-foreground text-sm mb-4">{categories[key]}</h4>
                 <ul className="space-y-2.5">
-                  {links.map((link) => (
+                  {items.map((link) => (
                     <li key={link}>
-                      <a
-                        href="#"
-                        className="text-sm text-foreground/40 hover:text-foreground/70 transition-colors"
-                      >
+                      <a href="#" className="text-sm text-foreground/40 hover:text-foreground/70 transition-colors">
                         {link}
                       </a>
                     </li>
@@ -80,7 +79,7 @@ const FooterSection = () => {
           {/* Copyright */}
           <div className="mt-16 pt-8 border-t border-foreground/[0.06] flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-xs text-foreground/30">
-              &copy; 2025 Talkys AI &middot; All rights reserved
+              {t('footer.copyright') as string}
             </p>
             <div className="flex items-center gap-4">
               {/* Social Icons */}
