@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { Instagram, Phone, Check } from 'lucide-react';
+import { useT } from '@/context/LocaleContext';
 
 const SocialMediaSection = () => {
+  const t = useT();
   const sectionRef = useRef<HTMLDivElement>(null);
   const [chatStep, setChatStep] = useState(0);
 
@@ -68,11 +70,10 @@ const SocialMediaSection = () => {
           {/* Section header */}
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 font-heading font-bold text-3xl sm:text-4xl lg:text-5xl text-foreground">
-              Turn Social Media Messages Into{' '}
-              <span className="text-[#E07A5F]">Confirmed Orders</span>
+              {t('social.titlePrefix') as string} <span className="text-[#E07A5F]">{t('social.titleHighlight') as string}</span>
             </h2>
             <p className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-100 mt-5 text-lg text-foreground/50">
-              Talkys connects to every platform your customers use and converts conversations into revenue.
+              {t('social.subtitle') as string}
             </p>
           </div>
 
@@ -88,7 +89,7 @@ const SocialMediaSection = () => {
                     <div className="w-2.5 h-2.5 rounded-full bg-green-400/60" />
                   </div>
                   <div className="flex-1 text-center">
-                    <span className="text-xs text-foreground/30">Instagram DM</span>
+                    <span className="text-xs text-foreground/30">{t('social.phoneFrame') as string}</span>
                   </div>
                 </div>
 
@@ -98,12 +99,12 @@ const SocialMediaSection = () => {
                     <Instagram className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <p className="font-medium text-foreground text-sm">@YourRestaurant</p>
-                    <p className="text-xs text-foreground/40">Instagram Business</p>
+                    <p className="font-medium text-foreground text-sm">{t('social.handle') as string}</p>
+                    <p className="text-xs text-foreground/40">{t('social.handleSub') as string}</p>
                   </div>
                   <div className="ml-auto flex items-center gap-1.5 px-2 py-1 rounded-full bg-emerald-400/10">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="text-xs text-emerald-400">Active</span>
+                    <span className="text-xs text-emerald-400">{t('social.activeBadge') as string}</span>
                   </div>
                 </div>
 
@@ -113,7 +114,7 @@ const SocialMediaSection = () => {
                     <div className="flex justify-end" style={{ animation: 'slideInFromRight 0.4s ease-out' }}>
                       <div className="bg-[#0F4C5C]/20 rounded-2xl rounded-tr-sm px-4 py-2.5 max-w-[80%]">
                         <p className="text-sm text-foreground/80">
-                          Baddo order 1 shawarma w 2 fries please, Hamra area
+                          {t('social.messages.customer1') as string}
                         </p>
                       </div>
                     </div>
@@ -122,7 +123,7 @@ const SocialMediaSection = () => {
                     <div className="flex justify-start" style={{ animation: 'slideInFromLeft 0.4s ease-out' }}>
                       <div className="bg-foreground/[0.04] rounded-2xl rounded-tl-sm px-4 py-2.5 max-w-[85%] border border-foreground/[0.06]">
                         <p className="text-sm text-foreground/70">
-                          Ahlan! Receiving your order now. Talkys will call you in a few seconds to confirm your address.
+                          {t('social.messages.agent1') as string}
                         </p>
                       </div>
                     </div>
@@ -130,7 +131,7 @@ const SocialMediaSection = () => {
                   {chatStep >= 3 && (
                     <div className="flex justify-end" style={{ animation: 'slideInFromRight 0.4s ease-out' }}>
                       <div className="bg-[#0F4C5C]/20 rounded-2xl rounded-tr-sm px-4 py-2">
-                        <p className="text-sm text-foreground/80">Ok thanks!</p>
+                        <p className="text-sm text-foreground/80">{t('social.messages.customer2') as string}</p>
                       </div>
                     </div>
                   )}
@@ -145,8 +146,8 @@ const SocialMediaSection = () => {
                             <div className="ripple-ring w-8 h-8 -top-2 -left-2" style={{ animationDelay: '0.5s' }} />
                           </div>
                           <div>
-                            <p className="text-xs text-[#E07A5F] font-medium">Incoming call from +961 XX XXX XXX</p>
-                            <p className="text-xs text-foreground/40">Talkys — Order Confirmation</p>
+                            <p className="text-xs text-[#E07A5F] font-medium">{t('social.messages.incomingFrom') as string}</p>
+                            <p className="text-xs text-foreground/40">{t('social.messages.incomingSub') as string}</p>
                           </div>
                         </div>
                       </div>
@@ -158,7 +159,7 @@ const SocialMediaSection = () => {
                         <div className="flex items-start gap-2">
                           <Check className="w-4 h-4 text-emerald-400 mt-0.5" />
                           <p className="text-xs text-emerald-300">
-                            Order confirmed! 1 Shawarma + 2 Fries — Delivery to Hamra in 35 min.
+                            {t('social.messages.confirmed') as string}
                           </p>
                         </div>
                       </div>
@@ -171,10 +172,10 @@ const SocialMediaSection = () => {
             {/* Right - Integrations grid */}
             <div className="order-1 lg:order-2">
               <h3 className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-100 font-heading font-semibold text-2xl text-foreground mb-3">
-                Connects to Your Entire Stack
+                {t('social.integrationsHeader') as string}
               </h3>
               <p className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-150 text-foreground/50 mb-8">
-                Talkys integrates with the tools you already use. POS systems, CRMs, messaging platforms — everything syncs automatically.
+                {t('social.integrationsSubtitle') as string}
               </p>
 
               {/* Integration cards */}
@@ -198,12 +199,12 @@ const SocialMediaSection = () => {
               {/* Open API note */}
               <div className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-300 mt-6 p-4 rounded-xl bg-foreground/[0.02] border border-foreground/[0.06]">
                 <p className="text-foreground/50 text-sm">
-                  Don't see your stack? Talkys <span className="text-[#1A8FA8]">open API</span> connects to any platform.{' '}
+                  {t('social.openApiBefore') as string} <span className="text-[#1A8FA8]">{t('social.openApiHighlight') as string}</span> {t('social.openApiAfter') as string}{' '}
                   <button
                     onClick={() => document.querySelector('#get-started')?.scrollIntoView({ behavior: 'smooth' })}
                     className="text-[#1A8FA8] hover:text-foreground transition-colors underline underline-offset-2"
                   >
-                    Talk to us
+                    {t('social.talkToUs') as string}
                   </button>
                 </p>
               </div>
