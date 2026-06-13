@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useT } from '@/context/LocaleContext';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const t = useT();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,11 +19,11 @@ const Navigation = () => {
   }, []);
 
   const navLinks = [
-    { label: 'How it Works', href: '#how-it-works' },
-    { label: 'Features', href: '#features' },
-    { label: 'Industries', href: '#industries' },
-    { label: 'Integrations', href: '#integrations' },
-    { label: 'Get Started', href: '#get-started' },
+    { label: t('nav.links.howItWorks') as string, href: '#how-it-works' },
+    { label: t('nav.links.features') as string, href: '#features' },
+    { label: t('nav.links.industries') as string, href: '#industries' },
+    { label: t('nav.links.integrations') as string, href: '#integrations' },
+    { label: t('nav.links.getStarted') as string, href: '#get-started' },
   ];
 
   const scrollToSection = (href: string) => {
@@ -64,10 +67,11 @@ const Navigation = () => {
             </div>
 
             <div className="hidden lg:flex items-center gap-3">
+              <LanguageSwitcher />
               <button
                 onClick={toggleTheme}
                 className="w-10 h-10 rounded-full bg-black/[0.05] dark:bg-white/[0.06] flex items-center justify-center hover:bg-black/[0.08] dark:hover:bg-white/[0.1] transition-colors border border-black/[0.06] dark:border-white/[0.06]"
-                aria-label="Toggle theme"
+                aria-label={t('nav.toggleTheme') as string}
               >
                 {theme === 'light' ? (
                   <Moon className="w-4 h-4 text-foreground/70" />
@@ -79,14 +83,16 @@ const Navigation = () => {
                 onClick={() => scrollToSection('#get-started')}
                 className="bg-gradient-to-r from-[#0F4C5C] to-[#1A8FA8] text-white hover:opacity-90 transition-all rounded-full px-6 py-2.5 text-sm font-medium"
               >
-                Book a Demo
+                {t('nav.bookDemo') as string}
               </button>
             </div>
 
             <div className="lg:hidden flex items-center gap-3">
+              <LanguageSwitcher />
               <button
                 onClick={toggleTheme}
                 className="w-10 h-10 rounded-full bg-black/[0.05] dark:bg-white/[0.06] flex items-center justify-center border border-black/[0.06] dark:border-white/[0.06]"
+                aria-label={t('nav.toggleTheme') as string}
               >
                 {theme === 'light' ? <Moon className="w-4 h-4 text-foreground/70" /> : <Sun className="w-4 h-4 text-[#E07A5F]" />}
               </button>
@@ -107,7 +113,7 @@ const Navigation = () => {
             </button>
           ))}
           <button onClick={() => scrollToSection('#get-started')} className="mt-4 bg-gradient-to-r from-[#0F4C5C] to-[#1A8FA8] text-white hover:opacity-90 transition-all rounded-full px-8 py-3 text-lg font-medium">
-            Book a Demo
+            {t('nav.bookDemo') as string}
           </button>
         </div>
       </div>
