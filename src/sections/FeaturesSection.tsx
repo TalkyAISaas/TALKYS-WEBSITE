@@ -10,6 +10,7 @@ import {
   Shield,
   Zap
 } from 'lucide-react';
+import { useT } from '@/context/LocaleContext';
 
 const FeaturesSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -32,16 +33,20 @@ const FeaturesSection = () => {
     return () => observer.disconnect();
   }, []);
 
+  const t = useT();
+  const itemsCopy = t<{ title: string; desc: string }[]>('features.items');
+  const dashboardStats = t<{ value: string; label: string }[]>('features.dashboard.stats');
+
   const features = [
-    { icon: Mic, title: 'Natural Voice', desc: 'Arabic & English with natural code-switching between dialects', highlight: true },
-    { icon: BookOpen, title: 'Custom Knowledge', desc: 'Train each agent on your business — menu, FAQ, policies' },
-    { icon: Phone, title: 'Unlimited Calls', desc: 'Handle hundreds of calls simultaneously, zero busy signals' },
-    { icon: ArrowRightLeft, title: 'Smart Transfer', desc: 'AI detects when to escalate to a human and transfers seamlessly' },
-    { icon: BarChart3, title: 'Live Analytics', desc: 'Real-time dashboard with call metrics, transcripts, and KPIs', highlight: true },
-    { icon: MessageSquare, title: 'Omnichannel', desc: 'WhatsApp, Instagram, Messenger, SMS — all in one inbox' },
-    { icon: Users, title: 'Multiple Agents', desc: 'Create unique AI personas with different voices and personalities' },
-    { icon: Shield, title: 'Secure & Compliant', desc: 'End-to-end encryption with GDPR-ready data handling' },
-    { icon: Zap, title: 'No-Code Setup', desc: 'Go live in days, not months. No developer or IT team required', highlight: true },
+    { icon: Mic,            highlight: true,  ...itemsCopy[0] },
+    { icon: BookOpen,       highlight: false, ...itemsCopy[1] },
+    { icon: Phone,          highlight: false, ...itemsCopy[2] },
+    { icon: ArrowRightLeft, highlight: false, ...itemsCopy[3] },
+    { icon: BarChart3,      highlight: true,  ...itemsCopy[4] },
+    { icon: MessageSquare,  highlight: false, ...itemsCopy[5] },
+    { icon: Users,          highlight: false, ...itemsCopy[6] },
+    { icon: Shield,         highlight: false, ...itemsCopy[7] },
+    { icon: Zap,            highlight: true,  ...itemsCopy[8] },
   ];
 
   return (
@@ -60,10 +65,10 @@ const FeaturesSection = () => {
           {/* Header */}
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 font-heading font-bold text-3xl sm:text-4xl lg:text-5xl text-foreground">
-              Everything Your Voice Team <span className="text-[#1A8FA8]">Needs</span>
+              {t('features.titlePrefix') as string} <span className="text-[#1A8FA8]">{t('features.titleHighlight') as string}</span>
             </h2>
             <p className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-100 mt-5 text-lg text-foreground/50">
-              Built for Lebanese businesses, Talkys combines enterprise-grade AI with simplicity.
+              {t('features.subtitle') as string}
             </p>
           </div>
 
@@ -109,23 +114,17 @@ const FeaturesSection = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between">
                   <div>
-                    <p className="text-[#1A8FA8] text-sm font-medium">Real-Time Intelligence Dashboard</p>
-                    <p className="text-foreground font-heading font-bold text-2xl mt-1">Monitor Every Conversation</p>
-                    <p className="text-foreground/40 text-sm mt-1">Call metrics, transcripts, lead scoring — all in one portal</p>
+                    <p className="text-[#1A8FA8] text-sm font-medium">{t('features.dashboard.eyebrow') as string}</p>
+                    <p className="text-foreground font-heading font-bold text-2xl mt-1">{t('features.dashboard.title') as string}</p>
+                    <p className="text-foreground/40 text-sm mt-1">{t('features.dashboard.subtitle') as string}</p>
                   </div>
                   <div className="hidden lg:flex items-center gap-6">
-                    <div className="text-center">
-                      <p className="text-foreground font-heading font-bold text-2xl">98%</p>
-                      <p className="text-foreground/30 text-xs">Accuracy</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-foreground font-heading font-bold text-2xl">2.4s</p>
-                      <p className="text-foreground/30 text-xs">Avg Response</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-foreground font-heading font-bold text-2xl">24/7</p>
-                      <p className="text-foreground/30 text-xs">Uptime</p>
-                    </div>
+                    {dashboardStats.map((s, i) => (
+                      <div key={i} className="text-center">
+                        <p className="text-foreground font-heading font-bold text-2xl">{s.value}</p>
+                        <p className="text-foreground/30 text-xs">{s.label}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
