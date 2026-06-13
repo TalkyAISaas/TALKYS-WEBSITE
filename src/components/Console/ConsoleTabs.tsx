@@ -1,5 +1,6 @@
 import * as Tabs from '@radix-ui/react-tabs';
 import { INDUSTRIES, type IndustryId } from '@/data/industries';
+import { useLocale } from '@/context/LocaleContext';
 
 interface ConsoleTabsProps {
   active: IndustryId;
@@ -7,6 +8,7 @@ interface ConsoleTabsProps {
 }
 
 export function ConsoleTabs({ active, onChange }: ConsoleTabsProps) {
+  const { locale } = useLocale();
   return (
     <Tabs.Root value={active} onValueChange={(v) => onChange(v as IndustryId)}>
       <Tabs.List
@@ -29,7 +31,7 @@ export function ConsoleTabs({ active, onChange }: ConsoleTabsProps) {
             `}
           >
             <span className="text-base" aria-hidden="true">{ind.icon}</span>
-            <span>{ind.label.en}</span>
+            <span>{ind.label[locale]}</span>
           </Tabs.Trigger>
         ))}
       </Tabs.List>

@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { INDUSTRIES, type IndustryId } from '@/data/industries';
+import { useT } from '@/context/LocaleContext';
 import { ConsoleTabs } from './ConsoleTabs';
 import { ActiveCall } from './ActiveCall';
 import { MetricStrip } from './MetricStrip';
 
 export function Console() {
+  const t = useT();
   const [activeId, setActiveId] = useState<IndustryId>('restaurant');
   const active = INDUSTRIES.find((i) => i.id === activeId)!;
 
@@ -27,7 +29,7 @@ export function Console() {
             <div className="w-2.5 h-2.5 rounded-full bg-foreground/15" />
           </div>
           <span className="ml-2 text-xs font-medium text-foreground/60">
-            Talkys Console
+            {t('console.label') as string}
           </span>
         </div>
         <div className="flex items-center gap-1.5 text-xs text-foreground/60">
@@ -35,7 +37,7 @@ export function Console() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4ade80] opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-[#4ade80]" />
           </span>
-          <span>Live</span>
+          <span>{t('console.live') as string}</span>
         </div>
       </div>
 
