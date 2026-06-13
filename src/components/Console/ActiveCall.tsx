@@ -57,10 +57,9 @@ export function ActiveCall({ industry }: ActiveCallProps) {
   const togglePlay = () => {
     if (!audioRef.current) return;
     if (audioRef.current.paused) {
-      audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+      audioRef.current.play().catch(() => {});
     } else {
       audioRef.current.pause();
-      setIsPlaying(false);
     }
   };
 
@@ -82,26 +81,41 @@ export function ActiveCall({ industry }: ActiveCallProps) {
       </div>
 
       {/* Transcript */}
-      <div
-        className="min-h-[120px] max-h-[160px] overflow-y-auto rounded-lg border border-foreground/10 bg-foreground/[0.02] p-3 space-y-2"
-        aria-live="polite"
-      >
+      <div className="min-h-[120px] max-h-[160px] overflow-y-auto rounded-lg border border-foreground/10 bg-foreground/[0.02] p-3 space-y-2">
         {visible.length === 0 ? (
           <p className="text-sm text-foreground/40 italic">
             Press play to hear a real Talkys agent take this call.
           </p>
         ) : (
-          visible.map(({ cue, visibleText }, idx) => (
-            <p key={`${cue.startTime}-${idx}`} className="text-sm text-foreground/85">
-              {cue.speaker && (
-                <span className="font-semibold text-[#1A8FA8]">{cue.speaker}: </span>
-              )}
-              {visibleText}
-              {idx === visible.length - 1 && visibleText.length < cue.text.length && (
-                <span className="inline-block w-1.5 h-3.5 ml-0.5 align-text-bottom bg-foreground/70 animate-pulse" />
-              )}
-            </p>
-          ))
+          <>
+            {/* Completed cues — announced to screen readers */}
+            <div aria-live="polite" className="space-y-2">
+              {visible
+                .filter(({ cue, visibleText }) => visibleText.length === cue.text.length)
+                .map(({ cue, visibleText }, idx) => (
+                  <p key={`${cue.startTime}-${idx}`} className="text-sm text-foreground/85">
+                    {cue.speaker && (
+                      <span className="font-semibold text-[#1A8FA8]">{cue.speaker}: </span>
+                    )}
+                    {visibleText}
+                  </p>
+                ))}
+            </div>
+            {/* In-progress cue — visually shown with caret, hidden from SR until complete */}
+            {visible.length > 0 && (() => {
+              const last = visible[visible.length - 1];
+              if (last.visibleText.length === last.cue.text.length) return null;
+              return (
+                <p aria-hidden="true" className="text-sm text-foreground/85">
+                  {last.cue.speaker && (
+                    <span className="font-semibold text-[#1A8FA8]">{last.cue.speaker}: </span>
+                  )}
+                  {last.visibleText}
+                  <span className="inline-block w-1.5 h-3.5 ml-0.5 align-text-bottom bg-foreground/70 animate-pulse" />
+                </p>
+              );
+            })()}
+          </>
         )}
       </div>
 
@@ -131,7 +145,10 @@ export function ActiveCall({ industry }: ActiveCallProps) {
         ref={audioRef}
         src={industry.demoCall.audio.en}
         preload="metadata"
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
         onEnded={() => setIsPlaying(false)}
+        onError={() => setIsPlaying(false)}
       />
     </div>
   );
