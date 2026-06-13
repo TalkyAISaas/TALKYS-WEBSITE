@@ -9,12 +9,10 @@ import HowItWorksSection from './sections/HowItWorksSection';
 import FeaturesSection from './sections/FeaturesSection';
 import SocialMediaSection from './sections/SocialMediaSection';
 import IndustriesSection from './sections/IndustriesSection';
+import TestimonialsSection from './sections/TestimonialsSection';
+import LogoMarqueeSection from './sections/LogoMarqueeSection';
 import GettingStartedSection from './sections/GettingStartedSection';
 import FooterSection from './sections/FooterSection';
-import FloatingObjects from './components/FloatingObjects';
-import BackgroundCanvas from './components/BackgroundCanvas';
-
-import { ThemeProvider } from './context/ThemeContext';
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -24,24 +22,22 @@ function App() {
   }, []);
 
   return (
-    <ThemeProvider>
-      <BackgroundCanvas />
-      <div className={`min-h-screen bg-background transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
-        <FloatingObjects />
-        <Navigation />
-        <main>
-          <HeroSection />
-          <ProblemSection />
-          <SolutionSection />
-          <HowItWorksSection />
-          <FeaturesSection />
-          <SocialMediaSection />
-          <IndustriesSection />
-          <GettingStartedSection />
-        </main>
-        <FooterSection />
-      </div>
-    </ThemeProvider>
+    <div className={`min-h-screen bg-background transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+      <Navigation />
+      <main>
+        <HeroSection />
+        <ProblemSection />
+        <SolutionSection />
+        <HowItWorksSection />
+        <FeaturesSection />
+        <SocialMediaSection />
+        <IndustriesSection />
+        <TestimonialsSection />
+        <LogoMarqueeSection />
+        <GettingStartedSection />
+      </main>
+      <FooterSection />
+    </div>
   );
 }
 
