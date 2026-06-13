@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { PhoneOff, Users, RefreshCw, TrendingUp } from 'lucide-react';
+import { useT } from '@/context/LocaleContext';
 
 const AnimatedCounter = ({ end, suffix = '', visible }: { end: number; suffix?: string; visible: boolean }) => {
   const [count, setCount] = useState(0);
@@ -37,12 +38,21 @@ const ProblemSection = () => {
     return () => observer.disconnect();
   }, []);
 
+  const t = useT();
+
+  interface ProblemCopy {
+    title: string;
+    description: string;
+    statLabel: string;
+  }
+  const problemCopy = t<ProblemCopy[]>('problem.items');
+
   const problems = [
-    { icon: PhoneOff, title: 'Missed Calls = Missed Revenue', description: 'Your delivery line rings during peak hours. Staff are busy. Customers hang up and call someone else.', image: 'https://images.unsplash.com/photo-1556745757-8d76bdb6984b?auto=format&fit=crop&w=600&q=80', stat: { value: 62, suffix: '%', label: 'of calls missed during peak hours' } },
-    { icon: Users, title: 'Staff Overwhelmed', description: 'Friday night, 8pm — three calls at once, WhatsApp orders, social media DMs stacking up.', image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80', stat: { value: 3, suffix: 'x', label: 'more orders than staff can handle' } },
-    { icon: RefreshCw, title: 'Orders Lost in Translation', description: 'Order taken by phone, written on paper, manually entered into POS. Errors happen.', image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=600&q=80', stat: { value: 23, suffix: '%', label: 'average order error rate' } },
-    { icon: TrendingUp, title: 'Hiring Costs Rising', description: 'A receptionist costs $800-1,500/month. They get sick, they leave, they make mistakes.', image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=600&q=80', stat: { value: 1500, suffix: '$', label: '/month per receptionist' } },
-  ];
+    { icon: PhoneOff,   image: 'https://images.unsplash.com/photo-1556745757-8d76bdb6984b?auto=format&fit=crop&w=600&q=80', stat: { value: 62,   suffix: '%' } },
+    { icon: Users,      image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80', stat: { value: 3,    suffix: 'x' } },
+    { icon: RefreshCw,  image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=600&q=80', stat: { value: 23,   suffix: '%' } },
+    { icon: TrendingUp, image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=600&q=80', stat: { value: 1500, suffix: '$' } },
+  ].map((p, i) => ({ ...p, ...problemCopy[i] }));
 
   return (
     <section ref={sectionRef} className="relative py-24 lg:py-32">
@@ -51,11 +61,12 @@ const ProblemSection = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 font-heading font-bold text-3xl sm:text-4xl lg:text-5xl text-foreground">
-              Lebanon's Businesses Are Losing{' '}
-              <span className="text-[#E07A5F]">Revenue</span> to Missed Calls
+              {t('problem.titlePrefix') as string}{' '}
+              <span className="text-[#E07A5F]">{t('problem.titleHighlight') as string}</span>{' '}
+              {t('problem.titleSuffix') as string}
             </h2>
             <p className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-100 mt-5 text-lg text-foreground/50 leading-relaxed">
-              Every unanswered call is a lost order. Every busy line is a customer calling your competitor.
+              {t('problem.subtitle') as string}
             </p>
           </div>
 
@@ -70,7 +81,7 @@ const ProblemSection = () => {
                       <p className="text-[#E07A5F] font-heading font-bold text-lg">
                         <AnimatedCounter end={problem.stat.value} suffix={problem.stat.suffix} visible={isVisible} />
                       </p>
-                      <p className="text-foreground/40 text-[10px]">{problem.stat.label}</p>
+                      <p className="text-foreground/40 text-[10px]">{problem.statLabel}</p>
                     </div>
                   </div>
                   <div className="p-6">
