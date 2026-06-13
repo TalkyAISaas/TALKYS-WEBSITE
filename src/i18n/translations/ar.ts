@@ -20,6 +20,11 @@ export const AR_TRANSLATIONS: Translations = {
       'يمنحك Talkys فريقاً من وكلاء الصوت الذكاء الاصطناعي يستقبلون الطلبات، يردّون على المكالمات، يديرون التوصيل والمحادثات مع عملائك — على مدار الساعة، بالعربية والإنجليزية.',
     ctaPrimary: 'احجز عرضاً مجانياً',
     ctaSecondary: 'شاهد كيف يعمل',
+    scribble: 'جرّبه مجاناً، بدون بطاقة',
+    trustLabel: 'يثق به',
+    trustCount: '١٢٠٠+',
+    trustSuffix: 'شركة',
+    trustLogos: ['Bright Smile', 'NextClinic', 'OakLaw', 'Nexter'],
   },
   problem: {
     titlePrefix: 'أعمال لبنان تفقد',
@@ -27,6 +32,7 @@ export const AR_TRANSLATIONS: Translations = {
     titleSuffix: 'بسبب المكالمات الفائتة',
     subtitle:
       'كل مكالمة دون رد هي طلب مفقود. وكل خط مشغول هو زبون يتصل بمنافسك.',
+    eyebrow: 'المشكلة',
     items: [
       {
         title: 'مكالمات فائتة = إيرادات مفقودة',
@@ -88,11 +94,15 @@ export const AR_TRANSLATIONS: Translations = {
         message: '"تفقّدت حسابك — آخر طلب لك في طريقه إليك."',
       },
     ],
+    eyebrow: 'الحل',
+    ariaName: 'آريا',
+    ariaTagline: 'وكيل ذكاء اصطناعي · على الخط',
   },
   howItWorks: {
     titlePrefix: 'كيف',
     titleHighlight: 'يعمل',
     subtitle: 'من أول مكالمة وحتى تأكيد الطلب — أتمتة كاملة.',
+    eyebrow: 'كيف يعمل',
     stepLabel: 'خطوة',
     steps: [
       {
@@ -133,6 +143,7 @@ export const AR_TRANSLATIONS: Translations = {
     titleHighlight: 'فريقك الصوتي',
     subtitle:
       'مصمّم للأعمال اللبنانية، Talkys يجمع الذكاء الاصطناعي بمستوى المؤسسات مع البساطة.',
+    eyebrow: 'الميزات',
     items: [
       { title: 'صوت طبيعي', desc: 'عربية وإنجليزية مع تبديل طبيعي بين اللهجات' },
       { title: 'معرفة مخصصة', desc: 'درّب كل وكيل على عملك — القائمة، الأسئلة الشائعة، السياسات' },
@@ -160,6 +171,7 @@ export const AR_TRANSLATIONS: Translations = {
     titleHighlight: 'طلبات مؤكدة',
     subtitle:
       'يتصل Talkys بكل المنصات التي يستخدمها زبائنك ويحوّل المحادثات إلى إيرادات.',
+    eyebrow: 'التكاملات',
     phoneFrame: 'رسالة إنستغرام',
     handle: '@YourRestaurant',
     handleSub: 'حساب أعمال إنستغرام',
@@ -187,6 +199,7 @@ export const AR_TRANSLATIONS: Translations = {
     titleHighlight: 'عمل لبناني',
     subtitle:
       'سواء كنت تدير مطعماً أو عيادة أو شركة لوجستية أو متجراً — Talkys يتكيّف مع قطاعك.',
+    eyebrow: 'القطاعات',
     speakingLabel: 'Talkys يتحدث إلى الزبون',
     items: [
       {
@@ -272,6 +285,8 @@ export const AR_TRANSLATIONS: Translations = {
     titleHighlight: 'عرضك التجريبي المجاني',
     paragraph:
       'شاهد بالضبط كيف يعمل Talkys لعملك. فريقنا سيرافقك في عرض حيّ مخصّص لقطاعك وسير عملك.',
+    eyebrow: 'ابدأ الآن',
+    formMeta: 'بدون بطاقة ائتمان · تجربة ١٤ يوماً · سنرد خلال ٢٤ ساعة',
     whatToExpect: 'ماذا تتوقع',
     expectations: [
       'عرض حي لمحادثة Talkys',
@@ -316,6 +331,8 @@ export const AR_TRANSLATIONS: Translations = {
   footer: {
     description:
       'وكيل الصوت الذكاء الاصطناعي الذي لا ينام. أول منصة قوى عاملة صوتية ذكية في لبنان. بوابة واحدة، وكلاء غير محدودين، وكل القنوات متصلة.',
+    newsletterPlaceholder: 'بريدك الإلكتروني',
+    newsletterCta: 'اشترك',
     regions: 'لبنان · الشرق الأوسط · عالمياً',
     categories: {
       Product: 'المنتج',
@@ -342,5 +359,30 @@ export const AR_TRANSLATIONS: Translations = {
       handled: 'تمت معالجتها',
       missed: 'فائتة',
     },
+  },
+  testimonials: {
+    eyebrow: 'العملاء',
+    titlePrefix: 'أكثر من ١٢٠٠ شركة تختار Talkys',
+    titleHighlight: 'كل يوم',
+    items: [
+      {
+        quote: 'حجز Talkys ١١ موعداً خلال الليل. شعرنا وكأننا وظّفنا موظفة استقبال لا تنام أبداً.',
+        name: 'سارة شين',
+        role: 'العمليات · Bright Smile Dental',
+        initials: 'SC',
+      },
+      {
+        quote: 'نلتقط ٣ أضعاف العملاء المحتملين بعد ساعات العمل. عائد الاستثمار واضح من الأسبوع الأول.',
+        name: 'ماركوس ريفيرا',
+        role: 'المؤسس · OakLaw Firm',
+        initials: 'MR',
+      },
+      {
+        quote: 'استغرق الإعداد ٨ دقائق. وصباحاً، كنا قد حجزنا أول معاينة — بدون أي تدخل بشري.',
+        name: 'جينا دياز',
+        role: 'وكيلة · NextClinic Realty',
+        initials: 'JD',
+      },
+    ],
   },
 };

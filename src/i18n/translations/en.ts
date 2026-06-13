@@ -18,6 +18,11 @@ export const EN_TRANSLATIONS = {
       'Talkys gives you a team of AI voice agents that take orders, answer calls, handle deliveries, and manage customer conversations — 24/7, in Arabic and English.',
     ctaPrimary: 'Book a Free Demo',
     ctaSecondary: 'See How It Works',
+    scribble: 'Try it free, no card',
+    trustLabel: 'TRUSTED BY',
+    trustCount: '1,200+',
+    trustSuffix: 'BUSINESSES',
+    trustLogos: ['Bright Smile', 'NextClinic', 'OakLaw', 'Nexter'],
   },
   problem: {
     titlePrefix: "Lebanon's Businesses Are Losing",
@@ -25,6 +30,7 @@ export const EN_TRANSLATIONS = {
     titleSuffix: 'to Missed Calls',
     subtitle:
       'Every unanswered call is a lost order. Every busy line is a customer calling your competitor.',
+    eyebrow: 'THE PROBLEM',
     items: [
       {
         title: 'Missed Calls = Missed Revenue',
@@ -89,11 +95,15 @@ export const EN_TRANSLATIONS = {
           '"I\'ve checked your account — your last order is out for delivery."',
       },
     ],
+    eyebrow: 'THE SOLUTION',
+    ariaName: 'Aria',
+    ariaTagline: 'AI Agent · On call',
   },
   howItWorks: {
     titlePrefix: 'How It',
     titleHighlight: 'Works',
     subtitle: 'From the first call to the confirmed order — fully automated.',
+    eyebrow: 'HOW IT WORKS',
     stepLabel: 'STEP',
     steps: [
       {
@@ -134,6 +144,7 @@ export const EN_TRANSLATIONS = {
     titleHighlight: 'Needs',
     subtitle:
       'Built for Lebanese businesses, Talkys combines enterprise-grade AI with simplicity.',
+    eyebrow: 'FEATURES',
     items: [
       { title: 'Natural Voice', desc: 'Arabic & English with natural code-switching between dialects' },
       { title: 'Custom Knowledge', desc: 'Train each agent on your business — menu, FAQ, policies' },
@@ -161,6 +172,7 @@ export const EN_TRANSLATIONS = {
     titleHighlight: 'Confirmed Orders',
     subtitle:
       'Talkys connects to every platform your customers use and converts conversations into revenue.',
+    eyebrow: 'INTEGRATIONS',
     phoneFrame: 'Instagram DM',
     handle: '@YourRestaurant',
     handleSub: 'Instagram Business',
@@ -188,6 +200,7 @@ export const EN_TRANSLATIONS = {
     titleHighlight: 'Lebanese Business',
     subtitle:
       'Whether you run a restaurant, clinic, logistics company, or retail store — Talkys adapts to your industry.',
+    eyebrow: 'INDUSTRIES',
     speakingLabel: 'Talkys speaking to customer',
     items: [
       {
@@ -273,6 +286,8 @@ export const EN_TRANSLATIONS = {
     titleHighlight: 'Free Demo',
     paragraph:
       'See exactly how Talkys works for your business. Our team will walk you through a live demo customized to your industry and workflow.',
+    eyebrow: 'GET STARTED',
+    formMeta: 'No credit card · 14-day trial · We will be in touch within 24h',
     whatToExpect: 'What to Expect',
     expectations: [
       'Live Talkys conversation demo',
@@ -317,6 +332,8 @@ export const EN_TRANSLATIONS = {
   footer: {
     description:
       "The AI voice agent that never sleeps. Lebanon's first AI voice workforce platform. One portal, unlimited agents, every channel connected.",
+    newsletterPlaceholder: 'Your email',
+    newsletterCta: 'Subscribe',
     regions: 'Lebanon · MENA · Global',
     categories: {
       Product: 'Product',
@@ -343,6 +360,31 @@ export const EN_TRANSLATIONS = {
       handled: 'handled',
       missed: 'missed',
     },
+  },
+  testimonials: {
+    eyebrow: 'CUSTOMERS',
+    titlePrefix: '1,200+ businesses pick Talkys',
+    titleHighlight: 'every day',
+    items: [
+      {
+        quote: 'Talkys booked 11 appointments overnight. Felt like hiring a receptionist that never sleeps.',
+        name: 'Sarah Chen',
+        role: 'Operations · Bright Smile Dental',
+        initials: 'SC',
+      },
+      {
+        quote: 'We capture 3x more after-hours leads. The ROI was clear in the first week.',
+        name: 'Marcus Rivera',
+        role: 'Founder · OakLaw Firm',
+        initials: 'MR',
+      },
+      {
+        quote: 'Setup took 8 minutes. By morning, we had booked our first showing — without anyone lifting a finger.',
+        name: 'Jenna Diaz',
+        role: 'Agent · NextClinic Realty',
+        initials: 'JD',
+      },
+    ],
   },
 } as const;
 
