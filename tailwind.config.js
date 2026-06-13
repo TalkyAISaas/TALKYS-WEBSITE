@@ -80,40 +80,6 @@ module.exports = {
           '0%':   { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
         },
-        'travel-pulse': {
-          '0%':   { left: '16%', opacity: '0', transform: 'scale(0.8)' },
-          '4%':   { left: '16%', opacity: '1', transform: 'scale(1.2)' },
-          '30%':  { left: '16%', opacity: '1', transform: 'scale(1.2)' },
-          '37%':  { left: '50%', opacity: '1', transform: 'scale(1.2)' },
-          '63%':  { left: '50%', opacity: '1', transform: 'scale(1.2)' },
-          '70%':  { left: '84%', opacity: '1', transform: 'scale(1.2)' },
-          '96%':  { left: '84%', opacity: '1', transform: 'scale(1.2)' },
-          '100%': { left: '84%', opacity: '0', transform: 'scale(0.8)' },
-        },
-        'step-active': {
-          '0%, 30%': {
-            transform: 'translateY(-8px)',
-            background: '#fef4ed',
-            borderColor: 'rgba(229,119,86,0.45)',
-            boxShadow: '0 26px 56px -16px rgba(229,119,86,0.38), 0 6px 18px -8px rgba(229,119,86,0.25)',
-          },
-          '33%, 100%': {
-            transform: 'translateY(0)',
-            background: '#fff',
-            borderColor: 'rgba(0,0,0,0.06)',
-            boxShadow: '0 14px 36px -14px rgba(14,79,92,0.18), 0 2px 8px -2px rgba(0,0,0,0.04)',
-          },
-        },
-        'chip-active': {
-          '0%, 30%': {
-            background: 'rgba(229,119,86,0.14)',
-            borderColor: 'rgba(229,119,86,0.4)',
-          },
-          '33%, 100%': {
-            background: '#fdf9f5',
-            borderColor: 'rgba(0,0,0,0.06)',
-          },
-        },
       },
       animation: {
         'bob-tile': 'bob-tile 5s ease-in-out infinite',
@@ -122,9 +88,6 @@ module.exports = {
         'live-blink': 'live-blink 2s ease-in-out infinite',
         'wave-pulse': 'wave-pulse 1.4s ease-in-out infinite',
         'scroll-logos': 'scroll-logos 30s linear infinite',
-        'travel-pulse': 'travel-pulse 9s ease-in-out infinite',
-        'step-active': 'step-active 9s ease-in-out infinite',
-        'chip-active': 'chip-active 9s ease-in-out infinite',
       },
     },
   },

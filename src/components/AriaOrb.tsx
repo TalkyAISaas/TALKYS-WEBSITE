@@ -35,7 +35,7 @@ export function AriaOrb() {
 
       {/* Label */}
       <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 text-[13px] text-muted-foreground tracking-[0.04em] whitespace-nowrap">
-        <span className="inline-block w-1.5 h-1.5 bg-green-500 rounded-full mr-1.5 align-middle animate-live-blink shadow-[0_0_6px_#16a34a]" />
+        <span className="inline-block w-1.5 h-1.5 bg-green-500 rounded-full me-1.5 align-middle animate-live-blink shadow-[0_0_6px_#16a34a]" />
         <strong className="text-foreground font-bold">{t('solution.ariaName') as string}</strong>
         <span> · {t('solution.ariaTagline') as string}</span>
       </div>

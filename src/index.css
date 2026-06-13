@@ -111,6 +111,11 @@
     transform: rotate(-3deg);
     line-height: 1;
   }
+
+  html[dir='rtl'] .scribble {
+    left: auto;
+    right: 40px;
+  }
 }
 
 @layer utilities {
