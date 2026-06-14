@@ -1,3 +1,7 @@
 node_modules
 .cursor
+.claude/
 .superpowers/
+.env
+.env.local
+.env.*.local

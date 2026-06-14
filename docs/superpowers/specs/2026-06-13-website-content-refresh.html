@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Talkys — Website Content Refresh Plan (2026-06-13)</title>
+<style>
+  :root {
+    --bg: #0b1018;
+    --panel: #121a26;
+    --panel-2: #0f1620;
+    --line: rgba(255,255,255,0.08);
+    --text: #e8edf3;
+    --muted: #97a3b6;
+    --accent: #1A8FA8;
+    --accent-2: #0F4C5C;
+    --warn: #E07A5F;
+    --ok: #34d399;
+    --code: #0c121b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    padding: 40px 24px 80px;
+  }
+  main { max-width: 980px; margin: 0 auto; }
+  h1 {
+    font-size: 30px; margin: 0 0 6px;
+    background: linear-gradient(90deg, #fff, #1A8FA8);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .meta { color: var(--muted); font-size: 13px; margin-bottom: 32px; }
+  .meta span + span::before { content: " · "; color: var(--line); }
+  h2 {
+    font-size: 22px;
+    margin: 40px 0 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; gap: 10px;
+  }
+  h2 .num {
+    font-size: 12px; font-weight: 700;
+    background: var(--accent-2); color: #fff;
+    padding: 4px 10px; border-radius: 999px;
+    letter-spacing: 0.5px;
+  }
+  h3 { font-size: 16px; margin: 22px 0 6px; color: var(--text); }
+  h4 { font-size: 13px; margin: 16px 0 6px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  p { margin: 6px 0; }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin: 12px 0;
+  }
+  .panel.warn { border-color: rgba(224,122,95,0.4); background: rgba(224,122,95,0.05); }
+  .panel.ok   { border-color: rgba(52,211,153,0.3); background: rgba(52,211,153,0.04); }
+  .panel.del  { border-color: rgba(255,99,99,0.3); background: rgba(255,99,99,0.04); }
+  .pick {
+    display: inline-block;
+    background: rgba(52,211,153,0.15);
+    color: var(--ok);
+    border: 1px solid rgba(52,211,153,0.35);
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-left: 6px;
+    text-transform: uppercase;
+  }
+  .alt {
+    display: inline-block;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--line);
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    color: var(--muted);
+    margin-left: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .quote {
+    background: var(--code);
+    border-left: 3px solid var(--accent);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-family: ui-monospace, Menlo, monospace;
+    font-size: 13.5px;
+    color: #d9e3ee;
+    margin: 4px 0;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: 14px;
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); font-weight: 600; }
+  td.stat { color: var(--accent); font-family: ui-monospace, Menlo, monospace; font-weight: 700; white-space: nowrap; }
+  td.label { color: var(--muted); width: 130px; font-weight: 600; }
+  .pills { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+  .pills span {
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--line);
+    font-size: 12px;
+    color: var(--text);
+  }
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+  .tag.keep   { background: rgba(52,211,153,0.15); color: var(--ok); }
+  .tag.new    { background: rgba(26,143,168,0.15); color: var(--accent); }
+  .tag.rewrite{ background: rgba(224,122,95,0.15); color: var(--warn); }
+  .tag.remove { background: rgba(255,99,99,0.15); color: #ff6b6b; }
+  .tbd {
+    background: rgba(255,200,0,0.12);
+    color: #ffd966;
+    border: 1px dashed rgba(255,200,0,0.4);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: ui-monospace, Menlo, monospace;
+  }
+  ul.checks { list-style: none; padding: 0; margin: 8px 0; }
+  ul.checks li { padding: 6px 0 6px 24px; position: relative; }
+  ul.checks li::before {
+    content: "✓"; position: absolute; left: 0; top: 6px;
+    color: var(--accent); font-weight: bold;
+  }
+  ul.dashes { list-style: none; padding: 0; margin: 8px 0; }
+  ul.dashes li { padding: 4px 0 4px 18px; position: relative; color: var(--text); }
+  ul.dashes li::before { content: "—"; position: absolute; left: 0; color: var(--muted); }
+  .toc {
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin: 0 0 32px;
+  }
+  .toc h4 { margin-top: 0; }
+  .toc ol { margin: 0; padding-left: 22px; }
+  .toc a { color: var(--text); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  .note { color: var(--muted); font-style: italic; font-size: 13px; }
+  .badge-voice {
+    display: inline-block;
+    padding: 6px 12px;
+    background: rgba(26,143,168,0.1);
+    border: 1px solid rgba(26,143,168,0.3);
+    border-radius: 999px;
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+<main>
+
+<h1>Talkys — Website Content Refresh</h1>
+<div class="meta">
+  <span>Spec date: 2026-06-13</span>
+  <span>Author: ali.fakih@rentallsoftware.com</span>
+  <span>Scope: full-site content rewrite + structural removals</span>
+</div>
+
+<div class="panel">
+  <h4 style="margin-top:0">Voice &amp; Audience (locked)</h4>
+  <p>
+    <span class="badge-voice">Lebanese-flavored bilingual</span>
+    &nbsp;Heavy local flavor. Primary audience: Lebanese business owners (restaurants, dealerships, hotels, retail) who code-switch naturally between Lebanese Arabic and English.
+  </p>
+  <p class="note">
+    The English site is the only site in scope. Arabic phrases (<em>yalla</em>, <em>khalas</em>, <em>ahlan</em>, <em>dakika</em>) appear sprinkled into English copy — never as a translated block.
+  </p>
+</div>
+
+<div class="toc">
+  <h4>What's in this plan</h4>
+  <ol>
+    <li><a href="#hero">Hero</a> &nbsp;<span class="tag rewrite">REWRITE</span> <span class="tag new">+pills</span></li>
+    <li><a href="#problem">Problem section</a> &nbsp;<span class="tag rewrite">REWRITE</span></li>
+    <li><a href="#solution">Solution — "One Platform. A Full Voice Team."</a> &nbsp;<span class="tag rewrite">REWRITE</span></li>
+    <li><a href="#howitworks">How It Works — 4-industry split</a> &nbsp;<span class="tag rewrite">REWRITE</span> <span class="tag new">+industry picker</span></li>
+    <li><a href="#features">Features → Stats &amp; Proof</a> &nbsp;<span class="tag rewrite">REWRITE</span></li>
+    <li><a href="#removals">Sections to remove</a> &nbsp;<span class="tag remove">REMOVE</span></li>
+    <li><a href="#footer">Footer</a> &nbsp;<span class="tag rewrite">REWRITE</span></li>
+    <li><a href="#imagery">Imagery direction</a> &nbsp;<span class="tag new">NEW</span></li>
+    <li><a href="#open">Open items &amp; placeholders</a></li>
+  </ol>
+</div>
+
+<!-- ============================ HERO ============================ -->
+<h2 id="hero"><span class="num">01</span> Hero <span class="tag rewrite">Rewrite</span> <span class="tag new">+ Integration Pills</span></h2>
+
+<div class="panel">
+  <h4>Badge</h4>
+  <div class="quote">Now Live in Lebanon</div>
+  <p class="note">No change.</p>
+</div>
+
+<div class="panel">
+  <h4>Headline</h4>
+  <div class="quote">Meet Talkys.</div>
+  <p class="note">No change.</p>
+</div>
+
+<div class="panel">
+  <h4>Subhead — replaces the current paragraph (item 1)</h4>
+  <p><strong>Locked copy</strong> <span class="pick">picked</span></p>
+  <div class="quote">Yalla — your phones never sleep again.</div>
+
+  <p style="margin-top:14px"><strong>Alternates kept on file</strong></p>
+  <div class="quote">Your AI voice team. Always on. Bil 3arabi w bil English.<span class="alt">alt B</span></div>
+  <div class="quote">Khalas with missed calls. Talkys picks up — every time.<span class="alt">alt C</span></div>
+</div>
+
+<div class="panel">
+  <h4>CTAs</h4>
+  <p>Primary: <code>Book a Free Demo</code> &nbsp;·&nbsp; Secondary: <code>See How It Works</code> <span class="note">(no change)</span></p>
+</div>
+
+<div class="panel ok">
+  <h4>NEW — "Connects natively with" strip (item 6)</h4>
+  <p>Sits inside the hero, below the Console. Content only — placement/visual handled later.</p>
+  <p><strong>Label:</strong> <code>CONNECTS NATIVELY WITH</code></p>
+  <div class="pills">
+    <span>Omega POS</span>
+    <span>Squirrel POS</span>
+    <span>WhatsApp Business</span>
+    <span>Instagram</span>
+    <span>Messenger</span>
+  </div>
+  <p class="note">Same 5 names that currently live at the bottom of "How It Works" — they move up to the hero. The existing "How It Works" trailing pill row is removed.</p>
+</div>
+
+<!-- ============================ PROBLEM ============================ -->
+<h2 id="problem"><span class="num">02</span> Problem section <span class="tag rewrite">Rewrite</span></h2>
+
+<div class="panel">
+  <h4>Headline (item 2)</h4>
+  <p><strong>Locked</strong> <span class="pick">picked</span></p>
+  <div class="quote">Every Missed Call Is a Customer Calling Someone Else.</div>
+
+  <p style="margin-top:14px"><strong>Alternates</strong></p>
+  <div class="quote">Lebanon Doesn't Have a Sales Problem. It Has a Pickup Problem.<span class="alt">alt B</span></div>
+  <div class="quote">Your Phone Rings. Nobody Answers. Khalas — Order Lost.<span class="alt">alt C</span></div>
+  <p class="note">All three keep the orange accent on the punch word (e.g. <em>Someone Else</em>, <em>Pickup Problem</em>, <em>Khalas</em>).</p>
+</div>
+
+<div class="panel">
+  <h4>Subhead (item 2)</h4>
+  <p><strong>Locked</strong> <span class="pick">picked</span></p>
+  <div class="quote">Friday night, 8pm. Three calls at once. Your staff is drowning. Your competitor isn't.</div>
+  <p><strong>Alternate</strong></p>
+  <div class="quote">While you're reading this, a phone is ringing somewhere in your business. Pray someone picks up.<span class="alt">alt B</span></div>
+</div>
+
+<div class="panel">
+  <h4>Four problem cards — icons &amp; stat numbers unchanged, copy rewritten</h4>
+  <table>
+    <thead><tr><th>#</th><th>New title</th><th>New description</th><th>Stat <span class="tbd">numbers TBD</span></th></tr></thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td><strong>Missed Calls = Khasara</strong></td>
+        <td>Peak hours, line is busy, staff is buried. Customer hangs up — and calls the spot next door.</td>
+        <td class="stat">62%</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><strong>Staff Maxed Out</strong></td>
+        <td>Friday 8pm: three phone calls, two WhatsApp orders, an Instagram DM. Something always falls through.</td>
+        <td class="stat">3×</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><strong>Orders Lost in the Shuffle</strong></td>
+        <td>Phone order → paper → POS → kitchen. Four steps, four chances to mess it up.</td>
+        <td class="stat">23%</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td><strong>Hiring Hurts</strong></td>
+        <td>$800–$1,500/month per receptionist. Then they get sick, leave, or forget to clock in.</td>
+        <td class="stat">$1,500</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================ SOLUTION ============================ -->
+<h2 id="solution"><span class="num">03</span> Solution — "One Platform. A Full Voice Team." <span class="tag rewrite">Rewrite copy</span></h2>
+
+<div class="panel">
+  <h4>Headline</h4>
+  <div class="quote">One Platform. A Full Voice Team.</div>
+  <p class="note">No change — gradient accent stays on "A Full Voice Team."</p>
+</div>
+
+<div class="panel">
+  <h4>Subhead</h4>
+  <div class="quote">Build a team of AI agents — each one with a name, a personality, a voice, and a job. They answer, they sell, they confirm, they sync. While you sleep.</div>
+</div>
+
+<div class="panel">
+  <h4>Four checkmark features (rewrite)</h4>
+  <ul class="checks">
+    <li>Unlimited parallel calls — no busy signal, ever.</li>
+    <li>Orders sync straight to Omega and Squirrel — no double entry.</li>
+    <li>Speaks Lebanese Arabic like it grew up here. English too.</li>
+    <li>Every call recorded, transcribed, searchable.</li>
+  </ul>
+</div>
+
+<div class="panel">
+  <h4>Three AI agents — names kept, lines rewritten (item 3)</h4>
+  <p class="note">Photos for these three agents must be swapped to Lebanese people — see <a href="#imagery" style="color:var(--accent)">Imagery direction</a>. Copy below is what each agent says inside the live preview bubble.</p>
+  <table>
+    <thead><tr><th>Name</th><th>Role</th><th>Quote</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Layla</strong></td><td>Receptionist</td><td><em>"Ahlan w sahlan! Welcome. Kif fina nsa3dak el yom?"</em></td></tr>
+      <tr><td><strong>Karim</strong></td><td>Delivery</td><td><em>"Order confirmed! Delivery to Hamra — 35 dakika w shouf el motorcycle."</em></td></tr>
+      <tr><td><strong>Sara</strong></td><td>Support</td><td><em>"Checked your account — your order is out for delivery. Yallah, akeed soon."</em></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="panel">
+  <h4>Team image caption</h4>
+  <div class="quote">Powering businesses across Lebanon — from Beirut to Tripoli.</div>
+  <p class="note">Caption unchanged. Underlying image to be swapped to Lebanese subjects (see Imagery section).</p>
+</div>
+
+<!-- ============================ HOWITWORKS ============================ -->
+<h2 id="howitworks"><span class="num">04</span> How It Works — 4-industry picker <span class="tag rewrite">Rewrite</span> <span class="tag new">+ industry picker</span></h2>
+
+<div class="panel">
+  <h4>Headline &amp; subhead</h4>
+  <div class="quote">How Talkys Works for Your Business</div>
+  <div class="quote">Pick your industry. Watch the call. Done.</div>
+</div>
+
+<div class="panel">
+  <h4>Four industry picker cards (item 5)</h4>
+  <table>
+    <thead><tr><th>Icon</th><th>Label</th><th>Tagline</th></tr></thead>
+    <tbody>
+      <tr><td>🍽</td><td><strong>Restaurant</strong></td><td>Orders, deliveries, table bookings.</td></tr>
+      <tr><td>🚗</td><td><strong>Dealership</strong></td><td>Leads, test drives, service bookings.</td></tr>
+      <tr><td>🏨</td><td><strong>Hotel</strong></td><td>Reservations, check-in info, room service.</td></tr>
+      <tr><td>🛍</td><td><strong>Retail</strong></td><td>Stock checks, returns, order tracking.</td></tr>
+    </tbody>
+  </table>
+  <p class="note">User picks one. The 5-step flow below rewrites its copy to that industry.</p>
+</div>
+
+<div class="panel">
+  <h4>Five steps — titles fixed, descriptions vary per industry</h4>
+
+  <h3>Step 01 · Customer Calls or Messages</h3>
+  <table>
+    <tbody>
+      <tr><td class="label">Restaurant</td><td>Friday night rush. Customer rings — Talkys picks up before the second beep.</td></tr>
+      <tr><td class="label">Dealership</td><td>A lead messages your Instagram at 11pm. Talkys answers like a real salesperson.</td></tr>
+      <tr><td class="label">Hotel</td><td>A guest calls from abroad asking about availability. No hold music. No "please wait".</td></tr>
+      <tr><td class="label">Retail</td><td>Customer DMs "is the leather bag back in stock?" — Talkys replies instantly.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Step 02 · Talkys Takes the Order</h3>
+  <table>
+    <tbody>
+      <tr><td class="label">Restaurant</td><td>Talkys knows the full menu, the prices, what's out tonight. Asks address, confirms, suggests fries.</td></tr>
+      <tr><td class="label">Dealership</td><td>Qualifies budget, model interest, and books a test drive on the spot.</td></tr>
+      <tr><td class="label">Hotel</td><td>Checks live availability, quotes the rate, confirms guest details — in Arabic or English.</td></tr>
+      <tr><td class="label">Retail</td><td>Pulls live stock, suggests alternatives, holds the item for 24 hours.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Step 03 · Synced to Your POS / CRM</h3>
+  <table>
+    <tbody>
+      <tr><td class="label">Restaurant</td><td>Order lands on the kitchen screen via Omega or Squirrel. No paper, no typos.</td></tr>
+      <tr><td class="label">Dealership</td><td>Lead pushes to your CRM with full transcript and lead score.</td></tr>
+      <tr><td class="label">Hotel</td><td>Booking written to your PMS, room blocked, confirmation auto-sent.</td></tr>
+      <tr><td class="label">Retail</td><td>Order or hold pushed to your inventory system, ready for fulfillment.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Step 04 · Confirmation Sent</h3>
+  <table>
+    <tbody>
+      <tr><td class="label">Restaurant</td><td>Customer gets a WhatsApp: "Order confirmed — 35 min to Hamra."</td></tr>
+      <tr><td class="label">Dealership</td><td>Customer gets a calendar invite + showroom address on WhatsApp.</td></tr>
+      <tr><td class="label">Hotel</td><td>Email + WhatsApp with booking ref, check-in time, and a map pin.</td></tr>
+      <tr><td class="label">Retail</td><td>WhatsApp with the order number and a track-your-order link.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Step 05 · Dashboard Updated</h3>
+  <table>
+    <tbody>
+      <tr><td class="label">All industries</td><td>Every call, every transcript, every metric — live in your admin portal.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="panel del">
+  <h4>Trailing integration pill row — REMOVED</h4>
+  <p>The 5 pills currently at the bottom of "How It Works" (Omega POS, Squirrel POS, WhatsApp Business, Instagram, Messenger) move up to the Hero <em>(see section 01)</em>. They do not appear here anymore.</p>
+</div>
+
+<!-- ============================ FEATURES ============================ -->
+<h2 id="features"><span class="num">05</span> Features section → Stats &amp; Proof <span class="tag rewrite">Rewrite</span></h2>
+
+<div class="panel">
+  <h4>New headline (item 8)</h4>
+  <p><strong>Locked</strong> <span class="pick">picked</span></p>
+  <div class="quote">The Numbers. The Proof.</div>
+  <p><strong>Alternates</strong></p>
+  <div class="quote">What Talkys Actually Changes.<span class="alt">alt B</span></div>
+  <div class="quote">Receipts.<span class="alt">alt C — punchier, riskier</span></div>
+</div>
+
+<div class="panel">
+  <h4>Subhead</h4>
+  <div class="quote">Real outcomes from Lebanese businesses running Talkys.</div>
+</div>
+
+<div class="panel warn">
+  <h4>Five stat cards <span class="tbd">numbers TBD — must be replaced before launch</span></h4>
+  <p>All numbers below are placeholders. They <strong>must</strong> be backed by real pilot data or removed before the site ships. Implementation should treat each stat as a config value so they can be edited without code.</p>
+  <table>
+    <thead><tr><th>#</th><th>Stat</th><th>Proof line</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="stat">&lt; 3 seconds</td><td>Average pickup time. Faster than any human team during a Friday rush.</td></tr>
+      <tr><td>2</td><td class="stat">62%</td><td>Fewer missed calls in the first month. <span class="tbd">cite pilot N</span></td></tr>
+      <tr><td>3</td><td class="stat">3.2×</td><td>More orders captured after-hours. Talkys works while Beirut sleeps.</td></tr>
+      <tr><td>4</td><td class="stat">$0</td><td>Sick days, training cost, turnover. Per agent. Per month.</td></tr>
+      <tr><td>5</td><td class="stat">2 days</td><td>From first call to live on your line. No IT team. No code.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="panel del">
+  <h4>"Monitor Every Conversation" dashboard preview — REMOVED (item 7)</h4>
+  <p>The bottom image card with the 98% / 2.4s / 24/7 stats is removed entirely. The 5 stat cards above replace its purpose.</p>
+</div>
+
+<!-- ============================ REMOVALS ============================ -->
+<h2 id="removals"><span class="num">06</span> Sections to remove <span class="tag remove">Remove</span></h2>
+
+<div class="panel del">
+  <h4>Social Media section (item 9)</h4>
+  <p>Entire <code>SocialMediaSection.tsx</code> removed from the page. The omnichannel point (WhatsApp / Instagram / Messenger) is already covered by:</p>
+  <ul class="dashes">
+    <li>The hero "Connects natively with" pills</li>
+    <li>The 5-step flow's Step 01 (which references DMs)</li>
+  </ul>
+</div>
+
+<div class="panel del">
+  <h4>"Built for Every Lebanese Business" / Industries section (item 10)</h4>
+  <p>Entire <code>IndustriesSection.tsx</code> removed. The 4-industry picker inside "How It Works" already covers this story for the 4 target industries.</p>
+</div>
+
+<!-- ============================ FOOTER ============================ -->
+<h2 id="footer"><span class="num">07</span> Footer <span class="tag rewrite">Rewrite</span></h2>
+
+<div class="panel del">
+  <h4>Tagline paragraph — REMOVED (item 11)</h4>
+  <p>Delete the paragraph:</p>
+  <div class="quote">"The AI voice agent that never sleeps. Lebanon's first AI voice workforce platform. One portal, unlimited agents, every channel connected."</div>
+  <p>Keep only the logo, the brand name, and the small "Lebanon · MENA · Global" line.</p>
+</div>
+
+<div class="panel">
+  <h4>Link groups (item 11)</h4>
+  <table>
+    <thead><tr><th>Group</th><th>Links</th></tr></thead>
+    <tbody>
+      <tr><td class="label">Product</td><td>Features · Integrations · Industries · Analytics · Admin Portal · Pricing</td></tr>
+      <tr><td class="label">Company</td><td>About Us · FAQ · Contact</td></tr>
+      <tr><td class="label">Legal</td><td>Privacy Policy · Terms of Service <span class="tag remove">Cookie Policy removed</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="panel">
+  <h4>Copyright (item 11)</h4>
+  <div class="quote">© 2026 Talkys AI · All rights reserved</div>
+  <p class="note">Year updated from 2025 → 2026.</p>
+</div>
+
+<!-- ============================ IMAGERY ============================ -->
+<h2 id="imagery"><span class="num">08</span> Imagery direction <span class="tag new">Asset swap</span></h2>
+
+<div class="panel">
+  <h4>Solution agents — Lebanese people (item 3)</h4>
+  <p>The three agent avatars (Layla, Karim, Sara) currently use generic Unsplash portraits. Replace with photos of Lebanese subjects.</p>
+  <ul class="dashes">
+    <li>Sourcing options to evaluate during implementation: licensed Lebanese stock libraries, custom photoshoot, AI-generated portraits with Levantine features (disclose if used).</li>
+    <li>Each photo should read as a 25–40 year old Beirut professional — warm, approachable, not corporate stock.</li>
+  </ul>
+</div>
+
+<div class="panel">
+  <h4>How It Works imagery — meaningful, not stock-y (item 4)</h4>
+  <p>Each of the 5 steps currently uses a loosely-related Unsplash photo. Replace with imagery that actually depicts the step:</p>
+  <table>
+    <thead><tr><th>Step</th><th>Current</th><th>Direction</th></tr></thead>
+    <tbody>
+      <tr><td>01 Customer Calls</td><td>generic call-center image</td><td>A Lebanese customer on a phone in a real Beirut setting (street, café, home).</td></tr>
+      <tr><td>02 Takes Order</td><td>generic person on phone</td><td>UI screenshot or render of Talkys live in a call — waveform + transcript visible.</td></tr>
+      <tr><td>03 POS Sync</td><td>generic POS terminal</td><td>Real Omega / Squirrel POS screen with an incoming Talkys order highlighted.</td></tr>
+      <tr><td>04 Confirmation</td><td>generic WhatsApp render</td><td>WhatsApp confirmation mockup with Arabic + English order line.</td></tr>
+      <tr><td>05 Dashboard</td><td>generic analytics dashboard</td><td>Actual Talkys admin portal screenshot (or close render) with transcripts and metrics.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="panel">
+  <h4>Solution team image</h4>
+  <p>Group photo image at the bottom of Solution should also feature a Lebanese team / Beirut backdrop.</p>
+</div>
+
+<!-- ============================ OPEN ============================ -->
+<h2 id="open"><span class="num">09</span> Open items &amp; placeholders</h2>
+
+<div class="panel warn">
+  <h4>Things that block "ship to production"</h4>
+  <ul class="dashes">
+    <li><strong>Stat numbers</strong> in section 05 (Stats &amp; Proof) — five values are placeholders. Source real pilot data before launch, or rephrase as industry averages with citation.</li>
+    <li><strong>Problem-section stat numbers</strong> (62%, 3×, 23%, $1,500) — currently inherited from existing copy. Confirm they're real or mark as illustrative.</li>
+    <li><strong>Lebanese imagery</strong> — must be sourced/created. Spec does not lock the sourcing path.</li>
+    <li><strong>Footer link targets</strong> — all footer links currently point to <code>"#"</code>. Spec does not change that; treat as out-of-scope for the content refresh.</li>
+  </ul>
+</div>
+
+<div class="panel">
+  <h4>Out of scope (intentionally)</h4>
+  <ul class="dashes">
+    <li>Visual / layout changes beyond the section removals listed above.</li>
+    <li>Component refactors. All copy lives in the same files it lives in today; implementation phase will only edit strings, swap image sources, and delete the two removed sections.</li>
+    <li>Arabic-language site (this refresh is English-only, with sprinkled Arabic phrases).</li>
+    <li>Navigation and on-page anchor links.</li>
+  </ul>
+</div>
+
+<div class="panel ok">
+  <h4>Mapping back to your original 11 asks</h4>
+  <table>
+    <thead><tr><th>#</th><th>Your ask</th><th>Where it's handled</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Shorter slangy hero subhead</td><td>§01 Hero — Subhead</td></tr>
+      <tr><td>2</td><td>Better Problem title + subtitle</td><td>§02 Problem — Headline &amp; Subhead</td></tr>
+      <tr><td>3</td><td>Lebanese people in Solution images</td><td>§08 Imagery — Solution agents</td></tr>
+      <tr><td>4</td><td>HowItWorks images meaningful</td><td>§08 Imagery — HIW imagery</td></tr>
+      <tr><td>5</td><td>HowItWorks split for 4 industries</td><td>§04 HIW — 4-industry picker</td></tr>
+      <tr><td>6</td><td>Integration pills as new section in hero</td><td>§01 Hero — "Connects natively with" strip</td></tr>
+      <tr><td>7</td><td>Remove Monitor Every Conversation</td><td>§05 Features — dashboard preview removed</td></tr>
+      <tr><td>8</td><td>Rethink Everything Your Voice Team Needs</td><td>§05 Features → Stats &amp; Proof</td></tr>
+      <tr><td>9</td><td>Social Media section — kill or rework</td><td>§06 Removals — Social Media cut entirely</td></tr>
+      <tr><td>10</td><td>Remove Built for Every Lebanese Business</td><td>§06 Removals — Industries cut entirely</td></tr>
+      <tr><td>11</td><td>Footer cleanup</td><td>§07 Footer</td></tr>
+    </tbody>
+  </table>
+</div>
+
+</main>
+</body>
+</html>

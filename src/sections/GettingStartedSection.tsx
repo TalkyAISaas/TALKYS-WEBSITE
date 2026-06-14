@@ -1,222 +1,293 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowRight, Headphones, Monitor, Settings, Sparkles } from 'lucide-react';
+import { ArrowRight, Loader2, Mountain } from 'lucide-react';
+import { toast } from 'sonner';
+import { useT } from '@/context/LocaleContext';
+import { ChipEyebrow } from '@/components/ChipEyebrow';
+import { AccentItalic } from '@/components/AccentItalic';
+
+const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
+const CC_RECIPIENTS = 'ali.fakih@rentallsoftware.com, ali.alfakih@ssupworld.com';
+
+const EMPTY_FORM = {
+  fullName: '',
+  email: '',
+  company: '',
+  industry: '',
+  phone: '',
+  useCase: '',
+  consent: false,
+};
 
 const GettingStartedSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [, setIsVisible] = useState(false);
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    company: '',
-    industry: '',
-    phone: '',
-    useCase: '',
-    consent: false,
-  });
+  const t = useT();
+  const [formData, setFormData] = useState(EMPTY_FORM);
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-visible');
-            setIsVisible(true);
-          }
+          if (entry.isIntersecting) entry.target.classList.add('animate-visible');
         });
       },
       { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
     );
-
     const elements = sectionRef.current?.querySelectorAll('.animate-on-scroll');
     elements?.forEach((el) => observer.observe(el));
-
     return () => observer.disconnect();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert('Demo booking coming soon!');
+    const accessKey = import.meta.env.VITE_WEB3FORMS_KEY;
+    if (!accessKey) {
+      toast.error('Form is not configured', {
+        description: 'Set VITE_WEB3FORMS_KEY in .env.local.',
+      });
+      return;
+    }
+
+    setStatus('submitting');
+
+    try {
+      const payload = {
+        access_key: accessKey,
+        subject: `New Talkys demo request — ${formData.fullName || formData.company || formData.email}`,
+        from_name: formData.fullName || 'Talkys website',
+        replyto: formData.email,
+        cc: CC_RECIPIENTS,
+        full_name: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        industry: formData.industry,
+        use_case: formData.useCase,
+        consent: formData.consent ? 'Yes' : 'No',
+      };
+
+      const res = await fetch(WEB3FORMS_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || 'Submission failed');
+      }
+
+      setStatus('success');
+      setFormData(EMPTY_FORM);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Submission failed. Please try again.';
+      setStatus('idle');
+      toast.error(
+        (t('getStarted.form.toastError') as string) || 'Something went wrong',
+        { description: message }
+      );
+    }
   };
 
-  const expectations = [
-    { icon: Headphones, text: 'Live Talkys conversation demo' },
-    { icon: Settings, text: 'Full workflow walkthrough' },
-    { icon: Monitor, text: 'Admin portal demo' },
-    { icon: Sparkles, text: 'Custom integration & pricing' },
-  ];
+  const resetForm = () => {
+    setStatus('idle');
+  };
+
+  const industryOptionsCopy = t<Record<string, string>>('getStarted.form.industryOptions');
+  const industryOptions =
+    industryOptionsCopy && typeof industryOptionsCopy === 'object' && !Array.isArray(industryOptionsCopy)
+      ? industryOptionsCopy
+      : {};
 
   return (
-    <section
-      ref={sectionRef}
-      id="get-started"
-      className="relative py-24 lg:py-32"
-    >
-      <div className="absolute top-0 left-0 right-0 section-divider" />
+    <section ref={sectionRef} id="get-started" className="py-24 lg:py-28">
+      <div className="max-w-[900px] mx-auto px-6">
+        <div className="text-center mb-6">
+          <ChipEyebrow>{(t('getStarted.eyebrow') as string) || 'GET STARTED'}</ChipEyebrow>
+        </div>
 
-      {/* Background effects */}
-      <div className="gradient-orb w-[600px] h-[600px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0F4C5C]/5" />
-      <div className="gradient-orb w-[300px] h-[300px] top-0 right-0 bg-[#E07A5F]/4" style={{ animationDelay: '1.5s' }} />
+        <div className="relative bg-white border border-black/[0.06] rounded-[28px] p-12 lg:p-16 overflow-hidden shadow-card">
+          <div
+            className="hidden md:block absolute -top-[30%] -right-[10%] w-[55%] h-[130%] pointer-events-none"
+            style={{ background: 'radial-gradient(circle, rgba(229,119,86,0.10) 0%, transparent 60%)' }}
+          />
+          <div
+            className="hidden md:block absolute -bottom-[40%] -left-[10%] w-[55%] h-[130%] pointer-events-none"
+            style={{ background: 'radial-gradient(circle, rgba(14,79,92,0.07) 0%, transparent 60%)' }}
+          />
 
-      <div className="w-full px-6 lg:px-16">
-        <div className="max-w-7xl mx-auto relative">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-            {/* Left - Info */}
-            <div>
-              <h2 className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 font-heading font-bold text-3xl sm:text-4xl lg:text-5xl text-foreground">
-                Book Your <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#0F4C5C] to-[#1A8FA8]">Free Demo</span>
-              </h2>
-              <p className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-100 mt-6 text-lg text-foreground/50 leading-relaxed">
-                See exactly how Talkys works for your business. Our team will walk you through
-                a live demo customized to your industry and workflow.
-              </p>
+          <div className="relative z-[1]">
+            {status === 'success' ? (
+              <div className="py-6 min-h-[420px]">
+                <div className="text-center mb-9">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/10 text-accent text-[11px] font-bold tracking-[0.18em] uppercase mb-5">
+                    <Mountain className="w-3.5 h-3.5" />
+                    {(t('getStarted.form.successEyebrow') as string) || 'Step 1 of something big'}
+                  </div>
+                  <h2
+                    className="font-heading font-bold text-foreground tracking-[-0.025em] leading-[1.05] mb-4 max-w-[640px] mx-auto"
+                    style={{ fontSize: 'clamp(30px, 4.4vw, 48px)' }}
+                  >
+                    {(t('getStarted.form.successTitlePrefix') as string) || "You're at the"}{' '}
+                    <AccentItalic>
+                      {(t('getStarted.form.successTitleAccent') as string) || 'doorstep'}
+                    </AccentItalic>{' '}
+                    {(t('getStarted.form.successTitleSuffix') as string) || 'of something big.'}
+                  </h2>
+                  <p className="text-muted-foreground text-[16px] max-w-[500px] mx-auto">
+                    {t('getStarted.form.successMessage') as string}
+                  </p>
+                </div>
 
-              {/* What to Expect - animated cards */}
-              <div className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-200 mt-10">
-                <h3 className="text-sm text-foreground/30 uppercase tracking-wider mb-5">What to Expect</h3>
-                <div className="grid grid-cols-2 gap-3">
-                  {expectations.map((item, index) => (
-                    <div
-                      key={index}
-                      className="card-dark p-4 group"
-                      style={{ animationDelay: `${index * 100}ms` }}
-                    >
-                      <item.icon className="w-5 h-5 text-[#1A8FA8] mb-2 group-hover:scale-110 transition-transform duration-300" />
-                      <p className="text-foreground/60 text-sm">{item.text}</p>
+                <div className="max-w-[460px] mx-auto flex items-end gap-2 h-[110px]" aria-hidden="true">
+                  {[18, 32, 50, 72, 100].map((h, i) => (
+                    <div key={i} className="flex-1 flex flex-col items-center gap-2">
+                      {i === 4 && (
+                        <span className="w-3 h-3 rounded-full bg-accent shadow-[0_0_0_4px_rgba(229,119,86,0.18)] mb-1" />
+                      )}
+                      <div
+                        className={`w-full rounded-t-[6px] transition-all ${
+                          i === 4 ? 'bg-accent' : 'bg-foreground/12'
+                        }`}
+                        style={{ height: `${h}%` }}
+                      />
                     </div>
                   ))}
                 </div>
-              </div>
+                <p className="text-center text-[11.5px] tracking-[0.16em] uppercase text-muted-foreground mt-3">
+                  {(t('getStarted.form.successStairCaption') as string) ||
+                    'You · Demo · Onboarding · Live · Scale'}
+                </p>
 
-              {/* Trust image */}
-              <div className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-300 mt-8">
-                <div className="relative rounded-2xl overflow-hidden h-40">
-                  <img
-                    src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=800&q=80"
-                    alt="Business meeting"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/60 to-transparent" />
-                  <div className="absolute bottom-4 left-4 flex items-center gap-6">
-                    {[
-                      { value: '24/7', label: 'Always On' },
-                      { value: 'AR+EN', label: 'Bilingual' },
-                      { value: '<3s', label: 'Response' },
-                    ].map((stat, i) => (
-                      <div key={i}>
-                        <p className="font-heading font-bold text-xl text-foreground">{stat.value}</p>
-                        <p className="text-foreground/30 text-xs">{stat.label}</p>
-                      </div>
-                    ))}
-                  </div>
+                <div className="text-center mt-9">
+                  <button
+                    type="button"
+                    onClick={resetForm}
+                    className="text-foreground/60 hover:text-accent text-sm font-medium transition-colors inline-flex items-center gap-1.5"
+                  >
+                    {(t('getStarted.form.sendAnother') as string) || 'Send another request'}
+                    <ArrowRight className="w-3.5 h-3.5 rtl:rotate-180" />
+                  </button>
                 </div>
               </div>
-            </div>
+            ) : status === 'submitting' ? (
+              <div className="flex flex-col items-center justify-center text-center py-10 min-h-[420px]">
+                <Loader2 className="w-12 h-12 text-accent animate-spin mb-6" />
+                <p className="text-foreground text-lg font-medium">
+                  {(t('getStarted.form.submitting') as string) || 'Sending your request…'}
+                </p>
+                <p className="text-muted-foreground text-sm mt-2">
+                  {(t('getStarted.form.submittingHint') as string) || 'This will only take a moment.'}
+                </p>
+              </div>
+            ) : (
+              <>
+                <h2
+                  className="text-center font-heading font-bold text-foreground tracking-[-0.025em] leading-[1.05] mb-4"
+                  style={{ fontSize: 'clamp(32px, 4.5vw, 48px)' }}
+                >
+                  {t('getStarted.titlePrefix') as string}{' '}
+                  <AccentItalic>{t('getStarted.titleHighlight') as string}</AccentItalic>
+                </h2>
+                <p className="text-center text-muted-foreground text-[17px] mb-9 max-w-[520px] mx-auto">
+                  {t('getStarted.paragraph') as string}
+                </p>
 
-            {/* Right - Form */}
-            <div className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-200">
-              <form onSubmit={handleSubmit} className="card-gradient-border p-8">
-                <div className="space-y-4">
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm text-foreground/50 mb-1.5">Full Name *</label>
+                <form onSubmit={handleSubmit} className="max-w-[520px] mx-auto">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-5">
+                    <div className="flex flex-col gap-2">
+                      <label className="text-[10.5px] font-bold tracking-[0.16em] uppercase text-muted-foreground">{t('getStarted.form.fullName') as string}</label>
                       <input
-                        type="text"
-                        required
+                        type="text" required
                         value={formData.fullName}
                         onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-foreground/[0.04] border border-foreground/[0.08] text-foreground placeholder-foreground/25 focus:border-[#0F4C5C]/50 focus:shadow-[0_0_15px_rgba(15,76,92,0.15)] focus:outline-none transition-all duration-300"
-                        placeholder="John Doe"
+                        placeholder={t('getStarted.form.fullNamePlaceholder') as string}
+                        className="bg-background border border-black/[0.06] text-foreground px-3.5 py-3 rounded-[11px] text-[14.5px] outline-none focus:border-accent focus:bg-white focus:shadow-[0_0_0_3px_rgba(229,119,86,0.15)] transition-all"
                       />
                     </div>
-                    <div>
-                      <label className="block text-sm text-foreground/50 mb-1.5">Work Email *</label>
+                    <div className="flex flex-col gap-2">
+                      <label className="text-[10.5px] font-bold tracking-[0.16em] uppercase text-muted-foreground">{t('getStarted.form.email') as string}</label>
                       <input
-                        type="email"
-                        required
+                        type="email" required
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-foreground/[0.04] border border-foreground/[0.08] text-foreground placeholder-foreground/25 focus:border-[#0F4C5C]/50 focus:shadow-[0_0_15px_rgba(15,76,92,0.15)] focus:outline-none transition-all duration-300"
-                        placeholder="john@company.com"
+                        placeholder={t('getStarted.form.emailPlaceholder') as string}
+                        className="bg-background border border-black/[0.06] text-foreground px-3.5 py-3 rounded-[11px] text-[14.5px] outline-none focus:border-accent focus:bg-white focus:shadow-[0_0_0_3px_rgba(229,119,86,0.15)] transition-all"
                       />
                     </div>
-                  </div>
-
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm text-foreground/50 mb-1.5">Company Name</label>
+                    <div className="flex flex-col gap-2">
+                      <label className="text-[10.5px] font-bold tracking-[0.16em] uppercase text-muted-foreground">{t('getStarted.form.phone') as string}</label>
+                      <input
+                        type="tel"
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        placeholder={t('getStarted.form.phonePlaceholder') as string}
+                        className="bg-background border border-black/[0.06] text-foreground px-3.5 py-3 rounded-[11px] text-[14.5px] outline-none focus:border-accent focus:bg-white focus:shadow-[0_0_0_3px_rgba(229,119,86,0.15)] transition-all"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label className="text-[10.5px] font-bold tracking-[0.16em] uppercase text-muted-foreground">{t('getStarted.form.company') as string}</label>
                       <input
                         type="text"
                         value={formData.company}
                         onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-foreground/[0.04] border border-foreground/[0.08] text-foreground placeholder-foreground/25 focus:border-[#0F4C5C]/50 focus:shadow-[0_0_15px_rgba(15,76,92,0.15)] focus:outline-none transition-all duration-300"
-                        placeholder="Your Company"
+                        placeholder={t('getStarted.form.companyPlaceholder') as string}
+                        className="bg-background border border-black/[0.06] text-foreground px-3.5 py-3 rounded-[11px] text-[14.5px] outline-none focus:border-accent focus:bg-white focus:shadow-[0_0_0_3px_rgba(229,119,86,0.15)] transition-all"
                       />
                     </div>
-                    <div>
-                      <label className="block text-sm text-foreground/50 mb-1.5">Industry</label>
+                    <div className="flex flex-col gap-2 sm:col-span-2">
+                      <label className="text-[10.5px] font-bold tracking-[0.16em] uppercase text-muted-foreground">{t('getStarted.form.industry') as string}</label>
                       <select
+                        required
                         value={formData.industry}
                         onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-foreground/[0.04] border border-foreground/[0.08] text-foreground/70 focus:border-[#0F4C5C]/50 focus:shadow-[0_0_15px_rgba(15,76,92,0.15)] focus:outline-none transition-all duration-300 appearance-none"
+                        className="bg-background border border-black/[0.06] text-foreground px-3.5 py-3 rounded-[11px] text-[14.5px] outline-none appearance-none cursor-pointer focus:border-accent focus:bg-white focus:shadow-[0_0_0_3px_rgba(229,119,86,0.15)] transition-all"
                       >
-                        <option value="" className="bg-background">Select industry</option>
-                        <option value="food" className="bg-background">Restaurants & Food</option>
-                        <option value="healthcare" className="bg-background">Healthcare</option>
-                        <option value="retail" className="bg-background">Retail & E-commerce</option>
-                        <option value="realestate" className="bg-background">Real Estate</option>
-                        <option value="salon" className="bg-background">Salons & Beauty</option>
-                        <option value="transport" className="bg-background">Transportation</option>
-                        <option value="logistics" className="bg-background">Logistics</option>
-                        <option value="other" className="bg-background">Other</option>
+                        <option value="">{t('getStarted.form.industrySelect') as string}</option>
+                        {Object.entries(industryOptions).map(([value, label]) => (
+                          <option key={value} value={value}>{label}</option>
+                        ))}
                       </select>
+                    </div>
+                    <div className="flex flex-col gap-2 sm:col-span-2">
+                      <label className="text-[10.5px] font-bold tracking-[0.16em] uppercase text-muted-foreground">{t('getStarted.form.useCase') as string}</label>
+                      <textarea
+                        rows={3}
+                        value={formData.useCase}
+                        onChange={(e) => setFormData({ ...formData, useCase: e.target.value })}
+                        placeholder={t('getStarted.form.useCasePlaceholder') as string}
+                        className="bg-background border border-black/[0.06] text-foreground px-3.5 py-3 rounded-[11px] text-[14.5px] outline-none focus:border-accent focus:bg-white focus:shadow-[0_0_0_3px_rgba(229,119,86,0.15)] transition-all resize-none"
+                      />
                     </div>
                   </div>
 
-                  <div>
-                    <label className="block text-sm text-foreground/50 mb-1.5">Phone Number</label>
+                  <div className="flex items-start gap-3 mb-5">
                     <input
-                      type="tel"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-foreground/[0.04] border border-foreground/[0.08] text-foreground placeholder-foreground/25 focus:border-[#0F4C5C]/50 focus:shadow-[0_0_15px_rgba(15,76,92,0.15)] focus:outline-none transition-all duration-300"
-                      placeholder="+961 XX XXX XXX"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm text-foreground/50 mb-1.5">Tell us about your use case</label>
-                    <textarea
-                      value={formData.useCase}
-                      onChange={(e) => setFormData({ ...formData, useCase: e.target.value })}
-                      rows={3}
-                      className="w-full px-4 py-3 rounded-xl bg-foreground/[0.04] border border-foreground/[0.08] text-foreground placeholder-foreground/25 focus:border-[#0F4C5C]/50 focus:shadow-[0_0_15px_rgba(15,76,92,0.15)] focus:outline-none transition-all duration-300 resize-none"
-                      placeholder="What would you like Talkys to handle?"
-                    />
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <input
-                      type="checkbox"
-                      id="consent"
+                      type="checkbox" id="consent"
                       checked={formData.consent}
                       onChange={(e) => setFormData({ ...formData, consent: e.target.checked })}
-                      className="mt-1 w-4 h-4 rounded border-foreground/20 bg-foreground/[0.04] text-[#0F4C5C] focus:ring-[#0F4C5C]/40"
+                      className="mt-1 w-4 h-4 rounded border-black/20 text-accent focus:ring-accent/40"
                     />
-                    <label htmlFor="consent" className="text-xs text-foreground/40">
-                      I agree to receive communications from Talkys. You can unsubscribe at any time.
-                    </label>
+                    <label htmlFor="consent" className="text-xs text-muted-foreground">{t('getStarted.form.consent') as string}</label>
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-[#0F4C5C] to-[#1A8FA8] text-white hover:shadow-[0_0_30px_rgba(15,76,92,0.4)] transition-all duration-300 rounded-xl px-8 py-4 text-base font-medium flex items-center justify-center gap-2 group mt-2"
+                    className="w-full btn-coral inline-flex items-center justify-center gap-2 text-base"
                   >
-                    Book My Demo
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300" />
+                    {t('getStarted.form.submit') as string}
+                    <ArrowRight className="w-4 h-4 rtl:rotate-180" />
                   </button>
-                </div>
-              </form>
-            </div>
+
+                  <p className="text-center text-muted-foreground text-[13px] mt-5">
+                    {(t('getStarted.formMeta') as string) || 'No credit card · 15-day trial · Reply within 24h'}
+                  </p>
+                </form>
+              </>
+            )}
           </div>
         </div>
       </div>

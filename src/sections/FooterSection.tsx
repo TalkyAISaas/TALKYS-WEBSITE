@@ -1,99 +1,90 @@
 import { useEffect, useRef } from 'react';
+import { Twitter, Linkedin, Youtube, Github } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useT } from '@/context/LocaleContext';
+
+const HREFS = {
+  Product: ['/#demo', '/#features', '/#why-talkys', '/#faq', '/#get-started'],
+  Company: ['/#founders', '/#faq', '/#get-started'],
+  Legal:   ['/privacy', '/terms', '/cookies'],
+} as const;
 
 const FooterSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const t = useT();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-visible');
-          }
+          if (entry.isIntersecting) entry.target.classList.add('animate-visible');
         });
       },
       { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
     );
-
     const elements = sectionRef.current?.querySelectorAll('.animate-on-scroll');
     elements?.forEach((el) => observer.observe(el));
-
     return () => observer.disconnect();
   }, []);
 
-  const footerLinks = {
-    Product: ['Features', 'Integrations', 'Industries', 'Analytics', 'Admin Portal', 'Pricing'],
-    Company: ['About Us', 'FAQ', 'Contact'],
-    Legal: ['Privacy Policy', 'Terms of Service', 'Cookie Policy'],
-  };
+  const categoriesCopy = t<{ Product: string; Company: string; Legal: string }>('footer.categories');
+  const linksCopy = t<{ Product: string[]; Company: string[]; Legal: string[] }>('footer.links');
+
+  const isObj = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
+  const categories = isObj(categoriesCopy) ? categoriesCopy : { Product: 'Product', Company: 'Company', Legal: 'Legal' };
+  const links = isObj(linksCopy) ? linksCopy : { Product: [], Company: [], Legal: [] };
+
+  const footerEntries: [keyof typeof categories, string[]][] = [
+    ['Product', Array.isArray(links.Product) ? links.Product : []],
+    ['Company', Array.isArray(links.Company) ? links.Company : []],
+    ['Legal',   Array.isArray(links.Legal)   ? links.Legal   : []],
+  ];
 
   return (
-    <footer
-      ref={sectionRef}
-      className="relative bg-[#F5F0EB] dark:bg-[#060a12] border-t border-[#E8E0D8] dark:border-white/[0.06]"
-    >
-      {/* Footer Links */}
-      <div className="py-16 px-6 lg:px-16">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-10">
-            {/* Logo & Description */}
-            <div className="lg:col-span-2">
-              <div className="flex items-center gap-2.5 mb-4">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-teal to-teal-light flex items-center justify-center">
-                  <span className="text-white font-heading font-bold text-lg">T</span>
-                </div>
-                <span className="font-heading font-semibold text-xl text-foreground">
-                  Talkys
-                </span>
-              </div>
-              <p className="text-sm text-foreground/40 leading-relaxed max-w-xs">
-                The AI voice agent that never sleeps. Lebanon's first AI voice workforce platform.
-                One portal, unlimited agents, every channel connected.
-              </p>
-              <p className="mt-2 text-xs text-foreground/20">
-                Lebanon &middot; MENA &middot; Global
-              </p>
+    <footer ref={sectionRef} className="bg-navy text-white/70 pt-20 pb-9 px-6">
+      <div className="max-w-[1100px] mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr] gap-10 pb-12 border-b border-white/[0.08]">
+          <div>
+            <div className="text-[26px] font-extrabold text-white tracking-[-0.04em] mb-3.5">
+              Talkys<span className="text-accent">.</span>
             </div>
-
-            {/* Links */}
-            {Object.entries(footerLinks).map(([category, links]) => (
-              <div key={category}>
-                <h4 className="font-heading font-semibold text-foreground text-sm mb-4">
-                  {category}
-                </h4>
-                <ul className="space-y-2.5">
-                  {links.map((link) => (
-                    <li key={link}>
-                      <a
-                        href="#"
-                        className="text-sm text-foreground/40 hover:text-foreground/70 transition-colors"
-                      >
-                        {link}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            <p className="text-white/55 text-sm leading-[1.55] max-w-[320px]">
+              {t('footer.description') as string}
+            </p>
           </div>
 
-          {/* Copyright */}
-          <div className="mt-16 pt-8 border-t border-foreground/[0.06] flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-xs text-foreground/30">
-              &copy; 2025 Talkys AI &middot; All rights reserved
-            </p>
-            <div className="flex items-center gap-4">
-              {/* Social Icons */}
-              {['LinkedIn', 'Instagram', 'X'].map((social) => (
-                <a
-                  key={social}
-                  href="#"
-                  className="w-8 h-8 rounded-full bg-foreground/[0.04] border border-foreground/[0.06] flex items-center justify-center hover:bg-foreground/[0.08] transition-colors"
-                >
-                  <span className="text-xs text-foreground/40">{social[0]}</span>
-                </a>
-              ))}
+          {footerEntries.map(([key, items]) => (
+            <div key={key}>
+              <h5 className="text-white text-xs font-bold tracking-[0.16em] uppercase mb-4">{categories[key]}</h5>
+              <ul className="list-none space-y-2.5">
+                {items.map((label, i) => (
+                  <li key={label}>
+                    <Link
+                      to={HREFS[key][i] ?? '#'}
+                      className="text-white/55 text-sm hover:text-accent transition-colors"
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
+          ))}
+        </div>
+
+        <div className="mt-7 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-white/40 text-[13px]">{t('footer.copyright') as string}</p>
+          <div className="flex gap-2">
+            {[Twitter, Linkedin, Youtube, Github].map((Icon, i) => (
+              <a
+                key={i}
+                href="#"
+                className="w-9 h-9 bg-white/[0.04] border border-white/[0.1] rounded-[10px] flex items-center justify-center text-white/65 hover:bg-accent hover:text-white hover:border-accent transition-all"
+                aria-label="Social"
+              >
+                <Icon className="w-4 h-4" />
+              </a>
+            ))}
           </div>
         </div>
       </div>

@@ -1,13 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
-import { Phone, MessageCircle, ShoppingCart, Send, BarChart3 } from 'lucide-react';
+import { Plug, Inbox, MessageCircle, Phone, Instagram, MessageSquare } from 'lucide-react';
+import { useT } from '@/context/LocaleContext';
+import { AccentItalic } from '@/components/AccentItalic';
+
+const ICONS = [Plug, Inbox];
+
+interface CardCopy {
+  eyebrow: string;
+  title: string;
+  titleAccent: string;
+  desc: string;
+}
 
 const HowItWorksSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [activeStep, setActiveStep] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
+  const t = useT();
+  const cardsCopy = t<CardCopy[]>('howItWorks.cards');
+  const cards = Array.isArray(cardsCopy) ? cardsCopy : [];
 
   useEffect(() => {
-    const animObserver = new IntersectionObserver(
+    const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) entry.target.classList.add('animate-visible');
@@ -15,192 +27,232 @@ const HowItWorksSection = () => {
       },
       { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
     );
-    const visObserver = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) { setIsVisible(true); visObserver.disconnect(); }
-      },
-      { threshold: 0.2 }
-    );
     const elements = sectionRef.current?.querySelectorAll('.animate-on-scroll');
-    elements?.forEach((el) => animObserver.observe(el));
-    if (sectionRef.current) visObserver.observe(sectionRef.current);
-    return () => { animObserver.disconnect(); visObserver.disconnect(); };
+    elements?.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
   }, []);
 
-  // Auto-advance steps only when section is visible
-  useEffect(() => {
-    if (!isVisible) return;
-    const interval = setInterval(() => {
-      setActiveStep((prev) => (prev + 1) % 5);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [isVisible]);
-
-  const steps = [
-    {
-      icon: Phone,
-      number: '01',
-      title: 'Customer Calls or Messages',
-      description: 'Your AI agent picks up instantly — no hold music, no waiting. Works via phone, WhatsApp, Instagram, or Messenger.',
-      image: 'https://images.unsplash.com/photo-1596524430615-b46475ddff6e?auto=format&fit=crop&w=600&q=80',
-      detail: 'Instant pickup in < 3 seconds',
-    },
-    {
-      icon: MessageCircle,
-      number: '02',
-      title: 'AI Takes the Order',
-      description: 'Natural conversation in Arabic or English. The agent knows your full menu, pricing, and availability.',
-      image: 'https://images.unsplash.com/photo-1577563908411-5077b6dc7624?auto=format&fit=crop&w=600&q=80',
-      detail: 'Bilingual AR/EN conversations',
-    },
-    {
-      icon: ShoppingCart,
-      number: '03',
-      title: 'Synced to Your POS',
-      description: 'Order appears on your kitchen screen instantly — zero manual entry. Direct integration with Omega & Squirrel.',
-      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=600&q=80',
-      detail: 'Real-time POS integration',
-    },
-    {
-      icon: Send,
-      number: '04',
-      title: 'Confirmation Sent',
-      description: 'Customer receives order summary + delivery ETA automatically via WhatsApp or SMS.',
-      image: 'https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&w=600&q=80',
-      detail: 'WhatsApp auto-confirmation',
-    },
-    {
-      icon: BarChart3,
-      number: '05',
-      title: 'Dashboard Updated',
-      description: 'Full transcript, order value, and status visible in your admin portal with real-time analytics.',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80',
-      detail: 'Live analytics & transcripts',
-    },
-  ];
-
   return (
-    <section
-      ref={sectionRef}
-      id="how-it-works"
-      className="relative py-24 lg:py-32"
-    >
-      <div className="absolute top-0 left-0 right-0 section-divider" />
+    <section ref={sectionRef} id="how-it-works" className="pt-6 pb-24 lg:pt-8 lg:pb-28">
+      <div className="max-w-[1100px] mx-auto px-6">
+        <div className="text-center mb-12">
+          <h2 className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 section-headline">
+            {t('howItWorks.titlePrefix') as string}{' '}
+            <AccentItalic>{t('howItWorks.titleHighlight') as string}</AccentItalic>
+          </h2>
+          <p className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-100 mt-4 text-base text-muted-foreground max-w-[560px] mx-auto">
+            {t('howItWorks.subtitle') as string}
+          </p>
+        </div>
 
-      {/* Background orb */}
-      <div className="gradient-orb w-[400px] h-[400px] top-1/3 -left-40 bg-[#1A8FA8]/5" />
-
-      <div className="w-full px-6 lg:px-16">
-        <div className="max-w-7xl mx-auto relative">
-          {/* Header */}
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 font-heading font-bold text-3xl sm:text-4xl lg:text-5xl text-foreground">
-              How It <span className="text-[#1A8FA8]">Works</span>
-            </h2>
-            <p className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-100 mt-5 text-lg text-foreground/50">
-              From the first call to the confirmed order — fully automated.
-            </p>
-          </div>
-
-          {/* Interactive steps layout */}
-          <div className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-200">
-            <div className="grid lg:grid-cols-[350px_1fr] gap-8">
-              {/* Step selector - left panel */}
-              <div className="space-y-2">
-                {steps.map((step, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setActiveStep(index)}
-                    className={`w-full text-left p-4 rounded-xl transition-all duration-500 group ${
-                      activeStep === index
-                        ? 'card-dark border-[#0F4C5C]/30 bg-[#0F4C5C]/10'
-                        : 'hover:bg-foreground/[0.03]'
-                    }`}
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-500 ${
-                        activeStep === index
-                          ? 'bg-gradient-to-br from-[#0F4C5C] to-[#1A8FA8] shadow-[0_0_20px_rgba(15,76,92,0.3)]'
-                          : 'bg-foreground/[0.04]'
-                      }`}>
-                        <span className={`font-heading font-bold text-sm ${activeStep === index ? 'text-white' : 'text-foreground/40'}`}>
-                          {step.number}
-                        </span>
-                      </div>
-                      <div>
-                        <h3 className={`font-heading font-semibold transition-colors duration-300 ${
-                          activeStep === index ? 'text-foreground' : 'text-foreground/50'
-                        }`}>
-                          {step.title}
-                        </h3>
-                        <p className={`text-xs mt-0.5 transition-colors duration-300 ${
-                          activeStep === index ? 'text-[#1A8FA8]' : 'text-foreground/25'
-                        }`}>
-                          {step.detail}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Progress bar */}
-                    {activeStep === index && (
-                      <div className="mt-3 ml-16 h-0.5 bg-foreground/[0.06] rounded-full overflow-hidden">
-                        <div className="h-full bg-gradient-to-r from-[#0F4C5C] to-[#1A8FA8] rounded-full animate-[shimmer_4s_linear_infinite]" style={{ width: '100%' }} />
-                      </div>
-                    )}
-                  </button>
-                ))}
-              </div>
-
-              {/* Step detail - right panel with image */}
-              <div className="card-gradient-border overflow-hidden">
-                <div className="relative h-full min-h-[400px]">
-                  {/* Image */}
-                  <img
-                    key={activeStep}
-                    src={steps[activeStep].image}
-                    alt={steps[activeStep].title}
-                    className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/30" />
-
-                  {/* Content overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 p-8">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0F4C5C] to-[#1A8FA8] flex items-center justify-center">
-                        {(() => {
-                          const Icon = steps[activeStep].icon;
-                          return <Icon className="w-5 h-5 text-white" />;
-                        })()}
-                      </div>
-                      <span className="text-[#1A8FA8] font-heading font-bold text-sm">STEP {steps[activeStep].number}</span>
-                    </div>
-                    <h3 className="font-heading font-bold text-2xl text-foreground mb-2">
-                      {steps[activeStep].title}
-                    </h3>
-                    <p className="text-foreground/60 leading-relaxed max-w-md">
-                      {steps[activeStep].description}
-                    </p>
+        <div className="grid md:grid-cols-2 gap-5">
+          {cards.map((card, i) => {
+            const Icon = ICONS[i];
+            return (
+              <div
+                key={i}
+                className="animate-on-scroll opacity-0 translate-y-4 bg-white border border-black/[0.06] rounded-[22px] p-7 lg:p-8 shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-700"
+                style={{ transitionDelay: `${(i + 1) * 100}ms` }}
+              >
+                <div className="flex md:block justify-center mb-5">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md text-[10.5px] font-bold tracking-[0.22em] border bg-background border-black/[0.06] text-foreground">
+                    <span className="text-accent text-[12px]">‹</span>
+                    {card.eyebrow}
+                    <span className="text-accent text-[12px]">›</span>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
 
-          {/* POS Integration Badges */}
-          <div className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-500 mt-12 flex flex-wrap justify-center gap-3">
-            {['Omega POS', 'Squirrel POS', 'WhatsApp Business', 'Instagram', 'Messenger'].map((integration, index) => (
-              <div
-                key={index}
-                className="px-5 py-2.5 rounded-full bg-foreground/[0.03] border border-foreground/[0.06] text-foreground/50 text-sm font-medium hover:bg-foreground/[0.06] hover:text-foreground/70 transition-all duration-300 cursor-default"
-              >
-                {integration}
+                <div className="w-14 h-14 mx-auto md:mx-0 rounded-[14px] flex items-center justify-center text-white mb-5 bg-gradient-to-br from-teal to-teal-light shadow-[0_10px_24px_-10px_rgba(14,79,92,0.5)]">
+                  {Icon && <Icon className="w-6 h-6" strokeWidth={2} />}
+                </div>
+
+                <h3 className="font-heading font-bold text-2xl text-foreground mb-3 tracking-[-0.015em]">
+                  {card.title}
+                  {card.titleAccent && (
+                    <>
+                      {' '}<AccentItalic>{card.titleAccent}</AccentItalic>
+                    </>
+                  )}
+                </h3>
+                <p className="text-base text-muted-foreground leading-[1.5] mb-6">
+                  {card.desc}
+                </p>
+
+                {i === 0 ? <IntegrationsGrid /> : <InboxMock />}
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
       </div>
     </section>
   );
 };
+
+/* ============================================================ Integrations grid */
+
+type Integration = {
+  name: string;
+  src: string;           // cdn URL or local /logos/* path
+  fallbackMark: string;  // shown if the image fails to load
+  fallbackColor: string;
+  invert?: boolean;      // white-on-transparent logos need invert to be visible on white tiles
+};
+
+const INTEGRATIONS: Integration[] = [
+  { name: 'Shopify',    src: 'https://cdn.simpleicons.org/shopify',        fallbackMark: 'SH', fallbackColor: '#95BF47' },
+  { name: 'Salesforce', src: '/logos/salesforce.svg',                      fallbackMark: 'SF', fallbackColor: '#00A1E0' },
+  { name: 'Odoo',       src: 'https://cdn.simpleicons.org/odoo',           fallbackMark: 'OD', fallbackColor: '#714B67' },
+  { name: 'Zoho',       src: 'https://cdn.simpleicons.org/zoho',           fallbackMark: 'ZO', fallbackColor: '#E04C2C' },
+  { name: 'HubSpot',    src: 'https://cdn.simpleicons.org/hubspot',        fallbackMark: 'HB', fallbackColor: '#FF7A59' },
+  { name: 'Google',     src: 'https://cdn.simpleicons.org/googlecalendar', fallbackMark: 'G',  fallbackColor: '#4285F4' },
+  { name: 'Talabat',    src: '/logos/talabat.svg',                         fallbackMark: 'TB', fallbackColor: '#FF5A00' },
+  { name: 'Foodics',    src: '/logos/foodics.svg',                         fallbackMark: 'F',  fallbackColor: '#0F3B57' },
+  { name: 'Omega POS',  src: '/logos/omegapos.png',                        fallbackMark: 'Ω',  fallbackColor: '#0E4F5C' },
+  { name: 'Squirrel',   src: '/logos/squirrel.webp',                       fallbackMark: 'SQ', fallbackColor: '#C25B40', invert: true },
+  { name: 'Toters',     src: '/logos/toters.png',                          fallbackMark: 'TO', fallbackColor: '#FF3D00' },
+];
+
+function BrandLogo({ logo }: { logo: Integration }) {
+  const [failed, setFailed] = useState(false);
+
+  if (failed) {
+    return (
+      <span
+        className="w-10 h-10 rounded-lg flex items-center justify-center text-white text-[13px] font-bold font-heading"
+        style={{ background: logo.fallbackColor }}
+      >
+        {logo.fallbackMark}
+      </span>
+    );
+  }
+
+  return (
+    <img
+      src={logo.src}
+      alt={`${logo.name} logo`}
+      loading="lazy"
+      onError={() => setFailed(true)}
+      className="w-10 h-10 object-contain"
+      style={logo.invert ? { filter: 'invert(1) brightness(0.65)' } : undefined}
+    />
+  );
+}
+
+function IntegrationsGrid() {
+  return (
+    <div className="grid grid-cols-4 gap-2">
+      {INTEGRATIONS.map((it) => (
+        <div
+          key={it.name}
+          title={it.name}
+          className="aspect-square flex items-center justify-center rounded-xl bg-white border border-black/[0.06] hover:border-accent/30 transition-all"
+        >
+          <BrandLogo logo={it} />
+        </div>
+      ))}
+      <a
+        href="#get-started"
+        onClick={(e) => {
+          e.preventDefault();
+          document.getElementById('get-started')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }}
+        className="aspect-square flex flex-col items-center justify-center rounded-xl border border-dashed border-accent/40 bg-accent/[0.04] text-accent transition-all hover:bg-accent hover:text-white hover:border-accent hover:shadow-coral"
+      >
+        <span className="text-base font-heading font-bold leading-none">+</span>
+        <span className="text-[10px] font-medium mt-0.5">many more</span>
+      </a>
+    </div>
+  );
+}
+
+/* ============================================================ Inbox mock */
+
+type Channel = 'whatsapp' | 'phone' | 'instagram' | 'messenger';
+
+interface InboxRow {
+  initials: string;
+  name: string;
+  channel: Channel;
+  preview: string;
+  tag: 'hot' | 'booked' | 'replied' | 'reply';
+  live?: boolean;
+}
+
+const INBOX_ROWS: InboxRow[] = [
+  { initials: 'FA', name: 'Fadi Azar',    channel: 'whatsapp',  preview: 'Wants 2 shawarmas + delivery to Hamra', tag: 'hot',     live: true },
+  { initials: 'KD', name: 'Karim Daher',  channel: 'phone',     preview: 'Test drive Thursday 5pm',               tag: 'booked' },
+  { initials: 'SN', name: 'Sara Nassar',  channel: 'instagram', preview: 'Asked about Civic pricing',             tag: 'replied' },
+  { initials: 'MK', name: 'Maya Khoury',  channel: 'messenger', preview: 'Needs to speak with manager',           tag: 'reply' },
+];
+
+const CHANNEL_STYLES: Record<Channel, { avatar: string; iconColor: string }> = {
+  whatsapp:  { avatar: '#25D366',                                                              iconColor: '#25D366' },
+  phone:     { avatar: '#e57756',                                                              iconColor: '#e57756' },
+  instagram: { avatar: 'linear-gradient(135deg,#962fbf 0%,#d62976 50%,#fa7e1e 100%)',           iconColor: '#d62976' },
+  messenger: { avatar: 'linear-gradient(135deg,#00C6FF 0%,#0078FF 100%)',                       iconColor: '#0078FF' },
+};
+
+const TAGS: Record<InboxRow['tag'], { label: string; bg: string; fg: string }> = {
+  hot:     { label: 'Hot lead',     bg: 'bg-accent/15',          fg: 'text-accent' },
+  booked:  { label: 'Booked',       bg: 'bg-emerald-500/10',     fg: 'text-emerald-700' },
+  replied: { label: 'Replied',      bg: 'bg-foreground/[0.06]',  fg: 'text-foreground/55' },
+  reply:   { label: 'Needs reply',  bg: 'bg-amber-400/15',       fg: 'text-amber-700' },
+};
+
+function ChannelIcon({ channel }: { channel: Channel }) {
+  const color = CHANNEL_STYLES[channel].iconColor;
+  const Icon =
+    channel === 'whatsapp'  ? MessageCircle :
+    channel === 'phone'     ? Phone :
+    channel === 'instagram' ? Instagram :
+                              MessageSquare;
+  return <Icon className="w-3 h-3" strokeWidth={2.5} style={{ color }} />;
+}
+
+function InboxMock() {
+  return (
+    <div className="rounded-[14px] bg-white border border-black/[0.06] overflow-hidden">
+      {/* Tab strip */}
+      <div className="flex items-center gap-2 px-3 py-2 border-b border-black/[0.06] text-[10.5px] font-semibold">
+        <span className="px-2 py-1 rounded-full bg-foreground text-white">All</span>
+        <span className="px-2 py-1 rounded-full text-accent bg-accent/10">Hot leads</span>
+        <span className="px-2 py-1 rounded-full text-foreground/55">Booked</span>
+        <span className="px-2 py-1 rounded-full text-foreground/55">Needs reply</span>
+      </div>
+      {/* Rows */}
+      <ul className="divide-y divide-black/[0.05]">
+        {INBOX_ROWS.map((row) => {
+          const tag = TAGS[row.tag];
+          const channelStyle = CHANNEL_STYLES[row.channel];
+          return (
+            <li key={row.name} className="flex items-center gap-2.5 px-3 py-2.5 hover:bg-bg-soft transition-colors">
+              <div className="relative">
+                <span
+                  className="inline-flex items-center justify-center w-8 h-8 rounded-full text-white text-[11px] font-bold"
+                  style={{ background: channelStyle.avatar }}
+                >
+                  {row.initials}
+                </span>
+                {row.live && (
+                  <span className="absolute -bottom-0 -end-0 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white animate-pulse" />
+                )}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-1.5 text-[12px] font-semibold text-foreground leading-tight">
+                  <ChannelIcon channel={row.channel} />
+                  <span className="truncate">{row.name}</span>
+                </div>
+                <p className="text-[11px] text-foreground/55 truncate leading-tight mt-0.5">{row.preview}</p>
+              </div>
+              <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${tag.bg} ${tag.fg} whitespace-nowrap`}>
+                {tag.label}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
 
 export default HowItWorksSection;

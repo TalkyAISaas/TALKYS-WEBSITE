@@ -1,20 +1,12 @@
 import { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'sonner';
 import './App.css';
 
-import Navigation from './sections/Navigation';
-import HeroSection from './sections/HeroSection';
-import ProblemSection from './sections/ProblemSection';
-import SolutionSection from './sections/SolutionSection';
-import HowItWorksSection from './sections/HowItWorksSection';
-import FeaturesSection from './sections/FeaturesSection';
-import SocialMediaSection from './sections/SocialMediaSection';
-import IndustriesSection from './sections/IndustriesSection';
-import GettingStartedSection from './sections/GettingStartedSection';
-import FooterSection from './sections/FooterSection';
-import FloatingObjects from './components/FloatingObjects';
-import BackgroundCanvas from './components/BackgroundCanvas';
-
-import { ThemeProvider } from './context/ThemeContext';
+import HomePage from './pages/HomePage';
+import LegalPage from './pages/LegalPage';
+import ThankYouIdeas from './pages/ThankYouIdeas';
+import WhatsAppFloatingButton from './components/WhatsAppFloatingButton';
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -24,24 +16,20 @@ function App() {
   }, []);
 
   return (
-    <ThemeProvider>
-      <BackgroundCanvas />
-      <div className={`min-h-screen bg-background transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
-        <FloatingObjects />
-        <Navigation />
-        <main>
-          <HeroSection />
-          <ProblemSection />
-          <SolutionSection />
-          <HowItWorksSection />
-          <FeaturesSection />
-          <SocialMediaSection />
-          <IndustriesSection />
-          <GettingStartedSection />
-        </main>
-        <FooterSection />
-      </div>
-    </ThemeProvider>
+    <div className={`min-h-screen bg-background transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/privacy" element={<LegalPage slug="privacy" />} />
+          <Route path="/terms" element={<LegalPage slug="terms" />} />
+          <Route path="/cookies" element={<LegalPage slug="cookies" />} />
+          <Route path="/sandbox/thank-you" element={<ThankYouIdeas />} />
+          <Route path="*" element={<HomePage />} />
+        </Routes>
+        <WhatsAppFloatingButton />
+      </BrowserRouter>
+      <Toaster position="top-right" richColors closeButton />
+    </div>
   );
 }
 
