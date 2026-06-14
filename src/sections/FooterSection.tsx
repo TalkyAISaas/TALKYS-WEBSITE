@@ -1,6 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { Twitter, Linkedin, Youtube, Github } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useT } from '@/context/LocaleContext';
+
+const LEGAL_HREFS = ['/privacy', '/terms', '/cookies'] as const;
 
 const FooterSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -41,28 +44,27 @@ const FooterSection = () => {
             <div className="text-[26px] font-extrabold text-white tracking-[-0.04em] mb-3.5">
               Talkys<span className="text-accent">.</span>
             </div>
-            <p className="text-white/55 text-sm leading-[1.55] mb-6 max-w-[320px]">
+            <p className="text-white/55 text-sm leading-[1.55] max-w-[320px]">
               {t('footer.description') as string}
             </p>
-            <div className="flex gap-2 max-w-[320px]">
-              <input
-                type="email"
-                placeholder={(t('footer.newsletterPlaceholder') as string) || 'Your email'}
-                className="bg-white/5 border border-white/[0.12] text-white px-3.5 py-2.5 rounded-[9px] text-sm flex-1 min-w-0 outline-none focus:border-accent placeholder-white/35"
-              />
-              <button className="bg-accent text-white border-0 px-4 py-2.5 rounded-[9px] text-sm font-semibold cursor-pointer hover:opacity-90">
-                {(t('footer.newsletterCta') as string) || 'Subscribe'}
-              </button>
-            </div>
           </div>
 
           {footerEntries.map(([key, items]) => (
             <div key={key}>
               <h5 className="text-white text-xs font-bold tracking-[0.16em] uppercase mb-4">{categories[key]}</h5>
               <ul className="list-none space-y-2.5">
-                {items.map((link) => (
-                  <li key={link}>
-                    <a href="#" className="text-white/55 text-sm hover:text-accent transition-colors">{link}</a>
+                {items.map((label, i) => (
+                  <li key={label}>
+                    {key === 'Legal' ? (
+                      <Link
+                        to={LEGAL_HREFS[i] ?? '#'}
+                        className="text-white/55 text-sm hover:text-accent transition-colors"
+                      >
+                        {label}
+                      </Link>
+                    ) : (
+                      <a href="#" className="text-white/55 text-sm hover:text-accent transition-colors">{label}</a>
+                    )}
                   </li>
                 ))}
               </ul>

@@ -58,7 +58,7 @@ module.exports = {
       keyframes: {
         'bob-tile': {
           '0%,100%': { transform: 'rotate(var(--rot, 0deg)) translateY(0)' },
-          '50%':     { transform: 'rotate(var(--rot, 0deg)) translateY(-14px)' },
+          '50%':     { transform: 'rotate(var(--rot, 0deg)) translateY(-8px)' },
         },
         'orb-breathe': {
           '0%,100%': { transform: 'translate(-50%, -50%) scale(1)' },
@@ -80,14 +80,24 @@ module.exports = {
           '0%':   { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
         },
+        'bubble-in': {
+          '0%':   { opacity: '0', transform: 'translateY(6px) scale(0.96)' },
+          '100%': { opacity: '1', transform: 'translateY(0)    scale(1)' },
+        },
+        'bounce-soft': {
+          '0%,100%': { transform: 'translateY(0)',   opacity: '0.7' },
+          '50%':     { transform: 'translateY(6px)', opacity: '1' },
+        },
       },
       animation: {
-        'bob-tile': 'bob-tile 5s ease-in-out infinite',
+        'bob-tile': 'bob-tile 9s ease-in-out infinite',
         'orb-breathe': 'orb-breathe 3s ease-in-out infinite',
         'orb-ripple': 'orb-ripple 4s ease-out infinite',
         'live-blink': 'live-blink 2s ease-in-out infinite',
         'wave-pulse': 'wave-pulse 1.4s ease-in-out infinite',
         'scroll-logos': 'scroll-logos 30s linear infinite',
+        'bubble-in': 'bubble-in 280ms ease-out both',
+        'bounce-soft': 'bounce-soft 1.8s ease-in-out infinite',
       },
     },
   },

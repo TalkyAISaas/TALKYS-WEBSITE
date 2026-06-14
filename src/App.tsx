@@ -1,18 +1,9 @@
 import { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 
-import Navigation from './sections/Navigation';
-import HeroSection from './sections/HeroSection';
-import ProblemSection from './sections/ProblemSection';
-import SolutionSection from './sections/SolutionSection';
-import HowItWorksSection from './sections/HowItWorksSection';
-import FeaturesSection from './sections/FeaturesSection';
-import SocialMediaSection from './sections/SocialMediaSection';
-import IndustriesSection from './sections/IndustriesSection';
-import TestimonialsSection from './sections/TestimonialsSection';
-import LogoMarqueeSection from './sections/LogoMarqueeSection';
-import GettingStartedSection from './sections/GettingStartedSection';
-import FooterSection from './sections/FooterSection';
+import HomePage from './pages/HomePage';
+import LegalPage from './pages/LegalPage';
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -23,20 +14,15 @@ function App() {
 
   return (
     <div className={`min-h-screen bg-background transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
-      <Navigation />
-      <main>
-        <HeroSection />
-        <ProblemSection />
-        <SolutionSection />
-        <HowItWorksSection />
-        <FeaturesSection />
-        <SocialMediaSection />
-        <IndustriesSection />
-        <TestimonialsSection />
-        <LogoMarqueeSection />
-        <GettingStartedSection />
-      </main>
-      <FooterSection />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/privacy" element={<LegalPage slug="privacy" />} />
+          <Route path="/terms" element={<LegalPage slug="terms" />} />
+          <Route path="/cookies" element={<LegalPage slug="cookies" />} />
+          <Route path="*" element={<HomePage />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

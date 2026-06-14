@@ -94,15 +94,14 @@ const FeaturesSection = () => {
           </button>
         </div>
 
-        {active && (
-          <div
-            id="day-timeline-panel"
-            role="tabpanel"
-            aria-labelledby={active.key}
-            key={active.key}
-            className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-300 max-w-[560px] mx-auto"
-          >
-            <ol className="relative ps-8 list-none">
+        <div
+          id="day-timeline-panel"
+          role="tabpanel"
+          aria-labelledby={active?.key ?? ''}
+          className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-300 max-w-[560px] mx-auto"
+        >
+          {active && (
+            <ol key={active.key} className="relative ps-8 list-none">
               <span
                 aria-hidden
                 className="absolute inset-y-1 start-[9px] w-[2px] rounded-full bg-gradient-to-b from-accent to-teal"
@@ -111,7 +110,7 @@ const FeaturesSection = () => {
                 <li key={`${active.key}-${idx}`} className="relative py-2.5 ps-0">
                   <span
                     aria-hidden
-                    className="absolute top-3.5 -start-8 w-4 h-4 rounded-full bg-white border-[3px] border-accent shadow-[0_0_0_4px_rgba(229,119,86,0.12)]"
+                    className="absolute top-3.5 -start-[30px] w-4 h-4 rounded-full bg-white border-[3px] border-accent shadow-[0_0_0_4px_rgba(229,119,86,0.12)]"
                   />
                   <div className="text-[11px] font-bold tracking-[0.08em] text-accent uppercase">
                     {moment.time}
@@ -123,8 +122,8 @@ const FeaturesSection = () => {
                 </li>
               ))}
             </ol>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </section>
   );

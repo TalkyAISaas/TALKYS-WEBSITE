@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, ArrowRight } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useT } from '@/context/LocaleContext';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 
 const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const t = useT();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
@@ -15,30 +18,36 @@ const Navigation = () => {
   }, [isMobileMenuOpen]);
 
   const navLinks = [
-    { label: t('nav.links.howItWorks') as string, href: '#how-it-works' },
+    { label: t('nav.links.howItWorks') as string, href: '#demo' },
     { label: t('nav.links.features') as string, href: '#features' },
-    { label: t('nav.links.industries') as string, href: '#industries' },
-    { label: t('nav.links.integrations') as string, href: '#integrations' },
     { label: t('nav.links.getStarted') as string, href: '#get-started' },
   ];
 
   const scrollToSection = (href: string) => {
+    setIsMobileMenuOpen(false);
+    if (location.pathname !== '/') {
+      navigate('/' + href);
+      return;
+    }
     const element = document.querySelector(href);
     if (element) element.scrollIntoView({ behavior: 'smooth' });
-    setIsMobileMenuOpen(false);
   };
 
   return (
     <>
       <nav className="sticky top-0 z-50 bg-background/82 backdrop-blur-xl border-b border-black/[0.06]">
         <div className="max-w-[1100px] mx-auto px-6 py-4 flex items-center justify-between">
-          <a
-            href="#"
-            onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+          <Link
+            to="/"
+            onClick={() => {
+              if (location.pathname === '/') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+            }}
             className="text-[22px] font-extrabold text-foreground tracking-[-0.04em]"
           >
             Talkys<span className="text-accent">.</span>
-          </a>
+          </Link>
 
           <ul className="hidden lg:flex gap-[30px] list-none">
             {navLinks.map((link) => (

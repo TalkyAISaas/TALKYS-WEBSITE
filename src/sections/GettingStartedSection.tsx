@@ -4,6 +4,9 @@ import { useT } from '@/context/LocaleContext';
 import { ChipEyebrow } from '@/components/ChipEyebrow';
 import { AccentItalic } from '@/components/AccentItalic';
 
+const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
+const CC_RECIPIENTS = 'ali.fakih@rentallsoftware.com, ali.alfakih@ssupworld.com';
+
 const GettingStartedSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const t = useT();
@@ -16,6 +19,8 @@ const GettingStartedSection = () => {
     useCase: '',
     consent: false,
   });
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState<string>('');
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -31,9 +36,62 @@ const GettingStartedSection = () => {
     return () => observer.disconnect();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert(t('getStarted.form.successMessage') as string);
+    const accessKey = import.meta.env.VITE_WEB3FORMS_KEY;
+    if (!accessKey) {
+      setStatus('error');
+      setErrorMsg('Form is not configured. Set VITE_WEB3FORMS_KEY in .env.local.');
+      return;
+    }
+
+    setStatus('submitting');
+    setErrorMsg('');
+
+    try {
+      const payload = {
+        access_key: accessKey,
+        subject: `New Talkys demo request — ${formData.fullName || formData.company || formData.email}`,
+        from_name: formData.fullName || 'Talkys website',
+        replyto: formData.email,
+        cc: CC_RECIPIENTS,
+        full_name: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        industry: formData.industry,
+        use_case: formData.useCase,
+        consent: formData.consent ? 'Yes' : 'No',
+      };
+
+      const res = await fetch(WEB3FORMS_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || 'Submission failed');
+      }
+
+      setStatus('success');
+      setFormData({
+        fullName: '',
+        email: '',
+        company: '',
+        industry: '',
+        phone: '',
+        useCase: '',
+        consent: false,
+      });
+    } catch (err) {
+      setStatus('error');
+      setErrorMsg(err instanceof Error ? err.message : 'Submission failed. Please try again.');
+    }
   };
 
   const industryOptionsCopy = t<Record<string, string>>('getStarted.form.industryOptions');
@@ -149,10 +207,23 @@ const GettingStartedSection = () => {
                 <label htmlFor="consent" className="text-xs text-muted-foreground">{t('getStarted.form.consent') as string}</label>
               </div>
 
-              <button type="submit" className="w-full btn-coral inline-flex items-center justify-center gap-2 text-base">
-                {t('getStarted.form.submit') as string}
+              <button
+                type="submit"
+                disabled={status === 'submitting'}
+                className="w-full btn-coral inline-flex items-center justify-center gap-2 text-base disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {status === 'submitting' ? 'Sending…' : (t('getStarted.form.submit') as string)}
                 <ArrowRight className="w-4 h-4 rtl:rotate-180" />
               </button>
+
+              {status === 'success' && (
+                <p className="text-center text-emerald-600 text-sm mt-4">
+                  {t('getStarted.form.successMessage') as string}
+                </p>
+              )}
+              {status === 'error' && (
+                <p className="text-center text-red-600 text-sm mt-4">{errorMsg}</p>
+              )}
 
               <p className="text-center text-muted-foreground text-[13px] mt-5">
                 {(t('getStarted.formMeta') as string) || 'No credit card · 14-day trial · Reply within 24h'}

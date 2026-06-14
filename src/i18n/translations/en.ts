@@ -125,6 +125,13 @@ export const EN_TRANSLATIONS = {
       },
     ],
   },
+  bridge: {
+    demoToHow: {
+      eyebrow: 'AND THEN',
+      linePrefix: 'After the call,',
+      lineAccent: 'your stack takes over.',
+    },
+  },
   features: {
     titlePrefix: 'Less time on the phone.',
     titleHighlight: 'More time with customers.',
@@ -189,6 +196,47 @@ export const EN_TRANSLATIONS = {
         ],
       },
     ],
+  },
+  whyTalkys: {
+    eyebrow: 'HOW WE COMPARE',
+    titlePrefix: 'Why',
+    titleHighlight: 'Talkys',
+    subtitle:
+      "Voice AI is everywhere. But almost none of it speaks Lebanese, knows your menu, or works without a tech team. Here's the short version.",
+    columnsTitle: 'How we stack up',
+    criteria: [
+      { key: 'arabic',       label: 'Lebanese\nArabic' },
+      { key: 'doneForYou',   label: 'Done-for-you\nsetup' },
+      { key: 'beirutTeam',   label: 'Local Beirut\nteam' },
+      { key: 'builtForYou',  label: 'Built for\nyour business' },
+      { key: 'multiChannel', label: 'Multi-channel\nout of the box' },
+    ],
+    talkys: {
+      name: 'Talkys',
+      subtitle: 'Built in Beirut, for Lebanon',
+      notes: {
+        arabic: 'Real Lebanese, the way you speak it',
+        doneForYou: 'We set it up for you',
+        beirutTeam: 'Real people in Beirut, on your hours',
+        builtForYou: 'Your menu, your voice, your team',
+        multiChannel: 'Phone, WhatsApp, Instagram & more, from day one',
+      },
+    },
+    other: {
+      name: 'Other voice AI tools',
+      subtitle: 'Built for the global average',
+      notes: {
+        arabic: 'Robotic accent, sounds foreign',
+        doneForYou: 'You configure it yourself',
+        beirutTeam: 'Support only in US/EU hours',
+        builtForYou: 'Empty out of the box. You fill it in',
+        multiChannel: 'Phone calls only, no WhatsApp or social',
+      },
+    },
+    footerLine: 'Voice AI is the tool. Talkys is the team.',
+    footerSubline:
+      'We do the building, the training, the integrations, so you can go from signup to live calls in days.',
+    cta: 'See Talkys in action',
   },
   getStarted: {
     titlePrefix: 'Book Your',
@@ -377,28 +425,44 @@ export const EN_TRANSLATIONS = {
       missed: 'missed',
     },
   },
-  testimonials: {
-    eyebrow: 'CUSTOMERS',
-    titlePrefix: '1,200+ businesses pick Talkys',
-    titleHighlight: 'every day',
+  founderNote: {
+    eyebrow: 'FROM THE FOUNDERS',
+    titlePrefix: 'Why we built',
+    titleHighlight: 'Talkys',
+    paragraphs: [
+      'Our mission is simple: every Lebanese business deserves a 24/7 team — not just the ones with venture funding.',
+      'We spent years building enterprise tools for global brands in Europe. We came back to put that same technology in the hands of Lebanese businesses — in Arabic, English, and French, at a price any company can afford.',
+    ],
+    signature: '— The Talkys team',
+  },
+  faq: {
+    eyebrow: 'QUESTIONS, ANSWERED',
+    titlePrefix: 'Everything you',
+    titleHighlight: 'wanted to ask',
     items: [
       {
-        quote: 'Talkys booked 11 appointments overnight. Felt like hiring a receptionist that never sleeps.',
-        name: 'Sarah Chen',
-        role: 'Operations · Bright Smile Dental',
-        initials: 'SC',
+        q: 'How does Talkys handle Lebanese Arabic?',
+        a: 'Talkys speaks fluent Lebanese Arabic, English, and French — and switches naturally between them mid-sentence, the way your customers actually talk. It learns your menu and prices immediately, and your tone from your chat history.',
       },
       {
-        quote: 'We capture 3x more after-hours leads. The ROI was clear in the first week.',
-        name: 'Marcus Rivera',
-        role: 'Founder · OakLaw Firm',
-        initials: 'MR',
+        q: "What happens when Talkys can't answer something?",
+        a: 'It hands off to your team with the full conversation summary — you never lose context. The handoff lands wherever you want: WhatsApp, email, or the person on call.',
       },
       {
-        quote: 'Setup took 8 minutes. By morning, we had booked our first showing — without anyone lifting a finger.',
-        name: 'Jenna Diaz',
-        role: 'Agent · NextClinic Realty',
-        initials: 'JD',
+        q: 'How long does setup take?',
+        a: 'Most businesses are live within 7–10 days maximum. We do the integrations, training, and voice setup with you — no tech team needed on your side.',
+      },
+      {
+        q: 'Is my customer data safe?',
+        a: 'Yes. All conversations are encrypted, stored in compliance with local data laws, and never shared or used to train other systems. Your customer list stays yours.',
+      },
+      {
+        q: 'What does it cost?',
+        a: 'After your demo, you pay a fixed one-time setup fee, then a small monthly fee to keep you updated and get ongoing 24/7 support.',
+      },
+      {
+        q: "What if it's not working for me?",
+        a: "15-day trial. If Talkys isn't earning its keep within the first two weeks, we'll part ways with no hard feelings.",
       },
     ],
   },
