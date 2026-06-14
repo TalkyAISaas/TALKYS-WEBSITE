@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Plug, Inbox, MessageCircle, Phone, Instagram, MessageSquare } from 'lucide-react';
 import { useT } from '@/context/LocaleContext';
-import { ChipEyebrow } from '@/components/ChipEyebrow';
 import { AccentItalic } from '@/components/AccentItalic';
 
 const ICONS = [Plug, Inbox];
@@ -34,17 +33,14 @@ const HowItWorksSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="how-it-works" className="py-24 lg:py-28">
+    <section ref={sectionRef} id="how-it-works" className="pt-6 pb-24 lg:pt-8 lg:pb-28">
       <div className="max-w-[1100px] mx-auto px-6">
         <div className="text-center mb-12">
-          <div className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 mb-5 inline-block">
-            <ChipEyebrow>{(t('howItWorks.eyebrow') as string) || 'WHAT HAPPENS AFTER'}</ChipEyebrow>
-          </div>
-          <h2 className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-100 section-headline">
+          <h2 className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 section-headline">
             {t('howItWorks.titlePrefix') as string}{' '}
             <AccentItalic>{t('howItWorks.titleHighlight') as string}</AccentItalic>
           </h2>
-          <p className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-150 mt-4 text-base text-muted-foreground max-w-[560px] mx-auto">
+          <p className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-100 mt-4 text-base text-muted-foreground max-w-[560px] mx-auto">
             {t('howItWorks.subtitle') as string}
           </p>
         </div>

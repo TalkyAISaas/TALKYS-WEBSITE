@@ -108,7 +108,7 @@ export const EN_TRANSLATIONS = {
     titlePrefix: 'Connects to your stack.',
     titleHighlight: 'Catches every customer.',
     subtitle:
-      'Talkys talks to the tools you already use and brings every conversation into one place — so nothing falls through the cracks.',
+      'Talkys integrates with the tools you already use, and brings every conversation into one place…',
     eyebrow: 'WHAT HAPPENS AFTER',
     cards: [
       {
@@ -127,7 +127,6 @@ export const EN_TRANSLATIONS = {
   },
   bridge: {
     demoToHow: {
-      eyebrow: 'AND THEN',
       linePrefix: 'After the call,',
       lineAccent: 'your stack takes over.',
     },

@@ -107,7 +107,7 @@ export const AR_TRANSLATIONS: Translations = {
     titlePrefix: 'يتكامل مع منظومتك.',
     titleHighlight: 'يلتقط كل زبون.',
     subtitle:
-      'Talkys يتصل بالأدوات اللي عم تستعملها أصلاً، وبيجمع كل المحادثات بمكان واحد — حتى ما يضيع شي.',
+      'Talkys بيتكامل مع الأدوات اللي عم تستعملها، وبيجمع كل المحادثات بمكان واحد…',
     eyebrow: 'ما يحصل بعد المكالمة',
     cards: [
       {
@@ -126,7 +126,6 @@ export const AR_TRANSLATIONS: Translations = {
   },
   bridge: {
     demoToHow: {
-      eyebrow: 'وبعدها',
       linePrefix: 'بعد المكالمة،',
       lineAccent: 'نظامك بيكمّل الشغل.',
     },
