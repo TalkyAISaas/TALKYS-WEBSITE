@@ -20,6 +20,8 @@ const Navigation = () => {
   const navLinks = [
     { label: t('nav.links.howItWorks') as string, href: '#demo' },
     { label: t('nav.links.features') as string, href: '#features' },
+    { label: t('nav.links.whyTalkys') as string, href: '#why-talkys' },
+    { label: t('nav.links.faq') as string, href: '#faq' },
     { label: t('nav.links.getStarted') as string, href: '#get-started' },
   ];
 

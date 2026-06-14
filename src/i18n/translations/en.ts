@@ -3,6 +3,8 @@ export const EN_TRANSLATIONS = {
     links: {
       howItWorks: 'How it Works',
       features: 'Features',
+      whyTalkys: 'Why Talkys',
+      faq: 'FAQ',
       getStarted: 'Get Started',
     },
     bookDemo: 'Book a Demo',
@@ -13,7 +15,7 @@ export const EN_TRANSLATIONS = {
     badge: 'Now Live in Lebanon',
     title: 'Meet',
     subtitle:
-      'Talkys gives you a team of AI voice agents that take orders, answer calls, handle deliveries, and manage customer conversations — 24/7, in Arabic and English.',
+      'Talkys gives you a team of AI Personas that take orders, answer calls, handle deliveries, and manage customer conversations, 24/7, in Arabic and English.',
     ctaPrimary: 'Book a Free Demo',
     ctaSecondary: 'See How It Works',
     scribble: 'Try it free, no card',
@@ -46,7 +48,7 @@ export const EN_TRANSLATIONS = {
       {
         title: 'Staff Overwhelmed',
         description:
-          'Friday night, 8pm — three calls at once, WhatsApp orders, social media DMs stacking up.',
+          'Friday night, 8pm. Three calls at once, WhatsApp orders, social media DMs stacking up.',
         statLabel: 'more orders than staff can handle',
       },
       {
@@ -67,9 +69,9 @@ export const EN_TRANSLATIONS = {
     titleLine1: 'One Platform.',
     titleLine2: 'A Full Voice Team.',
     paragraph:
-      'Talkys lets you build a team of AI voice agents that each have their own name, personality, knowledge base, and role. They answer calls, take orders, book tables, send confirmations, and sync everything to your existing systems — automatically.',
+      'Talkys lets you build a team of AI Personas that each have their own name, personality, knowledge base, and role. They answer calls, take orders, book tables, send confirmations, and sync everything to your existing systems, automatically.',
     features: [
-      'Unlimited parallel calls — no busy signal, ever',
+      'Unlimited parallel calls. No busy signal, ever.',
       'Orders sync directly to Omega & Squirrel POS',
       'Speaks natural Lebanese Arabic + English',
       'Every call logged, transcribed, and searchable',
@@ -97,11 +99,11 @@ export const EN_TRANSLATIONS = {
         name: 'Sara',
         role: 'Support',
         message:
-          '"I\'ve checked your account — your last order is out for delivery."',
+          '"I\'ve checked your account, and your last order is out for delivery."',
       },
     ],
     eyebrow: 'THE SOLUTION',
-    ariaName: 'Aria',
+    ariaName: 'Talky',
     ariaTagline: 'AI Agent · On call',
   },
   howItWorks: {
@@ -115,7 +117,7 @@ export const EN_TRANSLATIONS = {
         eyebrow: 'INTEGRATIONS',
         title: 'Plugs into the tools you already use',
         titleAccent: '',
-        desc: 'POS, e-commerce, CRM, accounting, delivery — Talkys keeps everything in sync. No exports, no spreadsheets, no double entry.',
+        desc: 'POS, e-commerce, CRM, accounting, delivery. Talkys keeps everything in sync. No exports, no spreadsheets, no double entry.',
       },
       {
         eyebrow: 'LEAD HANDOFF',
@@ -134,7 +136,7 @@ export const EN_TRANSLATIONS = {
   features: {
     titlePrefix: 'Less time on the phone.',
     titleHighlight: 'More time with customers.',
-    subtitle: 'A real day at your business — pick yours.',
+    subtitle: 'A real day at your business. Pick yours.',
     eyebrow: 'A DAY WITH TALKYS',
     yourIndustry: 'Your industry',
     yourIndustryAria: "Don't see yours? Book a demo",
@@ -158,7 +160,7 @@ export const EN_TRANSLATIONS = {
           { time: '2:00 AM',  text: 'A guest in another timezone wants three nights.', outcome: 'Availability checked, dates negotiated, confirmation sent.' },
           { time: '8:00 AM',  text: 'Concierge requests start coming in.',              outcome: 'Restaurant booked, taxi arranged, no front desk wait.' },
           { time: '6:00 PM',  text: 'A wedding inquiry rolls in.',                      outcome: 'Qualified and handed to your events team.' },
-          { time: '11:30 PM', text: 'Late check-in.',                                    outcome: "Room code sent, guest settled — you didn't get the call." },
+          { time: '11:30 PM', text: 'Late check-in.',                                    outcome: "Room code sent, guest settled. You didn't get the call." },
         ],
       },
       {
@@ -179,7 +181,7 @@ export const EN_TRANSLATIONS = {
         moments: [
           { time: '5:30 AM',  text: "You're still kneading. A catering order rolls in for 9am pickup.", outcome: 'Confirmed and on the slip.' },
           { time: '7:00 AM',  text: 'Doors open.',                                       outcome: 'Three pickups already lined up. Customer walks in, walks out with a box.' },
-          { time: '12:00 PM', text: 'Cake-order DMs flood in over lunch.',               outcome: 'Each one logged — size, date, contact.' },
+          { time: '12:00 PM', text: 'Cake-order DMs flood in over lunch.',               outcome: 'Each one logged: size, date, contact.' },
           { time: '8:00 PM',  text: "You're closed. A wedding cake inquiry lands.",      outcome: 'Notes saved, callback scheduled for tomorrow.' },
         ],
       },
@@ -243,7 +245,7 @@ export const EN_TRANSLATIONS = {
     paragraph:
       'See exactly how Talkys works for your business. Our team will walk you through a live demo customized to your industry and workflow.',
     eyebrow: 'GET STARTED',
-    formMeta: 'No credit card · 14-day trial · We will be in touch within 24h',
+    formMeta: 'No credit card · 15-day trial · We will be in touch within 24h',
     whatToExpect: 'What to Expect',
     expectations: [
       'Live Talkys conversation demo',
@@ -282,7 +284,18 @@ export const EN_TRANSLATIONS = {
       consent:
         'I agree to receive communications from Talkys. You can unsubscribe at any time.',
       submit: 'Book My Demo',
-      successMessage: 'Demo booking coming soon!',
+      successMessage: "We're looking forward to getting to know your business — and giving you your dream employee.",
+      successEyebrow: 'Step 1 of something big',
+      successTitlePrefix: "You're at the",
+      successTitleAccent: 'doorstep',
+      successTitleSuffix: 'of something big.',
+      successStairCaption: 'You · Demo · Onboarding · Live · Scale',
+      successTitle: 'Thank you!',
+      sendAnother: 'Send another request',
+      submitting: 'Sending your request…',
+      submittingHint: 'This will only take a moment.',
+      toastSuccess: 'Demo request sent',
+      toastError: 'Something went wrong',
     },
   },
   footer: {
@@ -297,7 +310,7 @@ export const EN_TRANSLATIONS = {
       Legal: 'Legal',
     },
     links: {
-      Product: ['Features', 'Integrations', 'Industries', 'Analytics', 'Admin Portal', 'Pricing'],
+      Product: ['How it Works', 'Features', 'Why Talkys', 'FAQ', 'Get Started'],
       Company: ['About Us', 'FAQ', 'Contact'],
       Legal: ['Privacy Policy', 'Terms of Service', 'Cookie Policy'],
     },
@@ -315,7 +328,7 @@ export const EN_TRANSLATIONS = {
       sections: [
         {
           heading: '1. Information We Collect',
-          body: 'We collect information you provide directly — such as your name, email, company, and any details you share when booking a demo. When you use the platform, we also collect call recordings, transcripts, usage logs, and basic device and browser data.',
+          body: 'We collect information you provide directly, such as your name, email, company, and any details you share when booking a demo. When you use the platform, we also collect call recordings, transcripts, usage logs, and basic device and browser data.',
         },
         {
           heading: '2. How We Use Your Information',
@@ -429,10 +442,10 @@ export const EN_TRANSLATIONS = {
     titlePrefix: 'Why we built',
     titleHighlight: 'Talkys',
     paragraphs: [
-      'Our mission is simple: every Lebanese business deserves a 24/7 team — not just the ones with venture funding.',
-      'We spent years building enterprise tools for global brands in Europe. We came back to put that same technology in the hands of Lebanese businesses — in Arabic, English, and French, at a price any company can afford.',
+      'Our mission is simple: every Lebanese business deserves a 24/7 team, not just the ones with venture funding.',
+      'We spent years building enterprise tools for global brands in Europe. We came back to put that same technology in the hands of Lebanese businesses, in Arabic, English, and French, at a price any company can afford.',
     ],
-    signature: '— The Talkys team',
+    signature: 'The Talkys team',
   },
   faq: {
     eyebrow: 'QUESTIONS, ANSWERED',
@@ -441,15 +454,15 @@ export const EN_TRANSLATIONS = {
     items: [
       {
         q: 'How does Talkys handle Lebanese Arabic?',
-        a: 'Talkys speaks fluent Lebanese Arabic, English, and French — and switches naturally between them mid-sentence, the way your customers actually talk. It learns your menu and prices immediately, and your tone from your chat history.',
+        a: 'Talkys speaks fluent Lebanese Arabic, English, and French, and switches naturally between them mid-sentence, the way your customers actually talk. It learns your menu and prices immediately, and your tone from your chat history.',
       },
       {
         q: "What happens when Talkys can't answer something?",
-        a: 'It hands off to your team with the full conversation summary — you never lose context. The handoff lands wherever you want: WhatsApp, email, or the person on call.',
+        a: 'It hands off to your team with the full conversation summary, so you never lose context. The handoff lands wherever you want: WhatsApp, email, or the person on call.',
       },
       {
         q: 'How long does setup take?',
-        a: 'Most businesses are live within 7–10 days maximum. We do the integrations, training, and voice setup with you — no tech team needed on your side.',
+        a: 'Most businesses are live within 7–10 days maximum. We do the integrations, training, and voice setup with you. No tech team needed on your side.',
       },
       {
         q: 'Is my customer data safe?',
@@ -467,7 +480,7 @@ export const EN_TRANSLATIONS = {
   },
   demo: {
     eyebrow: 'HEAR IT IN ACTION',
-    titlePrefix: 'Voice or chat —',
+    titlePrefix: 'Voice or chat,',
     titleHighlight: 'we cover both.',
     subtitle:
       'Pick an industry, pick a channel. Talkys handles every call and every conversation, on every platform your customers use.',

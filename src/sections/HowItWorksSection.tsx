@@ -54,13 +54,15 @@ const HowItWorksSection = () => {
                 className="animate-on-scroll opacity-0 translate-y-4 bg-white border border-black/[0.06] rounded-[22px] p-7 lg:p-8 shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-700"
                 style={{ transitionDelay: `${(i + 1) * 100}ms` }}
               >
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md text-[10.5px] font-bold tracking-[0.22em] mb-5 border bg-background border-black/[0.06] text-foreground">
-                  <span className="text-accent text-[12px]">‹</span>
-                  {card.eyebrow}
-                  <span className="text-accent text-[12px]">›</span>
+                <div className="flex md:block justify-center mb-5">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md text-[10.5px] font-bold tracking-[0.22em] border bg-background border-black/[0.06] text-foreground">
+                    <span className="text-accent text-[12px]">‹</span>
+                    {card.eyebrow}
+                    <span className="text-accent text-[12px]">›</span>
+                  </div>
                 </div>
 
-                <div className="w-14 h-14 rounded-[14px] flex items-center justify-center text-white mb-5 bg-gradient-to-br from-teal to-teal-light shadow-[0_10px_24px_-10px_rgba(14,79,92,0.5)]">
+                <div className="w-14 h-14 mx-auto md:mx-0 rounded-[14px] flex items-center justify-center text-white mb-5 bg-gradient-to-br from-teal to-teal-light shadow-[0_10px_24px_-10px_rgba(14,79,92,0.5)]">
                   {Icon && <Icon className="w-6 h-6" strokeWidth={2} />}
                 </div>
 

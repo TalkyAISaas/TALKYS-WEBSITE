@@ -88,6 +88,10 @@ module.exports = {
           '0%,100%': { transform: 'translateY(0)',   opacity: '0.7' },
           '50%':     { transform: 'translateY(6px)', opacity: '1' },
         },
+        'mode-in': {
+          '0%':   { opacity: '0', transform: 'translateY(8px) scale(0.98)' },
+          '100%': { opacity: '1', transform: 'translateY(0)    scale(1)' },
+        },
       },
       animation: {
         'bob-tile': 'bob-tile 9s ease-in-out infinite',
@@ -98,6 +102,7 @@ module.exports = {
         'scroll-logos': 'scroll-logos 30s linear infinite',
         'bubble-in': 'bubble-in 280ms ease-out both',
         'bounce-soft': 'bounce-soft 1.8s ease-in-out infinite',
+        'mode-in': 'mode-in 320ms ease-out both',
       },
     },
   },

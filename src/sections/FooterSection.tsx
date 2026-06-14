@@ -3,7 +3,11 @@ import { Twitter, Linkedin, Youtube, Github } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useT } from '@/context/LocaleContext';
 
-const LEGAL_HREFS = ['/privacy', '/terms', '/cookies'] as const;
+const HREFS = {
+  Product: ['/#demo', '/#features', '/#why-talkys', '/#faq', '/#get-started'],
+  Company: ['/#founders', '/#faq', '/#get-started'],
+  Legal:   ['/privacy', '/terms', '/cookies'],
+} as const;
 
 const FooterSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -55,16 +59,12 @@ const FooterSection = () => {
               <ul className="list-none space-y-2.5">
                 {items.map((label, i) => (
                   <li key={label}>
-                    {key === 'Legal' ? (
-                      <Link
-                        to={LEGAL_HREFS[i] ?? '#'}
-                        className="text-white/55 text-sm hover:text-accent transition-colors"
-                      >
-                        {label}
-                      </Link>
-                    ) : (
-                      <a href="#" className="text-white/55 text-sm hover:text-accent transition-colors">{label}</a>
-                    )}
+                    <Link
+                      to={HREFS[key][i] ?? '#'}
+                      className="text-white/55 text-sm hover:text-accent transition-colors"
+                    >
+                      {label}
+                    </Link>
                   </li>
                 ))}
               </ul>

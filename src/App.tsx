@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'sonner';
 import './App.css';
 
 import HomePage from './pages/HomePage';
 import LegalPage from './pages/LegalPage';
+import ThankYouIdeas from './pages/ThankYouIdeas';
+import WhatsAppFloatingButton from './components/WhatsAppFloatingButton';
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -20,9 +23,12 @@ function App() {
           <Route path="/privacy" element={<LegalPage slug="privacy" />} />
           <Route path="/terms" element={<LegalPage slug="terms" />} />
           <Route path="/cookies" element={<LegalPage slug="cookies" />} />
+          <Route path="/sandbox/thank-you" element={<ThankYouIdeas />} />
           <Route path="*" element={<HomePage />} />
         </Routes>
+        <WhatsAppFloatingButton />
       </BrowserRouter>
+      <Toaster position="top-right" richColors closeButton />
     </div>
   );
 }
