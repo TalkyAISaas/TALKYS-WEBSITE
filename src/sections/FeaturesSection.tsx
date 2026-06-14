@@ -1,22 +1,30 @@
-import { useEffect, useRef } from 'react';
-import {
-  Mic, BookOpen, Phone, ArrowRightLeft, BarChart3, MessageSquare, Users, Shield, Zap,
-} from 'lucide-react';
-import VanillaTilt from 'vanilla-tilt';
+import { useEffect, useRef, useState } from 'react';
 import { useT } from '@/context/LocaleContext';
 import { ChipEyebrow } from '@/components/ChipEyebrow';
 import { AccentItalic } from '@/components/AccentItalic';
 
-const ICONS = [Mic, BookOpen, Phone, ArrowRightLeft, BarChart3, MessageSquare, Users, Shield, Zap];
-const HIGHLIGHT_INDEXES = new Set([0, 4, 8]);
+type Moment = { time: string; text: string; outcome: string };
+type Industry = { key: string; label: string; emoji?: string; moments: Moment[] };
+
+const DEFAULT_KEY = 'dealership';
 
 const FeaturesSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const t = useT();
-  const itemsCopy = t<{ title: string; desc: string }[]>('features.items');
-  const dashboardStatsCopy = t<{ value: string; label: string }[]>('features.dashboard.stats');
-  const items = Array.isArray(itemsCopy) ? itemsCopy : [];
-  const dashboardStats = Array.isArray(dashboardStatsCopy) ? dashboardStatsCopy : [];
+
+  const industriesCopy = t<Industry[]>('features.industries');
+  const industries: Industry[] = Array.isArray(industriesCopy) ? industriesCopy : [];
+
+  const yourIndustryLabel = (t('features.yourIndustry') as string) || 'Your industry';
+  const yourIndustryAria = (t('features.yourIndustryAria') as string) || 'Book a demo';
+
+  const initialKey = industries.some((i) => i.key === DEFAULT_KEY)
+    ? DEFAULT_KEY
+    : industries[0]?.key ?? DEFAULT_KEY;
+  const [activeKey, setActiveKey] = useState<string>(initialKey);
+
+  const active =
+    industries.find((i) => i.key === activeKey) ?? industries[0] ?? null;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -29,32 +37,19 @@ const FeaturesSection = () => {
     );
     const elements = sectionRef.current?.querySelectorAll('.animate-on-scroll');
     elements?.forEach((el) => observer.observe(el));
-
-    const tiltTargets = sectionRef.current?.querySelectorAll<HTMLElement>('[data-tilt]');
-    if (tiltTargets) {
-      VanillaTilt.init(Array.from(tiltTargets), {
-        max: 4,
-        speed: 500,
-        perspective: 1500,
-        easing: 'cubic-bezier(.03,.98,.52,.99)',
-      });
-    }
-
-    return () => {
-      observer.disconnect();
-      tiltTargets?.forEach((el) => {
-        const tilt = (el as HTMLElement & { vanillaTilt?: { destroy: () => void } }).vanillaTilt;
-        if (tilt) tilt.destroy();
-      });
-    };
+    return () => observer.disconnect();
   }, []);
+
+  const scrollToDemo = () => {
+    document.querySelector('#get-started')?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <section ref={sectionRef} id="features" className="py-24 lg:py-28">
-      <div className="max-w-[1100px] mx-auto px-6">
-        <div className="text-center mb-12">
+      <div className="max-w-[920px] mx-auto px-6">
+        <div className="text-center mb-10">
           <div className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 mb-5 inline-block">
-            <ChipEyebrow>{(t('features.eyebrow') as string) || 'FEATURES'}</ChipEyebrow>
+            <ChipEyebrow>{(t('features.eyebrow') as string) || 'A DAY WITH TALKYS'}</ChipEyebrow>
           </div>
           <h2 className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-100 section-headline">
             {t('features.titlePrefix') as string}{' '}
@@ -65,72 +60,71 @@ const FeaturesSection = () => {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {items.map((item, i) => {
-            const Icon = ICONS[i];
-            const isHighlight = HIGHLIGHT_INDEXES.has(i);
-            const isWaveform = i === 4;
+        <div
+          role="tablist"
+          aria-label={(t('features.eyebrow') as string) || 'Industries'}
+          className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-200 flex flex-wrap justify-center gap-2 mb-10"
+        >
+          {industries.map((industry) => {
+            const isActive = industry.key === activeKey;
             return (
-              <div
-                key={i}
-                data-tilt
-                data-tilt-max={isHighlight ? 3 : 4}
-                className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 relative bg-white border border-black/[0.06] rounded-[22px] p-7 shadow-card hover:shadow-card-hover overflow-hidden"
-                style={{ transitionDelay: `${(i + 1) * 60}ms`, transformStyle: 'preserve-3d' }}
+              <button
+                key={industry.key}
+                role="tab"
+                aria-selected={isActive}
+                aria-controls="day-timeline-panel"
+                onClick={() => setActiveKey(industry.key)}
+                className={`text-xs font-semibold px-4 py-2 rounded-full transition-all ${
+                  isActive
+                    ? 'bg-gradient-to-br from-accent to-accent-soft text-white border border-transparent shadow-[0_6px_14px_-4px_rgba(229,119,86,0.45)]'
+                    : 'bg-white text-muted-foreground border border-black/10 hover:border-black/20'
+                }`}
               >
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-all ${
-                  isHighlight
-                    ? 'bg-gradient-to-br from-accent to-accent-soft text-white shadow-[0_10px_24px_-10px_rgba(229,119,86,0.5)]'
-                    : 'bg-gradient-to-br from-teal to-teal-light text-white shadow-[0_10px_24px_-10px_rgba(14,79,92,0.5)]'
-                }`}>
-                  {Icon && <Icon className="w-5 h-5" strokeWidth={2} />}
-                </div>
-                <h3 className="font-heading font-bold text-[20px] text-foreground mb-1.5 tracking-[-0.02em]">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-[1.5]">
-                  {item.desc}
-                </p>
-
-                {isWaveform && (
-                  <div className="mt-4 h-16 flex items-end gap-1 justify-between">
-                    {Array.from({ length: 18 }, (_, k) => (
-                      <div
-                        key={k}
-                        className="flex-1 rounded-[3px] animate-wave-pulse"
-                        style={{
-                          background: 'linear-gradient(180deg, #e57756 0%, #f5a585 100%)',
-                          animationDelay: `${(k < 9 ? k : 17 - k) * 0.08}s`,
-                          boxShadow: '0 0 12px rgba(229,119,86,0.3)',
-                        }}
-                      />
-                    ))}
-                  </div>
-                )}
-              </div>
+                {industry.label}
+              </button>
             );
           })}
+          <button
+            type="button"
+            onClick={scrollToDemo}
+            aria-label={yourIndustryAria}
+            className="text-xs font-semibold italic px-4 py-2 rounded-full border border-dashed border-teal/40 text-teal hover:border-teal/70 hover:bg-teal/5 transition-all"
+          >
+            + {yourIndustryLabel}
+          </button>
         </div>
 
-        <div className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-500 mt-12">
-          <div className="bg-white border border-black/[0.06] rounded-[22px] p-8 shadow-card relative overflow-hidden">
-            <div className="grid lg:grid-cols-[1fr_auto] gap-6 items-end">
-              <div>
-                <p className="text-accent text-sm font-medium uppercase tracking-[0.16em]">{t('features.dashboard.eyebrow') as string}</p>
-                <p className="text-foreground font-heading font-bold text-2xl mt-2">{t('features.dashboard.title') as string}</p>
-                <p className="text-muted-foreground text-sm mt-1">{t('features.dashboard.subtitle') as string}</p>
-              </div>
-              <div className="flex items-center gap-6">
-                {dashboardStats.map((s, k) => (
-                  <div key={k} className="text-center">
-                    <p className="text-foreground font-heading font-bold text-2xl">{s.value}</p>
-                    <p className="text-muted-foreground text-xs">{s.label}</p>
+        {active && (
+          <div
+            id="day-timeline-panel"
+            role="tabpanel"
+            aria-labelledby={active.key}
+            key={active.key}
+            className="animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-300 max-w-[560px] mx-auto"
+          >
+            <ol className="relative ps-8 list-none">
+              <span
+                aria-hidden
+                className="absolute inset-y-1 start-[9px] w-[2px] rounded-full bg-gradient-to-b from-accent to-teal"
+              />
+              {active.moments.map((moment, idx) => (
+                <li key={`${active.key}-${idx}`} className="relative py-2.5 ps-0">
+                  <span
+                    aria-hidden
+                    className="absolute top-3.5 -start-8 w-4 h-4 rounded-full bg-white border-[3px] border-accent shadow-[0_0_0_4px_rgba(229,119,86,0.12)]"
+                  />
+                  <div className="text-[11px] font-bold tracking-[0.08em] text-accent uppercase">
+                    {moment.time}
                   </div>
-                ))}
-              </div>
-            </div>
+                  <p className="mt-1 text-sm text-foreground leading-[1.5]">
+                    {moment.text}{' '}
+                    <span className="font-bold text-teal">{moment.outcome}</span>
+                  </p>
+                </li>
+              ))}
+            </ol>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );
