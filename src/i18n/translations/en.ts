@@ -3,8 +3,6 @@ export const EN_TRANSLATIONS = {
     links: {
       howItWorks: 'How it Works',
       features: 'Features',
-      industries: 'Industries',
-      integrations: 'Integrations',
       getStarted: 'Get Started',
     },
     bookDemo: 'Book a Demo',
@@ -13,16 +11,23 @@ export const EN_TRANSLATIONS = {
   },
   hero: {
     badge: 'Now Live in Lebanon',
-    title: 'Meet Talkys.',
+    title: 'Meet',
     subtitle:
       'Talkys gives you a team of AI voice agents that take orders, answer calls, handle deliveries, and manage customer conversations — 24/7, in Arabic and English.',
     ctaPrimary: 'Book a Free Demo',
     ctaSecondary: 'See How It Works',
     scribble: 'Try it free, no card',
-    trustLabel: 'TRUSTED BY',
-    trustCount: '1,200+',
-    trustSuffix: 'BUSINESSES',
-    trustLogos: ['Bright Smile', 'NextClinic', 'OakLaw', 'Nexter'],
+    channels: {
+      call:          { name: 'Phone calls',     tagline: 'We answer every ring' },
+      whatsappChat:  { name: 'WhatsApp chat',   tagline: 'Replies in seconds' },
+      whatsappCall:  { name: 'WhatsApp call',   tagline: 'Voice calls, picked up 24/7' },
+      instagram:     { name: 'Instagram DMs',   tagline: 'Every message handled' },
+      facebook:      { name: 'Facebook',        tagline: 'Inbox and comments covered' },
+      messenger:     { name: 'Messenger',       tagline: 'Always-on responses' },
+      sms:           { name: 'SMS',             tagline: 'Texts back in real time' },
+      email:         { name: 'Email',           tagline: 'Inbox handled for you' },
+      calendar:      { name: 'Google Calendar', tagline: 'Books meetings on your behalf' },
+    },
   },
   problem: {
     titlePrefix: "Lebanon's Businesses Are Losing",
@@ -100,184 +105,88 @@ export const EN_TRANSLATIONS = {
     ariaTagline: 'AI Agent · On call',
   },
   howItWorks: {
-    titlePrefix: 'How It',
-    titleHighlight: 'Works',
-    subtitle: 'From the first call to the confirmed order — fully automated.',
-    eyebrow: 'HOW IT WORKS',
-    stepLabel: 'STEP',
-    steps: [
+    titlePrefix: 'Connects to your stack.',
+    titleHighlight: 'Catches every customer.',
+    subtitle:
+      'Talkys talks to the tools you already use and brings every conversation into one place — so nothing falls through the cracks.',
+    eyebrow: 'WHAT HAPPENS AFTER',
+    cards: [
       {
-        title: 'Customer Calls or Messages',
-        description:
-          'Your AI agent picks up instantly — no hold music, no waiting. Works via phone, WhatsApp, Instagram, or Messenger.',
-        detail: 'Instant pickup in < 3 seconds',
+        eyebrow: 'INTEGRATIONS',
+        title: 'Plugs into the tools you already use',
+        titleAccent: '',
+        desc: 'POS, e-commerce, CRM, accounting, delivery — Talkys keeps everything in sync. No exports, no spreadsheets, no double entry.',
       },
       {
-        title: 'AI Takes the Order',
-        description:
-          'Natural conversation in Arabic or English. The agent knows your full menu, pricing, and availability.',
-        detail: 'Bilingual AR/EN conversations',
-      },
-      {
-        title: 'Synced to Your POS',
-        description:
-          'Order appears on your kitchen screen instantly — zero manual entry. Direct integration with Omega & Squirrel.',
-        detail: 'Real-time POS integration',
-      },
-      {
-        title: 'Confirmation Sent',
-        description:
-          'Customer receives order summary + delivery ETA automatically via WhatsApp or SMS.',
-        detail: 'WhatsApp auto-confirmation',
-      },
-      {
-        title: 'Dashboard Updated',
-        description:
-          'Full transcript, order value, and status visible in your admin portal with real-time analytics.',
-        detail: 'Live analytics & transcripts',
+        eyebrow: 'LEAD HANDOFF',
+        title: 'Every chat, summarized.',
+        titleAccent: 'You take the lead.',
+        desc: 'Talkys handles the noise, surfaces the real leads, and gets out of the way. You do the work that matters.',
       },
     ],
-    integrations: ['Omega POS', 'Squirrel POS', 'WhatsApp Business', 'Instagram', 'Messenger'],
   },
   features: {
-    titlePrefix: 'Everything Your Voice Team',
-    titleHighlight: 'Needs',
-    subtitle:
-      'Built for Lebanese businesses, Talkys combines enterprise-grade AI with simplicity.',
-    eyebrow: 'FEATURES',
-    items: [
-      { title: 'Natural Voice', desc: 'Arabic & English with natural code-switching between dialects' },
-      { title: 'Custom Knowledge', desc: 'Train each agent on your business — menu, FAQ, policies' },
-      { title: 'Unlimited Calls', desc: 'Handle hundreds of calls simultaneously, zero busy signals' },
-      { title: 'Smart Transfer', desc: 'AI detects when to escalate to a human and transfers seamlessly' },
-      { title: 'Live Analytics', desc: 'Real-time dashboard with call metrics, transcripts, and KPIs' },
-      { title: 'Omnichannel', desc: 'WhatsApp, Instagram, Messenger, SMS — all in one inbox' },
-      { title: 'Multiple Agents', desc: 'Create unique AI personas with different voices and personalities' },
-      { title: 'Secure & Compliant', desc: 'End-to-end encryption with GDPR-ready data handling' },
-      { title: 'No-Code Setup', desc: 'Go live in days, not months. No developer or IT team required' },
-    ],
-    dashboard: {
-      eyebrow: 'Real-Time Intelligence Dashboard',
-      title: 'Monitor Every Conversation',
-      subtitle: 'Call metrics, transcripts, lead scoring — all in one portal',
-      stats: [
-        { value: '98%', label: 'Accuracy' },
-        { value: '2.4s', label: 'Avg Response' },
-        { value: '24/7', label: 'Uptime' },
-      ],
-    },
-  },
-  social: {
-    titlePrefix: 'Turn Social Media Messages Into',
-    titleHighlight: 'Confirmed Orders',
-    subtitle:
-      'Talkys connects to every platform your customers use and converts conversations into revenue.',
-    eyebrow: 'INTEGRATIONS',
-    phoneFrame: 'Instagram DM',
-    handle: '@YourRestaurant',
-    handleSub: 'Instagram Business',
-    activeBadge: 'Active',
-    messages: {
-      customer1: 'Baddo order 1 shawarma w 2 fries please, Hamra area',
-      agent1:
-        'Ahlan! Receiving your order now. Talkys will call you in a few seconds to confirm your address.',
-      customer2: 'Ok thanks!',
-      incomingFrom: 'Incoming call from +961 XX XXX XXX',
-      incomingSub: 'Talkys — Order Confirmation',
-      confirmed:
-        'Order confirmed! 1 Shawarma + 2 Fries — Delivery to Hamra in 35 min.',
-    },
-    integrationsHeader: 'Connects to Your Entire Stack',
-    integrationsSubtitle:
-      'Talkys integrates with the tools you already use. POS systems, CRMs, messaging platforms — everything syncs automatically.',
-    openApiBefore: "Don't see your stack? Talkys",
-    openApiHighlight: 'open API',
-    openApiAfter: 'connects to any platform.',
-    talkToUs: 'Talk to us',
-  },
-  industries: {
-    titlePrefix: 'Built for Every',
-    titleHighlight: 'Lebanese Business',
-    subtitle:
-      'Whether you run a restaurant, clinic, logistics company, or retail store — Talkys adapts to your industry.',
-    eyebrow: 'INDUSTRIES',
-    speakingLabel: 'Talkys speaking to customer',
-    items: [
+    titlePrefix: 'Less time on the phone.',
+    titleHighlight: 'More time with customers.',
+    subtitle: 'A real day at your business — pick yours.',
+    eyebrow: 'A DAY WITH TALKYS',
+    yourIndustry: 'Your industry',
+    yourIndustryAria: "Don't see yours? Book a demo",
+    industries: [
       {
-        shortTitle: 'Food',
-        title: 'Restaurants & Food Delivery',
-        description:
-          'Take orders in Arabic and English, sync to POS, confirm via WhatsApp.',
-        role: 'Ordering + Receptionist',
-        flow: ['Customer calls or DMs', 'Talkys takes order and address', 'POS sync + ETA confirmation'],
-        quote: '"Ahlan! I see you usually order 2 shawarmas. Same address in Hamra?"',
-        capabilities: ['Menu knowledge', 'POS integration', 'Delivery tracking', 'Upselling'],
+        key: 'dealership',
+        label: 'Dealership',
+        emoji: '🚗',
+        moments: [
+          { time: '9:00 AM',  text: 'A buyer asks about pricing on your latest SUV.',  outcome: 'Quoted, qualified, scheduled.' },
+          { time: '1:00 PM',  text: 'Someone wants a test drive this weekend.',         outcome: 'Booked into your sales calendar.' },
+          { time: '4:00 PM',  text: 'A financing question comes up.',                   outcome: 'Routed to your sales lead, ready to close.' },
+          { time: '10:00 PM', text: 'A service inquiry after hours.',                   outcome: 'Answered. Appointment confirmed for Monday.' },
+        ],
       },
       {
-        shortTitle: 'Healthcare',
-        title: 'Clinics & Healthcare',
-        description: 'Book appointments, handle inquiries, send reminders 24/7.',
-        role: 'Secretary + Appointment Agent',
-        flow: ['Patient calls', 'Talkys books appointment slot', 'Reminder sent with clinic details'],
-        quote: '"Dr. Hanna has availability Thursday at 3pm. Shall I book that for you?"',
-        capabilities: ['Scheduling', 'Patient records', 'Reminders', 'Insurance queries'],
+        key: 'hotel',
+        label: 'Hotel',
+        emoji: '🏨',
+        moments: [
+          { time: '2:00 AM',  text: 'A guest in another timezone wants three nights.', outcome: 'Availability checked, dates negotiated, confirmation sent.' },
+          { time: '8:00 AM',  text: 'Concierge requests start coming in.',              outcome: 'Restaurant booked, taxi arranged, no front desk wait.' },
+          { time: '6:00 PM',  text: 'A wedding inquiry rolls in.',                      outcome: 'Qualified and handed to your events team.' },
+          { time: '11:30 PM', text: 'Late check-in.',                                    outcome: "Room code sent, guest settled — you didn't get the call." },
+        ],
       },
       {
-        shortTitle: 'Retail',
-        title: 'Retail & E-commerce',
-        description: 'Handle order inquiries, process returns, answer product questions.',
-        role: 'Customer Service + Lead Agent',
-        flow: ['Client asks about product', 'Talkys qualifies intent and details', 'Lead/opportunity pushed to CRM'],
-        quote: '"The leather bag you liked is back in stock. Want me to reserve one?"',
-        capabilities: ['Product catalog', 'CRM sync', 'Returns handling', 'Recommendations'],
+        key: 'restaurant',
+        label: 'Restaurant',
+        emoji: '🍽️',
+        moments: [
+          { time: '7:00 AM',  text: 'Doors open.',                                       outcome: 'Talkys starts taking orders at that exact second. No delays, no sick days.' },
+          { time: '12:30 PM', text: 'Friday lunch hits, three calls ring at once.',      outcome: 'All three get fed. No busy signal, ever.' },
+          { time: '7:45 PM',  text: 'A customer calls upset about a late delivery.',    outcome: 'Handed to you with the full transcript.' },
+          { time: '11:00 PM', text: "You're home with your family.",                     outcome: "Fourteen more orders booked for tomorrow's lunch rush." },
+        ],
       },
       {
-        shortTitle: 'Real Estate',
-        title: 'Real Estate',
-        description: 'Qualify leads, schedule viewings, answer property questions.',
-        role: 'Lead Management',
-        flow: ['Inbound inquiry received', 'Talkys qualifies budget and area', 'Viewing booked with agent'],
-        quote: '"Welcome back, Ahmad. You were looking at 3-bedroom villas in Beit Mery..."',
-        capabilities: ['Lead scoring', 'Property matching', 'Viewing scheduler', 'Follow-ups'],
+        key: 'pastry',
+        label: 'Pastry',
+        emoji: '🥐',
+        moments: [
+          { time: '5:30 AM',  text: "You're still kneading. A catering order rolls in for 9am pickup.", outcome: 'Confirmed and on the slip.' },
+          { time: '7:00 AM',  text: 'Doors open.',                                       outcome: 'Three pickups already lined up. Customer walks in, walks out with a box.' },
+          { time: '12:00 PM', text: 'Cake-order DMs flood in over lunch.',               outcome: 'Each one logged — size, date, contact.' },
+          { time: '8:00 PM',  text: "You're closed. A wedding cake inquiry lands.",      outcome: 'Notes saved, callback scheduled for tomorrow.' },
+        ],
       },
       {
-        shortTitle: 'Salons',
-        title: 'Salons & Beauty',
-        description: 'Book appointments, send reminders, handle cancellations.',
-        role: 'Receptionist',
-        flow: ['Customer requests service', 'Talkys finds open slot', 'Booking confirmation + reminders'],
-        quote: '"We have an opening with Sarah at 2pm for a blowout. Should I confirm?"',
-        capabilities: ['Booking system', 'Staff schedules', 'Cancellations', 'Product upsells'],
-      },
-      {
-        shortTitle: 'Transport',
-        title: 'Transportation',
-        description:
-          'Handle booking inquiries, track shipments, manage fleet communications.',
-        role: 'Call Answering + Dispatch',
-        flow: ['Client calls for shipment status', 'Talkys fetches live update', 'Status and ETA shared instantly'],
-        quote: '"Your shipment #4821 is currently in customs. Expected release: tomorrow 10am."',
-        capabilities: ['Fleet tracking', 'ETA updates', 'Dispatch coordination', 'Status queries'],
-      },
-      {
-        shortTitle: 'Logistics',
-        title: 'Logistics & Warehousing',
-        description:
-          'Manage delivery schedules, coordinate pickups, update customers.',
-        role: 'Operations Assistant',
-        flow: ['Pickup request received', 'Talkys confirms window and details', 'Task pushed to operations queue'],
-        quote: '"Your pickup is scheduled for tomorrow between 9-11am. Driver Ahmad will call before arriving."',
-        capabilities: ['Pickup scheduling', 'Inventory queries', 'Route optimization', 'Customer updates'],
-      },
-      {
-        shortTitle: 'Import/Export',
-        title: 'Import & Export',
-        description:
-          'Handle customs inquiries, track shipments, coordinate with partners.',
-        role: 'Client Calls + Service Desk',
-        flow: ['Partner calls for customs status', 'Talkys answers from knowledge base', 'Case logged for follow-up'],
-        quote: '"Container MSKU-7291 cleared customs yesterday. Delivery to warehouse is scheduled Friday."',
-        capabilities: ['Customs tracking', 'Document status', 'Partner coordination', 'Case management'],
+        key: 'retail',
+        label: 'Retail',
+        emoji: '🛍️',
+        moments: [
+          { time: '10:30 AM', text: 'An Instagram DM: "Is this still in stock?"',        outcome: 'Stock checked, checkout link sent, order placed.' },
+          { time: '2:00 PM',  text: 'Three "where\'s my order?" messages in five minutes.', outcome: 'Tracking pulled, ETAs given. Zero replies needed from you.' },
+          { time: '7:00 PM',  text: 'A return request comes through WhatsApp.',         outcome: 'Your policy applied, return label sent, customer happy.' },
+          { time: '1:00 AM',  text: 'A buyer in the Gulf checks sizes.',                outcome: 'Size guide in Arabic, checkout link sent. She bought it.' },
+        ],
       },
     ],
   },
@@ -345,7 +254,114 @@ export const EN_TRANSLATIONS = {
       Company: ['About Us', 'FAQ', 'Contact'],
       Legal: ['Privacy Policy', 'Terms of Service', 'Cookie Policy'],
     },
-    copyright: '© 2025 Talkys AI · All rights reserved',
+    copyright: '© 2026 Talkys AI · All rights reserved',
+  },
+  legal: {
+    lastUpdated: 'Last updated: June 14, 2026',
+    backToHome: 'Back to home',
+    contactNote: 'Questions? Reach us at',
+    contactEmail: 'hello@talkys.ai',
+    privacy: {
+      title: 'Privacy Policy',
+      intro:
+        'This Privacy Policy explains how Talkys AI ("we", "us", "our") collects, uses, and protects information when you visit our website or use our AI voice agent platform.',
+      sections: [
+        {
+          heading: '1. Information We Collect',
+          body: 'We collect information you provide directly — such as your name, email, company, and any details you share when booking a demo. When you use the platform, we also collect call recordings, transcripts, usage logs, and basic device and browser data.',
+        },
+        {
+          heading: '2. How We Use Your Information',
+          body: 'We use the information to operate and improve the service, respond to your requests, provide customer support, send service-related updates, and meet legal obligations. We do not sell personal data.',
+        },
+        {
+          heading: '3. Sharing and Disclosure',
+          body: 'We share data with trusted vendors who process it on our behalf (such as hosting, analytics, and telephony providers) under confidentiality obligations. We may disclose information when required by law or to protect our rights and users.',
+        },
+        {
+          heading: '4. Data Retention',
+          body: 'We keep personal data only as long as needed to provide the service, comply with legal obligations, and resolve disputes. Call recordings and transcripts are retained according to your account configuration.',
+        },
+        {
+          heading: '5. Your Rights',
+          body: 'Subject to applicable law, you may request access, correction, deletion, or portability of your personal data, or object to certain processing. To exercise these rights, contact us using the details below.',
+        },
+        {
+          heading: '6. Security',
+          body: 'We apply administrative, technical, and physical safeguards designed to protect your data. No method of transmission or storage is 100% secure, but we work to maintain reasonable protections.',
+        },
+        {
+          heading: '7. Changes to This Policy',
+          body: 'We may update this Privacy Policy from time to time. When we do, we will revise the "Last updated" date above and, where appropriate, notify you through the platform.',
+        },
+      ],
+    },
+    terms: {
+      title: 'Terms of Service',
+      intro:
+        'These Terms of Service ("Terms") govern your access to and use of the Talkys AI website and platform. By using our services, you agree to these Terms.',
+      sections: [
+        {
+          heading: '1. Use of the Service',
+          body: 'You may use Talkys only for lawful purposes and in line with these Terms. You agree not to misuse the service, attempt to disrupt it, or access it through unauthorized means.',
+        },
+        {
+          heading: '2. Accounts',
+          body: 'You are responsible for the activity that happens under your account and for keeping your credentials secure. Notify us promptly if you suspect unauthorized use.',
+        },
+        {
+          heading: '3. Acceptable Use',
+          body: 'Do not use Talkys to violate any law, infringe intellectual property, harass others, or generate content that is fraudulent, harmful, or deceptive. We may suspend or terminate accounts that violate this policy.',
+        },
+        {
+          heading: '4. Intellectual Property',
+          body: 'The Talkys platform, including its software, branding, and content, is owned by Talkys AI or its licensors and is protected by intellectual property laws. You retain rights to content you submit, and grant us a limited license to process it to provide the service.',
+        },
+        {
+          heading: '5. Disclaimers',
+          body: 'The service is provided "as is" without warranties of any kind, express or implied, including merchantability, fitness for a particular purpose, and non-infringement. We do not guarantee uninterrupted or error-free operation.',
+        },
+        {
+          heading: '6. Limitation of Liability',
+          body: 'To the maximum extent permitted by law, Talkys AI will not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of data, profits, or revenue arising from your use of the service.',
+        },
+        {
+          heading: '7. Termination',
+          body: 'We may suspend or terminate access to the service at any time for any reason, including for violation of these Terms. You may stop using the service at any time.',
+        },
+        {
+          heading: '8. Changes to These Terms',
+          body: 'We may update these Terms periodically. Continued use of the service after changes take effect constitutes acceptance of the revised Terms.',
+        },
+      ],
+    },
+    cookies: {
+      title: 'Cookie Policy',
+      intro:
+        'This Cookie Policy explains how Talkys AI uses cookies and similar technologies on our website. By using the site, you agree to the use of cookies as described here.',
+      sections: [
+        {
+          heading: '1. What Are Cookies',
+          body: 'Cookies are small text files placed on your device when you visit a website. They help the site function correctly, remember your preferences, and understand how visitors use the site.',
+        },
+        {
+          heading: '2. Types of Cookies We Use',
+          body: 'Essential cookies are required for the site to operate. Preference cookies remember choices such as your language. Analytics cookies help us understand traffic patterns and improve the experience. We do not use cookies for advertising.',
+        },
+        {
+          heading: '3. Managing Cookies',
+          body: 'Most browsers let you block or delete cookies through their settings. Disabling essential cookies may affect site functionality. Refer to your browser documentation for instructions.',
+        },
+        {
+          heading: '4. Third-Party Cookies',
+          body: 'Some cookies may be set by trusted third parties (for example, analytics providers). Those providers process data under their own privacy policies.',
+        },
+        {
+          heading: '5. Updates',
+          body: 'We may update this Cookie Policy as our use of cookies evolves. The "Last updated" date above reflects the latest revision.',
+        },
+      ],
+    },
   },
   console: {
     label: 'Talkys Console',
@@ -385,6 +401,24 @@ export const EN_TRANSLATIONS = {
         initials: 'JD',
       },
     ],
+  },
+  demo: {
+    eyebrow: 'HEAR IT IN ACTION',
+    titlePrefix: 'Voice or chat —',
+    titleHighlight: 'we cover both.',
+    subtitle:
+      'Pick an industry, pick a channel. Talkys handles every call and every conversation, on every platform your customers use.',
+    industryLabel: 'Choose industry',
+    modeLabel: 'Choose interaction',
+    voiceMode: 'Voice',
+    chatMode: 'Chat',
+    languageNote: 'Talks in any language, but understands all languages.',
+    callerLabel: 'Sample Call',
+    liveLabel: '● LIVE',
+    transcriptPrompt: 'Press play to hear a real Talkys agent take this call.',
+    playAria: 'Play sample call',
+    pauseAria: 'Pause sample call',
+    customIndustry: 'Your industry',
   },
 } as const;
 
